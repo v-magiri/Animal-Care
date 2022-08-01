@@ -1,0 +1,97 @@
+{
+  "project_info": {
+    "project_number": "545835902324",
+    "project_id": "animal-care-f5baa",
+    "storage_bucket": "animal-care-f5baa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:545835902324:android:f93c7fb4b001560b983821",
+        "android_client_info": {
+          "package_name": "com.magiri.animal_care"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "545835902324-4fk03uu0kn1athcmvttdsudpjbsr576l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUirAlYSrY9Tgm-1JFHNlr9_WQgx3YSJE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "545835902324-4fk03uu0kn1athcmvttdsudpjbsr576l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:545835902324:android:38930e9929040eed983821",
+        "android_client_info": {
+          "package_name": "com.magiri.animalcare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "545835902324-4fk03uu0kn1athcmvttdsudpjbsr576l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUirAlYSrY9Tgm-1JFHNlr9_WQgx3YSJE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "545835902324-4fk03uu0kn1athcmvttdsudpjbsr576l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:545835902324:android:012008037965454d983821",
+        "android_client_info": {
+          "package_name": "com.magiri.animalcare_vet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "545835902324-4fk03uu0kn1athcmvttdsudpjbsr576l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUirAlYSrY9Tgm-1JFHNlr9_WQgx3YSJE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "545835902324-4fk03uu0kn1athcmvttdsudpjbsr576l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
