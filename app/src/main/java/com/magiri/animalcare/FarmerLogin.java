@@ -28,6 +28,7 @@ import com.magiri.animalcare.Session.Session;
 public class FarmerLogin extends AppCompatActivity {
     private EditText phoneNumberEditText,passwordEditTxt;
     private Button loginBtn;
+    private TextView signUpTxt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,25 +40,38 @@ public class FarmerLogin extends AppCompatActivity {
         phoneNumberEditText=findViewById(R.id.farmerPhoneEditTxt);
         passwordEditTxt=findViewById(R.id.farmerPassWordEditTxt);
         loginBtn=findViewById(R.id.farmerLoginBtn);
-        String phoneNumber=phoneNumberEditText.getText().toString().trim();
-        String password=passwordEditTxt.getText().toString().trim();
+        signUpTxt=findViewById(R.id.signUpTextView);
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String phoneNumber=phoneNumberEditText.getText().toString().trim();
+                String password=passwordEditTxt.getText().toString().trim();
 
-        if(TextUtils.isEmpty(phoneNumber)){
-            phoneNumberEditText.setError("Phone Number is Required");
-            phoneNumberEditText.requestFocus();
-            return;
-        }
-        if(TextUtils.isEmpty(password)){
-            passwordEditTxt.setError("Password is required");
-            passwordEditTxt.requestFocus();
-            return;
-        }
-        if(phoneNumber.contains(" ")){
-            phoneNumberEditText.setError("Phone Number can not contain Spaces");
-            phoneNumberEditText.requestFocus();
-            return;
-        }
-        loginFarmer(phoneNumber,password);
+                if(TextUtils.isEmpty(phoneNumber)){
+                    phoneNumberEditText.setError("Phone Number is Required");
+                    phoneNumberEditText.requestFocus();
+                    return;
+                }
+                if(TextUtils.isEmpty(password)){
+                    passwordEditTxt.setError("Password is required");
+                    passwordEditTxt.requestFocus();
+                    return;
+                }
+                if(phoneNumber.contains(" ")){
+                    phoneNumberEditText.setError("Phone Number can not contain Spaces");
+                    phoneNumberEditText.requestFocus();
+                    return;
+                }
+                loginFarmer(phoneNumber,password);
+            }
+        });
+        signUpTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),FarmerRegistration.class));
+                finish();
+            }
+        });
     }
 
     private void loginFarmer(String phoneNumber, String password) {

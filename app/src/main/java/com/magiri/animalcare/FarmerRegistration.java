@@ -29,8 +29,10 @@ import com.magiri.animalcare.Model.Farmer;
 
 public class FarmerRegistration extends AppCompatActivity {
     private static final String TAG = "Error in Registration";
-    private EditText FarmerNameEditTxt,FarmerPhonenumberEditTxt,FarmerPasswordEditTxt;
+    private EditText FarmerNameEditTxt,FarmerPhoneNumberEditTxt,FarmerPasswordEditTxt;
     private Button registerBtn;
+    private TextView signInTxt;
+    String Name,FarmerPhoneNumber,password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,51 +42,65 @@ public class FarmerRegistration extends AppCompatActivity {
 
     private void initViews() {
         FarmerNameEditTxt=findViewById(R.id.fullNameEditTxt);
-        FarmerPhonenumberEditTxt=findViewById(R.id.phoneNumberEditTxt);
+        FarmerPhoneNumberEditTxt=findViewById(R.id.phoneNumberEditTxt);
         FarmerPasswordEditTxt=findViewById(R.id.passwordEditTxt);
         registerBtn=findViewById(R.id.registerBtn);
-        
-        String Name=FarmerNameEditTxt.getText().toString().trim();
-        String FarmersPhoneNumber=FarmerPhonenumberEditTxt.getText().toString().trim();
-        String password=FarmerPasswordEditTxt.getText().toString().trim();
+        signInTxt=findViewById(R.id.signInTextView);
         
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                validate Fields
-                if(TextUtils.isEmpty(Name)){
-                    FarmerNameEditTxt.setError("Name is required");
-                    FarmerNameEditTxt.requestFocus();
-                    return;
-                }
-                if(TextUtils.isEmpty(FarmersPhoneNumber)){
-                    FarmerPhonenumberEditTxt.setError("PhoneNumber is required");
-                    FarmerPhonenumberEditTxt.requestFocus();
-                    return;
-                }
-                if(TextUtils.isEmpty(password)){
-                    FarmerPasswordEditTxt.setError("Password is required");
-                    FarmerPasswordEditTxt.requestFocus();
-                    return;
-                }
-                if(FarmersPhoneNumber.contains(" ")){
-                    FarmerPhonenumberEditTxt.setError("PhoneNumber can not contain Spaces");
-                    FarmerPhonenumberEditTxt.requestFocus();
-                    return;
-                }
-                if(Name.length() <= 20){
-                    FarmerNameEditTxt.setError("Full Name is required");
-                    FarmerNameEditTxt.requestFocus();
-                    return;
-                }
-//                register Farmer
-                String FarmerID= Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-                String FarmerLocation="";
-                registerFarmer(FarmerID,Name,FarmersPhoneNumber,FarmerLocation,password);
+                validateFields();
 
             }
         });
+        signInTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),FarmerLogin.class));
+                finish();
+            }
+        });
         
+    }
+
+    private void validateFields() {
+        Name=FarmerNameEditTxt.getText().toString().trim();
+        FarmerPhoneNumber=FarmerPhoneNumberEditTxt.getText().toString().trim();
+        password=FarmerPasswordEditTxt.getText().toString().trim();
+
+
+        if(TextUtils.isEmpty(Name)){
+            FarmerNameEditTxt.setError("Name is required");
+            FarmerNameEditTxt.requestFocus();
+            return;
+        }
+        if(TextUtils.isEmpty(FarmerPhoneNumber)){
+            FarmerPhoneNumberEditTxt.setError("PhoneNumber is required");
+            FarmerPhoneNumberEditTxt.requestFocus();
+            return;
+        }
+        if(TextUtils.isEmpty(password)){
+            FarmerPasswordEditTxt.setError("Password is required");
+            FarmerPasswordEditTxt.requestFocus();
+            return;
+        }
+        if(FarmerPhoneNumber.contains(" ")){
+            FarmerPhoneNumberEditTxt.setError("PhoneNumber can not contain Spaces");
+            FarmerPhoneNumberEditTxt.requestFocus();
+            return;
+        }
+        if(Name.length() < 20){
+            FarmerNameEditTxt.setError("Full Name is required");
+            FarmerNameEditTxt.requestFocus();
+            return;
+        }
+//                register Farmer
+        String FarmerID= Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        String FarmerLocation="";
+        registerFarmer(FarmerID,Name,FarmerPhoneNumber,FarmerLocation,password);
+
     }
 
     private void registerFarmer(String farmerID, String name, String farmersPhoneNumber, String farmerLocation, String password) {

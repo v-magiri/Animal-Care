@@ -4,4 +4,7 @@
     <string name="Password">Enter Password</string>
     <string name="PhoneNumber">Enter Phone Number</string>
     <string name="FullName">Enter Full Name</string>
+    <string name="loginBtn">Login</string>
+    <string name="signupTxt">Do not have Account? Signup</string>
+    <string name="signInTxt">Already Have an Account? Signin</string>
 </resources>

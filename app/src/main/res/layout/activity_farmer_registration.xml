@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:text="Register"
             android:textAlignment="center"
-            android:textSize="20sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="@color/black"/>
         <com.google.android.material.textfield.TextInputLayout
@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/PhoneNumber"
                 android:textSize="20sp"
-                android:inputType="textPhonetic"
+                android:inputType="phone"
                 android:padding="15dp"
                 android:id="@+id/phoneNumberEditTxt" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -70,21 +70,21 @@
             android:text="@string/registerBtn"
             android:textSize="20sp"
             android:padding="10dp"
+            android:textColor="@color/white"
             android:background="@drawable/button_background"
             app:backgroundTint="@null"
             android:layout_marginVertical="20dp"
-            android:id="@+id/registerBtn"
-            android:layout_below="@+id/passwordEditTxt"/>
+            android:id="@+id/registerBtn" />
     </LinearLayout>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Already Have Account? Sign in"
+        android:text="@string/signInTxt"
         android:textSize="18sp"
         android:layout_below="@+id/registrationLayout"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="20dp"
-        android:id="@+id/signTextView"
+        android:layout_marginEnd="20dp"
+        android:id="@+id/signInTextView"
         android:textColor="@color/animalCareBackground"
         android:layout_marginVertical="10dp"/>
 
