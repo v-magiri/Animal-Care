@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">AnimalCare</string>
+    <string name="registerBtn">Register</string>
+    <string name="Password">Enter Password</string>
+    <string name="PhoneNumber">Enter Phone Number</string>
+    <string name="FullName">Enter Full Name</string>
 </resources>
