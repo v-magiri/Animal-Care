@@ -4,9 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/button_background.xml" value="0.1445" />
+        <entry key="app/src/main/res/drawable/image_background.xml" value="0.1445" />
+        <entry key="app/src/main/res/layout/activity_farmer_forum.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/activity_farmer_home.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/activity_farmer_login.xml" value="0.21" />
+        <entry key="app/src/main/res/layout/activity_farmer_records.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/activity_farmer_registration.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/activity_farmer_vet_chat.xml" value="0.19375" />
+        <entry key="app/src/main/res/layout/activity_vets_around.xml" value="0.19375" />
       </map>
     </option>
   </component>

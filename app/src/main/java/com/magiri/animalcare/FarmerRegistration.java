@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -86,8 +87,8 @@ public class FarmerRegistration extends AppCompatActivity {
             FarmerPasswordEditTxt.requestFocus();
             return;
         }
-        if(FarmerPhoneNumber.contains(" ")){
-            FarmerPhoneNumberEditTxt.setError("PhoneNumber can not contain Spaces");
+        if(!Patterns.PHONE.matcher(FarmerPhoneNumber).matches()){
+            FarmerPhoneNumberEditTxt.setError("Invalid PhoneNumber");
             FarmerPhoneNumberEditTxt.requestFocus();
             return;
         }

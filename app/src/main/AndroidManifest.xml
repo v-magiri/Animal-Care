@@ -14,8 +14,20 @@
         android:theme="@style/Theme.AnimalCare"
         tools:targetApi="31">
         <activity
-            android:name=".FarmerHome"
+            android:name=".Farmer_Vet_Chat"
             android:exported="false" />
+        <activity
+            android:name=".Farmer_Forum"
+            android:exported="false" />
+        <activity
+            android:name=".FarmerRecords"
+            android:exported="false" />
+        <activity
+            android:name=".Vets_Around"
+            android:exported="false" />
+        <activity
+            android:name=".FarmerHome"
+            android:exported="true" />
         <activity
             android:name=".FarmerLogin"
             android:exported="false" />
@@ -30,8 +42,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true" />
     </application>
 
 </manifest>
