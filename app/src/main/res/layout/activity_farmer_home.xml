@@ -4,12 +4,23 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawerLayout"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.google.android.material.appbar.MaterialToolbar
+                android:layout_width="match_parent"
+                android:id="@+id/animalCareMaterialToolbar"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/animalCareBackground"
+                app:navigationIcon="@drawable/ic_menu"
+                app:title="@string/app_name"/>
+        </com.google.android.material.appbar.AppBarLayout>
         <FrameLayout
             android:layout_width="match_parent"
             android:id="@+id/banner"
@@ -17,6 +28,7 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:elevation="2dp"
+                android:id="@+id/farmerProfileCard"
                 android:layout_marginTop="140dp"
                 android:layout_marginHorizontal="20dp"
                 android:layout_height="wrap_content">
@@ -127,7 +139,7 @@
                     android:orientation="horizontal">
                     <LinearLayout
                         android:layout_width="wrap_content"
-                        android:id="@+id/records"
+                        android:id="@+id/recordsCard"
                         android:layout_weight="2"
                         android:layout_marginHorizontal="5dp"
                         android:gravity="center_horizontal|center_vertical"
@@ -156,6 +168,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
+                        android:id="@+id/forumCard"
                         android:gravity="center_horizontal|center_vertical"
                         android:layout_marginHorizontal="5dp"
                         android:elevation="2dp">
@@ -171,79 +184,6 @@
                                 android:background="@drawable/image_background"
                                 android:padding="20dp"/>
                             <TextView
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/Forum"
@@ -257,10 +197,11 @@
         </ScrollView>
     </RelativeLayout>
     <com.google.android.material.navigation.NavigationView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
         android:id="@+id/navigationView"
-        app:headerLayout="@drawable/animalCareHeader"
-        app:menu="@menu/drawer_menu"
-        android:layout_gravity="start"/>
+        app:headerLayout="@layout/profile_header"
+        app:menu="@menu/navigation_menu"
+        android:layout_gravity="start"
+        />
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="Home"/>
+    <item
+        android:id="@+id/account"
+        android:icon="@drawable/ic_baseline_account_circle_24"
+        android:title="Profile"/>
+    <item
+        android:id="@+id/forumChat"
+        android:icon="@drawable/ic_baseline_forum_24"
+        android:title="Forum"/>
+    <item
+        android:id="@+id/record"
+        android:icon="@drawable/ic_records_base_24"
+        android:title="Farm Records"
+        />
+    <item
+        android:id="@+id/logout"
+        android:icon="@drawable/ic_logout"
+        android:title="Logout"/>
+
+</menu>

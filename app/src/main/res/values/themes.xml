@@ -12,4 +12,10 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+    <style name="divider">
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/underLineColor</item>
+        <item name="android:layout_marginTop">15dp</item>
+    </style>
+
 </resources>

@@ -5,6 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FarmerLogin">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -62,17 +65,17 @@
             android:layout_marginVertical="20dp"
             android:id="@+id/farmerLoginBtn"
             android:layout_below="@+id/passwordEditTxt"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/signupTxt"
+            android:textSize="18sp"
+            android:layout_gravity="end"
+            android:layout_marginRight="20dp"
+            android:id="@+id/signUpTextView"
+            android:textColor="@color/animalCareBackground"
+            android:layout_marginVertical="10dp"/>
     </LinearLayout>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/signupTxt"
-        android:textSize="18sp"
-        android:layout_below="@+id/registrationLayout"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="20dp"
-        android:id="@+id/signUpTextView"
-        android:textColor="@color/animalCareBackground"
-        android:layout_marginVertical="10dp"/>
+    </ScrollView>
 
 </RelativeLayout>
