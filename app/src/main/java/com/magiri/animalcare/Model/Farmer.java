@@ -1,17 +1,18 @@
 package com.magiri.animalcare.Model;
 
 public class Farmer {
-    String FarmerName,PhoneNumber,FarmerLocation,FarmerID,FarmerPassword;
+    String FarmerName,PhoneNumber,FarmerLocation,FarmerID,FarmerPassword,ProfilePicUrl;
 
     public Farmer() {
     }
 
-    public Farmer(String farmerID, String farmerName, String phoneNumber, String farmerLocation, String farmerPassword) {
+    public Farmer(String farmerID, String farmerName, String phoneNumber, String farmerLocation, String farmerPassword,String profilePicUrl) {
         this.FarmerName = farmerName;
         this.PhoneNumber = phoneNumber;
         this.FarmerLocation = farmerLocation;
         this.FarmerID = farmerID;
         this.FarmerPassword = farmerPassword;
+        this.ProfilePicUrl=profilePicUrl;
     }
 
     public String getFarmerName() {
@@ -52,5 +53,13 @@ public class Farmer {
 
     public void setFarmerPassword(String farmerPassword) {
         FarmerPassword = farmerPassword;
+    }
+
+    public String getProfilePicUrl() {
+        return ProfilePicUrl;
+    }
+
+    public void setProfilePicUrl(String profilePicUrl) {
+        ProfilePicUrl = profilePicUrl;
     }
 }

@@ -11,4 +11,16 @@
     <string name="myHerd">My Herd</string>
     <string name="farm_records">Farm Records</string>
     <string name="Forum">Forum</string>
+    <string name="topicNameTxt">Topic Name Appears Here</string>
+    <string name="createForumPost">Create Forum Post</string>
+    <string name="postMessage">Write Post Message here</string>
+
+    //string for spinner
+    <string-array name="topic">
+        <item>Select Topic ▼</item>
+        <item>Veterinary Services</item>
+        <item>Animal Health</item>
+        <item>Animal Feeds</item>
+        <item>Animal Record Keeping</item>
+    </string-array>
 </resources>

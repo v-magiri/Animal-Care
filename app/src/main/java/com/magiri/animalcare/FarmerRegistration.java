@@ -110,7 +110,7 @@ public class FarmerRegistration extends AppCompatActivity {
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Farmer newFarmer=new Farmer(farmerID,name,farmersPhoneNumber,farmerLocation,password);
+                Farmer newFarmer=new Farmer(farmerID,name,farmersPhoneNumber,farmerLocation,password,"");
                 mRef.child(farmerID).setValue(newFarmer).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

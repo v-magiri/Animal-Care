@@ -41,7 +41,9 @@ public class FarmerHome extends AppCompatActivity {
         materialToolbar=findViewById(R.id.animalCareMaterialToolbar);
         navigationView=findViewById(R.id.navigationView);
         drawerLayout=findViewById(R.id.drawerLayout);
-        closeDrawerImageView=findViewById(R.id.imgClose);
+        View header=navigationView.getHeaderView(0);
+
+        closeDrawerImageView=header.findViewById(R.id.imgClose);
 
         //todo implement the forum chat
         forumCard.setOnClickListener(v -> {
