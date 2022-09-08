@@ -75,6 +75,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_below="@+id/topicLayout"
+        android:id="@+id/postMessageScrollView"
         android:layout_height="wrap_content">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -94,6 +95,7 @@
             android:layout_width="380dp"
             android:layout_height="250dp"
             android:id="@+id/postImage"
+            android:scaleType="fitXY"
             android:layout_marginHorizontal="10dp"
             android:layout_below="@+id/messageTxt"/>
         <View

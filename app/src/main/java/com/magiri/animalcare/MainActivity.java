@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.google.android.material.appbar.MaterialToolbar;
-import com.magiri.animalcare.Adapters.Forum_MessageAdapter;
 
 public class MainActivity extends AppCompatActivity {
     @Override

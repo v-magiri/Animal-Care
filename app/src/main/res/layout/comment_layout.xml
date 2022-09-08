@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/accent"
+    android:layout_margin="10dp"
+    android:backgroundTint="@color/accent"
+    android:elevation="10dp"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:padding="5dp"
+        android:layout_height="wrap_content">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_farmer"
+            android:id="@+id/publisherProfilePic"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/publisherProfilePic"
+            android:layout_marginLeft="5dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="Name Appear Here"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:id="@+id/publisherNameTxt"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_margin="3dp"
+                android:textColor="@color/black"
+                android:id="@+id/commentTxt"
+                android:text="Comment appears Here"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Date Appears Here"
+                android:gravity="end"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:layout_margin="3dp"
+                android:id="@+id/commentDateTxt"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

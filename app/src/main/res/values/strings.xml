@@ -14,6 +14,9 @@
     <string name="topicNameTxt">Topic Name Appears Here</string>
     <string name="createForumPost">Create Forum Post</string>
     <string name="postMessage">Write Post Message here</string>
+    <string name="like">Like</string>
+    <string name="dislike">Dislike</string>
+    <string name="comment">Comment</string>
 
     //string for spinner
     <string-array name="topic">

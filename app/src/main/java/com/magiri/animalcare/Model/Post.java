@@ -5,14 +5,6 @@ public class Post {
 
     public Post() {
     }
-    public Post(String askedBy, String date, String postId, String publisher, String question, String topic) {
-        this.askedBy = askedBy;
-        this.date = date;
-        this.postId = postId;
-        this.publisher = publisher;
-        this.question = question;
-        this.topic = topic;
-    }
 
     public Post(String askedBy, String date, String postId, String publisher, String question, String questionimage, String topic) {
         this.askedBy = askedBy;

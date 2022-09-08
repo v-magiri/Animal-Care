@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
@@ -25,7 +26,8 @@ public class FarmerHome extends AppCompatActivity {
     private MaterialToolbar materialToolbar;
     private NavigationView navigationView;;
     private DrawerLayout drawerLayout;;
-    private ImageView closeDrawerImageView;
+    private ImageView closeDrawerImageView,clientProfilePic,headerProfilePic;
+    private TextView nameTxt,headerFarmerNameTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +43,19 @@ public class FarmerHome extends AppCompatActivity {
         materialToolbar=findViewById(R.id.animalCareMaterialToolbar);
         navigationView=findViewById(R.id.navigationView);
         drawerLayout=findViewById(R.id.drawerLayout);
+        nameTxt=findViewById(R.id.clientNameTxt);
+        clientProfilePic=findViewById(R.id.farmerProfilePic);
+
         View header=navigationView.getHeaderView(0);
+        headerFarmerNameTxt=header.findViewById(R.id.FarmerNameTxt);
+        headerProfilePic=header.findViewById(R.id.profilePic);
+
+        nameTxt.setText(Session.getInstance(this).getFarmerName());
+        headerFarmerNameTxt.setText(Session.getInstance(this).getFarmerName());
 
         closeDrawerImageView=header.findViewById(R.id.imgClose);
 
-        //todo implement the forum chat
+
         forumCard.setOnClickListener(v -> {
             startActivity(new Intent(getApplicationContext(),Farmer_Forum.class));
             finish();
@@ -70,7 +80,7 @@ public class FarmerHome extends AppCompatActivity {
         //open the navigation Drawer
         materialToolbar.setNavigationOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
 
-        //todo add the closeDrawerImageView correctly
+
         closeDrawerImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

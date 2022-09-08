@@ -5,6 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FarmerRegistration">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,45 +28,45 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
+            android:hint="@string/FullName"
+            android:id="@+id/fullNameEditTxt"
             android:textColorHint="@color/black">
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/FullName"
                 android:textSize="20sp"
                 android:padding="15dp"
-                android:inputType="text"
-                android:id="@+id/fullNameEditTxt" />
+                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColorHint="@color/black"
-            android:id="@+id/phone_wrapper"
+            android:hint="@string/PhoneNumber"
+            android:id="@+id/phoneNumberEditTxt"
             android:layout_marginTop="10dp">
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/PhoneNumber"
                 android:textSize="20sp"
                 android:inputType="phone"
-                android:padding="15dp"
-                android:id="@+id/phoneNumberEditTxt" />
+                android:padding="15dp" />
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColorHint="@color/black"
+            android:hint="@string/Password"
+            android:id="@+id/passwordEditTxt"
+            app:endIconMode="password_toggle"
             android:layout_marginTop="10dp">
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/Password"
                 android:textSize="20sp"
                 android:padding="15dp"
                 android:inputType="textPassword"
-                android:textAppearance="?android:textAppearanceLarge"
-                android:id="@+id/passwordEditTxt" />
+                android:textAppearance="?android:textAppearanceLarge" />
         </com.google.android.material.textfield.TextInputLayout>
         <Button
             android:layout_width="match_parent"
@@ -75,17 +79,17 @@
             app:backgroundTint="@null"
             android:layout_marginVertical="20dp"
             android:id="@+id/registerBtn" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/signInTxt"
+            android:textSize="18sp"
+            android:layout_gravity="end"
+            android:layout_marginEnd="20dp"
+            android:id="@+id/signInTextView"
+            android:textColor="@color/animalCareBackground"
+            android:layout_marginVertical="10dp"/>
     </LinearLayout>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/signInTxt"
-        android:textSize="18sp"
-        android:layout_below="@+id/registrationLayout"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="20dp"
-        android:id="@+id/signInTextView"
-        android:textColor="@color/animalCareBackground"
-        android:layout_marginVertical="10dp"/>
+    </ScrollView>
 
 </RelativeLayout>
