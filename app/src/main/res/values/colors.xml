@@ -8,4 +8,5 @@
     <color name="underLineColor">#D8D6D6</color>
     <color name="accent">#F0F0F0</color>
     <color name="green">#4caf50</color>
+    <color name="bluish_transparent">#F0F8FF</color>
 </resources>

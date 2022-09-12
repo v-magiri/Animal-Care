@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ViewVet">
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/viewVetAppBar">
+        <com.google.android.material.appbar.MaterialToolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/animalCareBackground"
+            app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
+            app:title="Vet"
+            app:titleTextColor="@color/white"
+            android:id="@+id/materialToolBar"/>
+    </com.google.android.material.appbar.AppBarLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:src="@drawable/ic_vet"
+        android:layout_marginVertical="10dp"
+        android:scaleType="centerInside"
+        android:layout_below="@+id/viewVetAppBar"
+        android:id="@+id/vetProfilePic"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/vetProfilePic">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/detailsLayout">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vet Name Appear Here"
+                android:id="@+id/vetNameTxt"
+                android:textSize="20sp"
+                android:layout_marginHorizontal="10dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:padding="5dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="@color/animalCareBackground"
+                android:layout_alignParentEnd="true"
+                android:text="@string/visitationFee"
+                android:padding="5dp"
+                android:id="@+id/visitationFeeTextView"
+                android:layout_marginRight="10dp"
+                android:textSize="16sp"
+                android:layout_centerVertical="true"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/locationLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/detailsLayout"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="5dp"
+            android:weightSum="1.5">
+
+            <TextView
+                android:id="@+id/locationTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_location"
+                android:drawablePadding="12dp"
+                android:gravity="center_vertical"
+                android:padding="5dp"
+                android:text="location Appears here"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <RelativeLayout
+                android:id="@+id/forwardLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/imageview_background"
+                android:padding="3dp">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:padding="2dp"
+                    android:src="@drawable/ic_forward" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/qualificationLayout"
+            android:layout_margin="10dp"
+            android:layout_below="@+id/locationLayout">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:padding="5dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_below="@+id/vetNameTxt"
+                android:text="@string/educationTxt"/>
+
+            <ListView
+                android:id="@+id/qualificationListView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/qualificationLayout">
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:background="@drawable/button_background"
+                android:text="Consult"
+                android:layout_weight="1"
+                app:backgroundTint="@null"
+                android:textColor="@color/white"
+                android:layout_below="@+id/qualificationLayout"
+                android:layout_marginBottom="30dp"
+                android:id="@+id/consultBtn"/>
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:background="@drawable/button_background"
+                android:text="Request Visit"
+                android:layout_weight="1"
+                app:backgroundTint="@null"
+                android:textColor="@color/white"
+                android:layout_below="@+id/qualificationLayout"
+                android:layout_marginBottom="30dp"
+                android:id="@+id/visitBtn"/>
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

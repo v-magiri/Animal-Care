@@ -16,6 +16,12 @@
         android:theme="@style/Theme.AnimalCare"
         tools:targetApi="31">
         <activity
+            android:name=".FarmerVet_Chat"
+            android:exported="false" />
+        <activity
+            android:name=".ViewVet"
+            android:exported="false" />
+        <activity
             android:name=".CommentActivity"
             android:exported="false" />
         <activity
@@ -28,9 +34,6 @@
             android:name=".Farmer_Account"
             android:exported="false" />
         <activity
-            android:name=".Farmer_Vet_Chat"
-            android:exported="false" />
-        <activity
             android:name=".Farmer_Forum"
             android:exported="true" />
         <activity
@@ -38,7 +41,7 @@
             android:exported="false" />
         <activity
             android:name=".Vets_Around"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".FarmerHome"
             android:exported="true" />

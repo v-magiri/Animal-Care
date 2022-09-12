@@ -17,6 +17,8 @@
     <string name="like">Like</string>
     <string name="dislike">Dislike</string>
     <string name="comment">Comment</string>
+    <string name="educationTxt">Education Qualification</string>
+    <string name="visitationFee">KSH 100</string>
 
     //string for spinner
     <string-array name="topic">

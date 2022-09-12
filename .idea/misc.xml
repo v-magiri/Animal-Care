@@ -4,18 +4,25 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable-v24/bg_msg_from.xml" value="0.17" />
         <entry key="app/src/main/res/drawable-v24/ic_disliked.xml" value="0.17" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.17" />
         <entry key="app/src/main/res/drawable-v24/ic_liked.xml" value="0.17" />
+        <entry key="app/src/main/res/drawable/bg_msg_you.xml" value="0.17" />
         <entry key="app/src/main/res/drawable/button_background.xml" value="0.1445" />
         <entry key="app/src/main/res/drawable/header_layout.xml" value="0.17" />
         <entry key="app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.17" />
         <entry key="app/src/main/res/drawable/ic_baseline_add_circle_24.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.17" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.17" />
         <entry key="app/src/main/res/drawable/image_background.xml" value="0.1445" />
+        <entry key="app/src/main/res/drawable/imageview_background.xml" value="0.17" />
         <entry key="app/src/main/res/drawable/post_background.xml" value="0.17" />
         <entry key="app/src/main/res/drawable/rectangle.xml" value="0.17" />
+        <entry key="app/src/main/res/drawable/triangle_msg_from.xml" value="0.17" />
+        <entry key="app/src/main/res/drawable/triangle_msg_you.xml" value="0.17" />
+        <entry key="app/src/main/res/layout/activity_chat.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/activity_comment.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_farmer_account.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/activity_farmer_forum.xml" value="0.19375" />
@@ -27,11 +34,22 @@
         <entry key="app/src/main/res/layout/activity_herd.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/activity_post.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/activity_vets_around.xml" value="0.19375" />
+        <entry key="app/src/main/res/layout/activity_view_vet.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/bg_msg_from.xml" value="0.19270833333333334" />
         <entry key="app/src/main/res/layout/comment_layout.xml" value="0.33" />
         <entry key="app/src/main/res/layout/forum_message_layout.xml" value="0.19375" />
+        <entry key="app/src/main/res/layout/item_mine_message.xml" value="0.19375" />
+        <entry key="app/src/main/res/layout/item_other_message.xml" value="0.19375" />
+        <entry key="app/src/main/res/layout/left_row_chat.xml" value="0.19270833333333334" />
+        <entry key="app/src/main/res/layout/left_row_chat_message.xml" value="0.22506082725060828" />
+        <entry key="app/src/main/res/layout/list_item_message_left.xml" value="0.22627737226277372" />
+        <entry key="app/src/main/res/layout/list_item_message_right.xml" value="0.33" />
         <entry key="app/src/main/res/layout/post_layout.xml" value="0.25" />
         <entry key="app/src/main/res/layout/profile_header.xml" value="0.19270833333333334" />
-        <entry key="app/src/main/res/menu/navigation_menu.xml" value="0.19270833333333334" />
+        <entry key="app/src/main/res/layout/right_row_chat.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/row_chat_message.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/vet_around_layout.xml" value="0.22" />
+        <entry key="app/src/main/res/menu/navigation_menu.xml" value="0.33" />
       </map>
     </option>
   </component>
