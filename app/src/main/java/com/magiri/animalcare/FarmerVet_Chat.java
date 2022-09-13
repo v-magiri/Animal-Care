@@ -88,7 +88,8 @@ public class FarmerVet_Chat extends AppCompatActivity {
                 Chat chat=new Chat(message,currentTimeStamp, Prevalent.currentOnlineFarmer.getFarmerName(),vetName,true,false);
                 ref.child(chatID).setValue(chat).addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
-                        sendMessage(chat);
+                        chatList.add(chat);
+                        chatAdapter.notifyDataSetChanged();
                     }
                 });
             }
@@ -102,8 +103,7 @@ public class FarmerVet_Chat extends AppCompatActivity {
     }
 
     private void sendMessage(Chat chat) {
-        chatList.add(chat);
-        chatAdapter.notifyDataSetChanged();
+
     }
 
     private void getMessages() {

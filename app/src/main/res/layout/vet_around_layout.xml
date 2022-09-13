@@ -3,9 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:elevation="10dp"
-    android:layout_margin="10dp"
+    android:layout_margin="5dp"
     android:layout_height="wrap_content"
     app:cardCornerRadius="10dp"
+    android:padding="5dp"
     android:layout_width="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,7 +16,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="6"
-            android:padding="8dp"
             android:id="@+id/vetDetailsLinearLayout">
 
             <ImageView
@@ -28,6 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="4"
+                android:layout_marginTop="4dp"
                 android:layout_marginLeft="5dp"
                 android:id="@+id/vetDetailsLayout"
                 android:orientation="vertical"
@@ -69,6 +70,8 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_weight="1"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
                 android:id="@+id/forwardRelativeLayout"
                 android:background="@drawable/imageview_background">
 
@@ -106,7 +109,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:background="@drawable/button_background"
-                android:text="Ask Visit"
+                android:text="Invite"
                 android:layout_weight="1"
                 android:textSize="16sp"
                 app:backgroundTint="@null"

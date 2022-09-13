@@ -1,24 +1,28 @@
 <resources>
     <string name="app_name">AnimalCare</string>
-    <string name="registerBtn">Register</string>
-    <string name="Password">Enter Password</string>
-    <string name="PhoneNumber">Enter Phone Number</string>
-    <string name="FullName">Enter Full Name</string>
-    <string name="loginBtn">Login</string>
-    <string name="signupTxt">Do not have Account? Signup</string>
-    <string name="signInTxt">Already Have an Account? Signin</string>
-    <string name="SearchVet">Search Vets</string>
-    <string name="myHerd">My Herd</string>
-    <string name="farm_records">Farm Records</string>
-    <string name="Forum">Forum</string>
-    <string name="topicNameTxt">Topic Name Appears Here</string>
-    <string name="createForumPost">Create Forum Post</string>
-    <string name="postMessage">Write Post Message here</string>
-    <string name="like">Like</string>
-    <string name="dislike">Dislike</string>
-    <string name="comment">Comment</string>
-    <string name="educationTxt">Education Qualification</string>
-    <string name="visitationFee">KSH 100</string>
+    <string name="registerBtn" translatable="false">Register</string>
+    <string name="Password" translatable="false">Enter Password</string>
+    <string name="PhoneNumber" translatable="false">Enter Phone Number</string>
+    <string name="FullName" translatable="false">Enter Full Name</string>
+    <string name="loginBtn" translatable="false">Login</string>
+    <string name="signupTxt" translatable="false">Do not have Account? Signup</string>
+    <string name="signInTxt" translatable="false">Already Have an Account? Signin</string>
+    <string name="SearchVet" translatable="false">Search Vets</string>
+    <string name="myHerd" translatable="false">My Herd</string>
+    <string name="farm_records" translatable="false">Farm Records</string>
+    <string name="Forum" translatable="false">Forum</string>
+    <string name="topicNameTxt" translatable="false">Topic Name Appears Here</string>
+    <string name="createForumPost" translatable="false">Create Forum Post</string>
+    <string name="postMessage" translatable="false">Write Post Message here</string>
+    <string name="like" translatable="false">Like</string>
+    <string name="dislike" translatable="false">Dislike</string>
+    <string name="comment" translatable="false">Comment</string>
+    <string name="educationTxt" translatable="false">Education Qualification</string>
+    <string name="visitationFee" translatable="false">KSH 100</string>
+    <string name="maps_ApiKey" translatable="false">AIzaSyCZtMKFAHRUj0VO_wcXqPPZ_yBsODwsWYY</string>
+    <string name="update" translatable="false">Update Profile</string>
+    <string name="EditProfile" translatable="false">Edit Profile</string>
+    <string name="request_visit" translatable="false">Invite Vet</string>
 
     //string for spinner
     <string-array name="topic">
