@@ -1,14 +1,14 @@
 package com.magiri.animalcare.Model;
 
 public class Chat {
-    String Message,TimeStamp,FarmerName,VetName;
-    Boolean IsFarmer,IsVet;
+    String Message, TimeStamp, FarmerID, VetID;
+    Boolean IsFarmer, IsVet;
 
-    public Chat(String message, String timeStamp, String farmerName, String vetName, Boolean isFarmer, Boolean isVet) {
+    public Chat(String message, String timeStamp, String farmerID, String vetID, Boolean isFarmer, Boolean isVet) {
         this.Message = message;
         this.TimeStamp = timeStamp;
-        this.FarmerName = farmerName;
-        this.VetName = vetName;
+        this.FarmerID = farmerID;
+        this.VetID = vetID;
         this.IsFarmer = isFarmer;
         this.IsVet = isVet;
     }
@@ -32,6 +32,22 @@ public class Chat {
         TimeStamp = timeStamp;
     }
 
+    public String getFarmerID() {
+        return FarmerID;
+    }
+
+    public void setFarmerID(String farmerID) {
+        FarmerID = farmerID;
+    }
+
+    public String getVetID() {
+        return VetID;
+    }
+
+    public void setVetID(String vetID) {
+        VetID = vetID;
+    }
+
     public Boolean getFarmer() {
         return IsFarmer;
     }
@@ -46,21 +62,5 @@ public class Chat {
 
     public void setVet(Boolean vet) {
         IsVet = vet;
-    }
-
-    public String getFarmerName() {
-        return FarmerName;
-    }
-
-    public void setFarmerName(String farmerName) {
-        FarmerName = farmerName;
-    }
-
-    public String getVetName() {
-        return VetName;
-    }
-
-    public void setVetName(String vetName) {
-        VetName = vetName;
     }
 }

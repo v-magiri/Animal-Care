@@ -1,18 +1,20 @@
 package com.magiri.animalcare.Model;
 
 public class VisitRequest {
-    String VetID,FarmerAddress,LocationLatitude,LocationLongitude,VisitationFee,FarmerID,Status;
+    String VetID,FarmerAddress,LocationLatitude,
+            LocationLongitude,VisitationFee,FarmerID,Status,VisitID;
     Boolean isPaid;
 
-    public VisitRequest(String vetID, String farmerAddress, String locationLatitude,
-                        String locationLongitude, String visitationFee, String farmerID, String status, Boolean isPaid) {
-        VetID = vetID;
-        FarmerAddress = farmerAddress;
-        LocationLatitude = locationLatitude;
-        LocationLongitude = locationLongitude;
-        VisitationFee = visitationFee;
-        FarmerID = farmerID;
-        Status = status;
+    public VisitRequest(String vetID, String farmerAddress,
+                        String locationLatitude, String locationLongitude, String visitationFee, String farmerID, String status, String visitID, Boolean isPaid) {
+        this.VetID = vetID;
+        this.FarmerAddress = farmerAddress;
+        this.LocationLatitude = locationLatitude;
+        this.LocationLongitude = locationLongitude;
+        this.VisitationFee = visitationFee;
+        this.FarmerID = farmerID;
+        this.Status = status;
+        this.VisitID = visitID;
         this.isPaid = isPaid;
     }
 
@@ -81,5 +83,13 @@ public class VisitRequest {
 
     public void setStatus(String status) {
         Status = status;
+    }
+
+    public String getVisitID() {
+        return VisitID;
+    }
+
+    public void setVisitID(String visitID) {
+        VisitID = visitID;
     }
 }

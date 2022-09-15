@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -23,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.magiri.animalcare.Adapters.ChatAdapter;
 import com.magiri.animalcare.Model.Chat;
+import com.magiri.animalcare.Model.ChatMemory;
 import com.magiri.animalcare.Session.Prevalent;
 
 import java.text.DateFormat;
@@ -40,7 +42,7 @@ public class FarmerVet_Chat extends AppCompatActivity {
     private ChatAdapter chatAdapter;
     private DatabaseReference databaseReference;
     String currentTimeStamp;
-    String Reg_Num,vetName;
+    String Reg_Num,vetName,FarmerID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +58,7 @@ public class FarmerVet_Chat extends AppCompatActivity {
         chatAdapter=new ChatAdapter(this,chatList);
         databaseReference= FirebaseDatabase.getInstance().getReference("Chats");
         chatRecyclerView.setAdapter(chatAdapter);
+        FarmerID=Prevalent.currentOnlineFarmer.getFarmerID();
 
         chatMaterialToolbar.setTitle(vetName);
         chatMaterialToolbar.setNavigationOnClickListener(v -> finish());
@@ -80,41 +83,37 @@ public class FarmerVet_Chat extends AppCompatActivity {
     private void saveMessage(String message) {
         currentTimeStamp= DateFormat.getInstance().format(new Date());
         final DatabaseReference ref;
-        ref=databaseReference.child(Prevalent.currentOnlineFarmer.getFarmerID()).child(Reg_Num);
-        String chatID=ref.push().getKey();
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Chat chat=new Chat(message,currentTimeStamp, Prevalent.currentOnlineFarmer.getFarmerName(),vetName,true,false);
-                ref.child(chatID).setValue(chat).addOnCompleteListener(task -> {
-                    if(task.isSuccessful()){
-                        chatList.add(chat);
-                        chatAdapter.notifyDataSetChanged();
-                    }
-                });
-            }
+        String chatID= String.valueOf(System.currentTimeMillis());
 
+        String chatKey=Reg_Num.substring(3);
+        ChatMemory.saveLastChat(chatID,FarmerID,FarmerVet_Chat.this);
+        Chat chat=new Chat(message,currentTimeStamp,FarmerID,Reg_Num,true,false);
+        databaseReference.child(FarmerID).child("client").setValue(FarmerID);
+        databaseReference.child(FarmerID).child("Vet").setValue(Reg_Num);
+        databaseReference.child(FarmerID).child("Messages").child(chatID).setValue(chat).addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                chatList.add(chat);
+                chatAdapter.notifyDataSetChanged();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.d(TAG, "onCancelled: "+error.getMessage());
-                Toast.makeText(getApplicationContext(),"Something Wrong Happened Please contact Support Team",Toast.LENGTH_SHORT).show();
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "onFailure: "+e.getMessage());
             }
         });
-    }
-
-    private void sendMessage(Chat chat) {
 
     }
 
     private void getMessages() {
-        final DatabaseReference ref;
-        ref=databaseReference.child(Prevalent.currentOnlineFarmer.getFarmerID()).child(Reg_Num);
-        ref.addValueEventListener(new ValueEventListener() {
+        String FarmerID=Prevalent.currentOnlineFarmer.getFarmerID();
+        databaseReference.child(FarmerID).child("Messages").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot dataSnapshot:snapshot.getChildren()){
                     Chat chat=dataSnapshot.getValue(Chat.class);
-                    chatList.add(chat);
+                    if(chat.getFarmerID().equals(FarmerID)){
+                        chatList.add(chat);
+                    }
                 }
                 chatAdapter.notifyDataSetChanged();
             }

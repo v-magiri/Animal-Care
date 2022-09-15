@@ -41,6 +41,7 @@
         <entry key="app/src/main/res/layout/activity_vets_around.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/activity_view_vet.xml" value="0.25" />
         <entry key="app/src/main/res/layout/bg_msg_from.xml" value="0.19270833333333334" />
+        <entry key="app/src/main/res/layout/chat_adapter_layout.xml" value="0.33" />
         <entry key="app/src/main/res/layout/comment_layout.xml" value="0.33" />
         <entry key="app/src/main/res/layout/forum_message_layout.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/item_mine_message.xml" value="0.19375" />

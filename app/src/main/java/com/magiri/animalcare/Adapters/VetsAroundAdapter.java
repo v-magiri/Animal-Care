@@ -57,7 +57,7 @@ public class VetsAroundAdapter extends RecyclerView.Adapter<VetsAroundAdapter.My
         Language="English";
         Api_Key=context.getResources().getString(R.string.maps_ApiKey);
         activity= (Activity) context;
-        mRef= FirebaseDatabase.getInstance().getReference("PendingVisitRequest");
+        mRef= FirebaseDatabase.getInstance().getReference("VisitRequest");
         progressDialog=new ProgressDialog(context);
         progressDialog.setTitle("Please Wait");
         progressDialog.setCanceledOnTouchOutside(false);
@@ -135,21 +135,20 @@ public class VetsAroundAdapter extends RecyclerView.Adapter<VetsAroundAdapter.My
     private void SaveRequest(String RegistrationNumber,String Fee) {
         final DatabaseReference ref;
         String clientID=Prevalent.currentOnlineFarmer.getFarmerID();
-        ref=mRef.child(RegistrationNumber).child(clientID);
-        String visitID=ref.push().getKey();
-        VisitRequest visitRequest=new VisitRequest(RegistrationNumber,Address,Latitude,Longitude,Fee,clientID,"Pending",false);
-        ref.child(visitID).setValue(visitRequest).addOnCompleteListener(new OnCompleteListener<Void>() {
+//        ref=mRef.child(RegistrationNumber);
+        String visitID=mRef.push().getKey();
+        VisitRequest visitRequest=new VisitRequest(RegistrationNumber,Address,Latitude,Longitude,Fee,clientID,"Pending",visitID,false);
+        assert visitID != null;
+        mRef.child(visitID).setValue(visitRequest).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
                     Toast.makeText(context,"Request Recorded",Toast.LENGTH_SHORT).show();
-                    progressDialog.dismiss();
-                    bottomSheetDialog.dismiss();
                 }else{
                     Log.d(TAG, "onComplete: Something Happened");
-                    progressDialog.dismiss();
-                    bottomSheetDialog.dismiss();
                 }
+                progressDialog.dismiss();
+                bottomSheetDialog.dismiss();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

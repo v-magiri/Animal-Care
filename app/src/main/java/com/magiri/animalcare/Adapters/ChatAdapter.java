@@ -11,16 +11,19 @@ import android.widget.TextView;
 
 import com.magiri.animalcare.Model.Chat;
 import com.magiri.animalcare.R;
+import com.magiri.animalcare.Session.Prevalent;
 
 import java.util.List;
 
 public class ChatAdapter extends BaseAdapter {
     private Context context;
     private List<Chat> chatList;
+    private String FarmerID;
 
     public ChatAdapter(Context context, List<Chat> chatList) {
         this.context = context;
         this.chatList = chatList;
+        FarmerID= Prevalent.currentOnlineFarmer.getFarmerID();
     }
 
     @Override
@@ -43,7 +46,7 @@ public class ChatAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         Chat chat=chatList.get(position);
         LayoutInflater layoutInflater= (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-        if(chatList.get(position).getFarmer()){
+        if(chatList.get(position).getFarmerID().equals(FarmerID)){
             convertView=layoutInflater.from(context).inflate(R.layout.right_row_chat,null);
         }else{
             convertView=layoutInflater.from(context).inflate(R.layout.left_row_chat,null);

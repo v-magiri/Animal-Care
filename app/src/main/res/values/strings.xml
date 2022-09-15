@@ -23,6 +23,7 @@
     <string name="update" translatable="false">Update Profile</string>
     <string name="EditProfile" translatable="false">Edit Profile</string>
     <string name="request_visit" translatable="false">Invite Vet</string>
+    <string name="receiverMessage">This is the meesage from the reciever</string>
 
     //string for spinner
     <string-array name="topic">
