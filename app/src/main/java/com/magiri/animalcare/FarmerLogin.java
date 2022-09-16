@@ -41,6 +41,11 @@ public class FarmerLogin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_farmer_login);
         initView();
+        if(Prevalent.currentOnlineFarmer!=null){
+            Intent intent=new Intent(FarmerLogin.this,FarmerHome.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     private void initView() {
@@ -111,7 +116,13 @@ public class FarmerLogin extends AppCompatActivity {
                             Prevalent.currentOnlineFarmer=farmerData;
                             startActivity(intent);
                             progressDialog.dismiss();
+                        }else{
+                            Toast.makeText(getApplicationContext(),"Incorrect Password",Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
                         }
+                    }else{
+                        Toast.makeText(getApplicationContext(),"Incorrect PhoneNumber",Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
                     }
                 }
             }

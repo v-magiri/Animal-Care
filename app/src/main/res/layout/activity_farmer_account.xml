@@ -14,6 +14,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/animalCareBackground"
             app:titleTextColor="@color/white"
+            android:id="@+id/profileMaterialToolBar"
             app:title="Profile"
             app:navigationIcon="@drawable/ic_baseline_arrow_back_24"/>
     </com.google.android.material.appbar.AppBarLayout>
@@ -102,6 +103,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/passwordInputLayout"
                 android:layout_marginTop="10dp"
+                app:endIconMode="password_toggle"
                 android:layout_below="@+id/phoneInputLayout"
                 android:layout_marginHorizontal="16dp"
                 android:hint="Enter Password"

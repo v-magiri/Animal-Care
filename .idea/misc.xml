@@ -39,6 +39,7 @@
         <entry key="app/src/main/res/layout/activity_farmer_registration.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_farmer_vet_chat.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/activity_herd.xml" value="0.19375" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/activity_post.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/activity_vets_around.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/activity_view_vet.xml" value="0.25" />

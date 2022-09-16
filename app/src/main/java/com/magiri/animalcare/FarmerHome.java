@@ -58,23 +58,23 @@ public class FarmerHome extends AppCompatActivity {
 
         forumCard.setOnClickListener(v -> {
             startActivity(new Intent(getApplicationContext(),Farmer_Forum.class));
-            finish();
+//            finish();
         });
         searchCard.setOnClickListener(v -> {
             startActivity(new Intent(getApplicationContext(),Vets_Around.class));
-            finish();
+//            finish();
         });
         herdLayout.setOnClickListener(v -> {
             startActivity(new Intent(getApplicationContext(),Herd.class));
-            finish();
+//            finish();
         });
         profileCard.setOnClickListener(v -> {
             startActivity(new Intent(getApplicationContext(),Farmer_Account.class));
-            finish();
+//            finish();
         });
         recordLayout.setOnClickListener(v -> {
             startActivity(new Intent(getApplicationContext(),FarmerRecords.class));
-            finish();
+//            finish();
         });
 
         //open the navigation Drawer
@@ -97,17 +97,17 @@ public class FarmerHome extends AppCompatActivity {
                 case R.id.account:
                     startActivity(new Intent(FarmerHome.this,Farmer_Account.class));
                     closeNavigationDrawer();
-                    finish();
+//                    finish();
                     break;
                 case R.id.forumChat:
                     startActivity(new Intent(FarmerHome.this,Farmer_Forum.class));
                     closeNavigationDrawer();
-                    finish();
+//                    finish();
                     break;
                 case R.id.record:
                     startActivity(new Intent(FarmerHome.this,FarmerRecords.class));
                     closeNavigationDrawer();
-                    finish();
+//                    finish();
                     break;
                 case R.id.logout:
                     SignoutUser();

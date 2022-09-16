@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,6 +34,7 @@ public class Farmer_Account extends AppCompatActivity {
     TextView nameTextView;
     DatabaseReference databaseReference;
     String name,phoneNumber,password;
+    private MaterialToolbar profileMaterialToolbar;
     ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,16 +49,19 @@ public class Farmer_Account extends AppCompatActivity {
         profileImageView=findViewById(R.id.farmerProfilePic);
         nameTextView=findViewById(R.id.clientNameTxt);
         progressDialog=new ProgressDialog(this);
+        profileMaterialToolbar=findViewById(R.id.profileMaterialToolBar);
         databaseReference= FirebaseDatabase.getInstance().getReference("Farmers").child(Prevalent.currentOnlineFarmer.getFarmerID());
 
-        name=nameInputLayout.getEditText().getText().toString().trim();
-        phoneNumber=phoneInputLayout.getEditText().getText().toString().trim();
-        password=passwordInputLayout.getEditText().getText().toString().trim();
         progressDialog.setTitle("Updating Account");
         progressDialog.setMessage("Please wait, while we update Profile");
         progressDialog.setCanceledOnTouchOutside(false);
 
-
+        profileMaterialToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         getProfile();
         editProfileBtn.setOnClickListener(new View.OnClickListener() {
@@ -81,9 +86,6 @@ public class Farmer_Account extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 validateFields();
-                progressDialog.show();
-                UpdateProfile();
-                finish();
             }
         });
     }
@@ -115,20 +117,27 @@ public class Farmer_Account extends AppCompatActivity {
     }
 
     private void validateFields() {
+        name=nameInputLayout.getEditText().getText().toString().trim();
+        phoneNumber=phoneInputLayout.getEditText().getText().toString().trim();
+        password=passwordInputLayout.getEditText().getText().toString().trim();
         if(TextUtils.isEmpty(name)){
-            nameInputLayout.getEditText().setError("Name Is Required..");
+            nameInputLayout.getEditText().setError("Name is Required..");
             return;
         }if(TextUtils.isEmpty(phoneNumber)){
-            phoneInputLayout.getEditText().setError("Phone Number Required");
+            phoneInputLayout.getEditText().setError("Phone Number is  Required");
             return;
         }if(TextUtils.isEmpty(password)){
-            passwordInputLayout.getEditText().setError("Password Required");
+            passwordInputLayout.getEditText().setError("Password is Required");
             return;
         }
         if(password.length()<6){
             passwordInputLayout.getEditText().setError("Password is too short");
             return;
         }
+        nameTextView.setText(name);
+        progressDialog.show();
+        UpdateProfile();
+        finish();
     }
 
     private void getProfile() {
@@ -136,10 +145,14 @@ public class Farmer_Account extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Farmer farmer=snapshot.getValue(Farmer.class);
-                nameTextView.setText(farmer.getFarmerName());
-                passwordInputLayout.getEditText().setText(farmer.getFarmerPassword());
-                phoneInputLayout.getEditText().setText(farmer.getPhoneNumber());
-                nameInputLayout.getEditText().setText(farmer.getFarmerName());
+                assert farmer != null;
+                name=farmer.getFarmerName();
+                password=farmer.getFarmerPassword();
+                phoneNumber=farmer.getPhoneNumber();
+                nameTextView.setText(name);
+                passwordInputLayout.getEditText().setText(password);
+                phoneInputLayout.getEditText().setText(phoneNumber);
+                nameInputLayout.getEditText().setText(name);
             }
 
             @Override

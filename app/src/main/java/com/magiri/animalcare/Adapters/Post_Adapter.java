@@ -76,12 +76,12 @@ public class Post_Adapter extends RecyclerView.Adapter<Post_Adapter.MyViewHolder
             @Override
             public void onClick(View v) {
                 if (holder.likeImageView.getTag().equals("like") && holder.dislikeImageView.getTag().equals("dislike")){
-                    ref.child("likes").child(post.getPostId()).child(userID).setValue(true);
+                    ref.child("Likes").child(post.getPostId()).child(userID).setValue(true);
                 } else if (holder.likeImageView.getTag().equals("like") && holder.dislikeImageView.getTag().equals("disliked")){
-                    ref.child("dislikes").child(post.getPostId()).child(userID).removeValue();
-                    ref.child("likes").child(post.getPostId()).child(userID).setValue(true);
+                    ref.child("Dislikes").child(post.getPostId()).child(userID).removeValue();
+                    ref.child("Likes").child(post.getPostId()).child(userID).setValue(true);
                 } else {
-                    ref.child("likes").child(post.getPostId()).child(userID).removeValue();
+                    ref.child("Likes").child(post.getPostId()).child(userID).removeValue();
                 }
             }
         });
@@ -90,12 +90,12 @@ public class Post_Adapter extends RecyclerView.Adapter<Post_Adapter.MyViewHolder
             @Override
             public void onClick(View v) {
                 if (holder.dislikeImageView.getTag().equals("dislike") && holder.likeImageView.getTag().equals("like")){
-                    ref.child("dislikes").child(post.getPostId()).child(userID).setValue(true);
+                    ref.child("Dislikes").child(post.getPostId()).child(userID).setValue(true);
                 } else if (holder.dislikeImageView.getTag().equals("dislike") && holder.likeImageView.getTag().equals("liked")){
-                    ref.child("likes").child(post.getPostId()).child(userID).removeValue();
-                    ref.child("dislikes").child(post.getPostId()).child(userID).setValue(true);
+                    ref.child("Likes").child(post.getPostId()).child(userID).removeValue();
+                    ref.child("Dislikes").child(post.getPostId()).child(userID).setValue(true);
                 } else {
-                    ref.child("dislikes").child(post.getPostId()).child(userID).removeValue();
+                    ref.child("Dislikes").child(post.getPostId()).child(userID).removeValue();
                 }
             }
         });
@@ -158,18 +158,18 @@ public class Post_Adapter extends RecyclerView.Adapter<Post_Adapter.MyViewHolder
     }
 
     private void isDisliked(ImageView dislikeImageView, String postId) {
-        DatabaseReference mRef=ref.child("DisLikes").child(postId);
+        DatabaseReference mRef=ref.child("Dislikes").child(postId);
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.child(userID).exists()){
                     //todo change to liked image view
                     dislikeImageView.setImageResource(R.drawable.ic_disliked);
-                    dislikeImageView.setTag("DisLiked");
+                    dislikeImageView.setTag("disliked");
                 }
                 else{
                     dislikeImageView.setImageResource(R.drawable.ic_dislike);
-                    dislikeImageView.setTag("Dislike");
+                    dislikeImageView.setTag("dislike");
                 }
             }
 
@@ -187,11 +187,11 @@ public class Post_Adapter extends RecyclerView.Adapter<Post_Adapter.MyViewHolder
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.child(userID).exists()){
                     likeImageView.setImageResource(R.drawable.ic_liked);
-                    likeImageView.setTag("Liked");
+                    likeImageView.setTag("liked");
                 }
                 else{
                     likeImageView.setImageResource(R.drawable.ic_like);
-                    likeImageView.setTag("Like");
+                    likeImageView.setTag("like");
                 }
             }
 
