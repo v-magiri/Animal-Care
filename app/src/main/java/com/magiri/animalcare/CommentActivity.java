@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -73,8 +74,8 @@ public class CommentActivity extends AppCompatActivity {
         postImageView=findViewById(R.id.postImageView);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setReverseLayout(true);
-        linearLayoutManager.setStackFromEnd(true);
+//        linearLayoutManager.setReverseLayout(true);
+//        linearLayoutManager.setStackFromEnd(true);
         commentsRecyclerView.setLayoutManager(linearLayoutManager);
         commentsRecyclerView.setHasFixedSize(true);
 
@@ -141,11 +142,10 @@ public class CommentActivity extends AppCompatActivity {
         String commentText=messageEditTxt.getText().toString().trim();
 
         if(commentText.isEmpty()){
-            messageEditTxt.setError("Please type Comment");
-            messageEditTxt.requestFocus();
             return;
         }else{
             progressDialog.show();
+            messageEditTxt.setText("");
             addComment(commentText);
         }
     }
@@ -179,10 +179,11 @@ public class CommentActivity extends AppCompatActivity {
     }
 
     private void fetchComments() {
-        commentList.clear();
         mRef.child("Comments").child(postID).addValueEventListener(new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                commentList.clear();
                 for(DataSnapshot dataSnapshot:snapshot.getChildren()){
                     Comment comment=dataSnapshot.getValue(Comment.class);
                     commentList.add(comment);

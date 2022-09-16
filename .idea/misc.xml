@@ -10,6 +10,7 @@
         <entry key="app/src/main/res/drawable-v24/ic_disliked.xml" value="0.17" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.17" />
         <entry key="app/src/main/res/drawable-v24/ic_liked.xml" value="0.17" />
+        <entry key="app/src/main/res/drawable-v24/your_chat_item_bg.xml" value="0.17" />
         <entry key="app/src/main/res/drawable/bg_msg_you.xml" value="0.17" />
         <entry key="app/src/main/res/drawable/bottom_sheet_background.xml" value="0.17" />
         <entry key="app/src/main/res/drawable/button_background.xml" value="0.1445" />
@@ -20,6 +21,7 @@
         <entry key="app/src/main/res/drawable/ic_baseline_add_circle_24.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.17" />
+        <entry key="app/src/main/res/drawable/ic_baseline_menu_24.xml" value="0.17" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.17" />
         <entry key="app/src/main/res/drawable/image_background.xml" value="0.1445" />
         <entry key="app/src/main/res/drawable/imageview_background.xml" value="0.17" />
@@ -42,7 +44,7 @@
         <entry key="app/src/main/res/layout/activity_view_vet.xml" value="0.25" />
         <entry key="app/src/main/res/layout/bg_msg_from.xml" value="0.19270833333333334" />
         <entry key="app/src/main/res/layout/chat_adapter_layout.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/comment_layout.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/comment_layout.xml" value="0.25" />
         <entry key="app/src/main/res/layout/forum_message_layout.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/item_mine_message.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/item_other_message.xml" value="0.19375" />

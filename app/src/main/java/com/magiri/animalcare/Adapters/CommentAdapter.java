@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,6 +22,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.magiri.animalcare.Model.Comment;
 import com.magiri.animalcare.Model.Farmer;
 import com.magiri.animalcare.R;
+import com.magiri.animalcare.Session.Prevalent;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -28,11 +33,13 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
     Context context;
     List<Comment> commentList;
     DatabaseReference databaseReference;
+    String FarmerID;
 
     public CommentAdapter(Context context, List<Comment> commentList) {
         this.context = context;
         this.commentList = commentList;
         databaseReference= FirebaseDatabase.getInstance().getReference();
+        FarmerID= Prevalent.currentOnlineFarmer.getFarmerID();
     }
 
     @NonNull
@@ -44,10 +51,18 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull CommentAdapter.MyViewHolder holder, int position) {
         Comment postComment=commentList.get(position);
-        holder.dateTxt.setText(postComment.getDate());
-        holder.commentTxt.setText(postComment.getComment());
+        if(postComment.getPublisher().equals(FarmerID)){
+            holder.opponentLayout.setVisibility(View.GONE);
+            holder.myCommentTxt.setText(postComment.getComment());
+            holder.myCommentDateTxt.setText(postComment.getDate());
+        }else {
+            holder.myCommentLayout.setVisibility(View.GONE);
+            holder.publisherDateTxt.setText(postComment.getDate());
+            holder.publisherCommentTxt.setText(postComment.getComment());
+            setPublisherDetails(holder.publisherImageView,holder.publisherNameTxt,postComment.getPublisher());
+        }
 
-        setPublisherDetails(holder.publisherImageView,holder.publisherNameTxt,postComment.getPublisher());
+
     }
 
     private void setPublisherDetails(ImageView publisherImageView, TextView publisherNameTxt, String publisher) {
@@ -77,13 +92,19 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
     }
     protected class MyViewHolder extends RecyclerView.ViewHolder{
         private final ImageView publisherImageView;
-        private final TextView publisherNameTxt,commentTxt,dateTxt;
+        private final TextView publisherNameTxt,publisherCommentTxt,publisherDateTxt;
+        private final TextView myCommentTxt,myCommentDateTxt;
+        private final RelativeLayout opponentLayout,myCommentLayout;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             publisherImageView=itemView.findViewById(R.id.publisherProfilePic);
             publisherNameTxt=itemView.findViewById(R.id.publisherNameTxt);
-            commentTxt=itemView.findViewById(R.id.commentTxt);
-            dateTxt=itemView.findViewById(R.id.commentDateTxt);
+            publisherCommentTxt=itemView.findViewById(R.id.publisherCommentTxt);
+            publisherDateTxt=itemView.findViewById(R.id.dateText);
+            myCommentLayout=itemView.findViewById(R.id.myCommentLayout);
+            opponentLayout=itemView.findViewById(R.id.publisherCommentLayout);
+            myCommentDateTxt=itemView.findViewById(R.id.chatDateTxt);
+            myCommentTxt=itemView.findViewById(R.id.myCommentTxt);
         }
     }
 

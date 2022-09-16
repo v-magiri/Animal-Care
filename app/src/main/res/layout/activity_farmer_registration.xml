@@ -30,6 +30,7 @@
             android:layout_marginTop="50dp"
             android:hint="@string/FullName"
             android:id="@+id/fullNameEditTxt"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:textColorHint="@color/black">
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -41,6 +42,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:textColorHint="@color/black"
             android:hint="@string/PhoneNumber"
             android:id="@+id/phoneNumberEditTxt"
@@ -55,6 +57,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:textColorHint="@color/black"
             android:hint="@string/Password"
             android:id="@+id/passwordEditTxt"

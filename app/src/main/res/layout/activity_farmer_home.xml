@@ -18,7 +18,7 @@
                 android:id="@+id/animalCareMaterialToolbar"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/animalCareBackground"
-                app:navigationIcon="@drawable/ic_menu"
+                app:navigationIcon="@drawable/ic_baseline_menu_24"
                 app:titleTextColor="@color/white"
                 app:title="@string/app_name"/>
         </com.google.android.material.appbar.AppBarLayout>
@@ -40,17 +40,19 @@
                     app:civ_border_color="@color/white"
                     app:civ_border_width="4dp"
                     android:id="@+id/farmerProfilePic"/>
+
                 <TextView
+                    android:id="@+id/clientNameTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="John Doe"
-                    android:layout_toRightOf="@+id/farmerProfilePic"
-                    android:layout_marginVertical="20dp"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
                     android:layout_marginHorizontal="10dp"
+                    android:layout_marginVertical="20dp"
+                    android:layout_toRightOf="@+id/farmerProfilePic"
+                    android:text="John Doe"
+                    android:padding="5dp"
                     android:textColor="@color/black"
-                    android:id="@+id/clientNameTxt"/>
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
             </RelativeLayout>
             <ImageView
                 android:layout_width="match_parent"
