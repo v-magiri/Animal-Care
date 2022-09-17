@@ -2,8 +2,10 @@ package com.magiri.animalcare;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -23,6 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.magiri.animalcare.Adapters.ChatAdapter;
+import com.magiri.animalcare.Adapters.VetClientChatAdapter;
 import com.magiri.animalcare.Model.Chat;
 import com.magiri.animalcare.Model.ChatMemory;
 import com.magiri.animalcare.Session.Prevalent;
@@ -36,10 +39,11 @@ public class FarmerVet_Chat extends AppCompatActivity {
     private static final String TAG = "FarmerVet_Chat";
     private FloatingActionButton sendFAB;
     private EditText messageEditTxt;
-    private ListView chatRecyclerView;
+    private RecyclerView chatRecyclerView;
     private MaterialToolbar chatMaterialToolbar;
     private List<Chat> chatList;
-    private ChatAdapter chatAdapter;
+//    private ChatAdapter chatAdapter;
+    private VetClientChatAdapter clientChatAdapter;
     private DatabaseReference databaseReference;
     String currentTimeStamp;
     String Reg_Num,vetName,FarmerID;
@@ -53,11 +57,14 @@ public class FarmerVet_Chat extends AppCompatActivity {
         chatMaterialToolbar=findViewById(R.id.chatMaterialToolbar);
         messageEditTxt=findViewById(R.id.et_message);
         chatRecyclerView=findViewById(R.id.chatRecyclerView);
+        chatRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        chatRecyclerView.setHasFixedSize(true);
         sendFAB=findViewById(R.id.btn_send);
         chatList=new ArrayList<>();
-        chatAdapter=new ChatAdapter(this,chatList);
+//        chatAdapter=new ChatAdapter(this,chatList);
         databaseReference= FirebaseDatabase.getInstance().getReference("Chats");
-        chatRecyclerView.setAdapter(chatAdapter);
+        clientChatAdapter=new VetClientChatAdapter(this,chatList);
+        chatRecyclerView.setAdapter(clientChatAdapter);
         FarmerID=Prevalent.currentOnlineFarmer.getFarmerID();
 
         chatMaterialToolbar.setTitle(vetName);
@@ -75,11 +82,12 @@ public class FarmerVet_Chat extends AppCompatActivity {
                 }
                 saveMessage(message);
                 messageEditTxt.setText("");
-                chatRecyclerView.setSelection(chatAdapter.getCount()-1);
+                chatRecyclerView.scrollToPosition(chatList.size()-1);
             }
         });
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void saveMessage(String message) {
         currentTimeStamp= DateFormat.getInstance().format(new Date());
         final DatabaseReference ref;
@@ -93,7 +101,7 @@ public class FarmerVet_Chat extends AppCompatActivity {
         databaseReference.child(FarmerID).child("Messages").child(chatID).setValue(chat).addOnCompleteListener(task -> {
             if(task.isSuccessful()){
                 chatList.add(chat);
-                chatAdapter.notifyDataSetChanged();
+                clientChatAdapter.notifyDataSetChanged();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -107,15 +115,18 @@ public class FarmerVet_Chat extends AppCompatActivity {
     private void getMessages() {
         String FarmerID=Prevalent.currentOnlineFarmer.getFarmerID();
         databaseReference.child(FarmerID).child("Messages").addValueEventListener(new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                chatList.clear();
                 for(DataSnapshot dataSnapshot:snapshot.getChildren()){
                     Chat chat=dataSnapshot.getValue(Chat.class);
+                    assert chat != null;
                     if(chat.getFarmerID().equals(FarmerID)){
                         chatList.add(chat);
                     }
                 }
-                chatAdapter.notifyDataSetChanged();
+                clientChatAdapter.notifyDataSetChanged();
             }
 
             @Override

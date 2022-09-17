@@ -18,14 +18,15 @@
             app:titleTextColor="@color/white"
             android:id="@+id/materialToolBar"/>
     </com.google.android.material.appbar.AppBarLayout>
-    <ImageView
-        android:layout_width="match_parent"
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/vetProfilePic"
+        android:layout_width="150dp"
         android:layout_height="150dp"
-        android:src="@drawable/ic_vet"
-        android:layout_marginVertical="10dp"
-        android:scaleType="centerInside"
         android:layout_below="@+id/viewVetAppBar"
-        android:id="@+id/vetProfilePic"/>
+        android:layout_marginVertical="10dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_vet" />
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -91,10 +92,10 @@
                 android:padding="3dp">
 
                 <ImageView
+                    android:id="@+id/viewVetLocationImageView"
                     android:layout_width="16dp"
                     android:layout_height="16dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
+                    android:layout_centerInParent="true"
                     android:padding="2dp"
                     android:src="@drawable/ic_forward" />
             </RelativeLayout>

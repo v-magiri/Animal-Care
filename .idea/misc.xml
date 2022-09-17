@@ -56,9 +56,10 @@
         <entry key="app/src/main/res/layout/post_layout.xml" value="0.25" />
         <entry key="app/src/main/res/layout/profile_header.xml" value="0.19270833333333334" />
         <entry key="app/src/main/res/layout/request_visit_bottom_sheet.xml" value="0.19375" />
-        <entry key="app/src/main/res/layout/right_row_chat.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/right_row_chat.xml" value="0.2" />
         <entry key="app/src/main/res/layout/row_chat_message.xml" value="0.25" />
         <entry key="app/src/main/res/layout/vet_around_layout.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/vet_client_chat_layout.xml" value="0.19270833333333334" />
         <entry key="app/src/main/res/menu/navigation_menu.xml" value="0.33" />
       </map>
     </option>

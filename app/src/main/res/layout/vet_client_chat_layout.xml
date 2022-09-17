@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:id="@+id/opponentMessageLayout"
+            android:layout_marginEnd="50dp"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/opponentArrowTxt"
+                android:background="@drawable/bg_msg_from"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/opponentMessage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_msg_from"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="5dp"
+                    android:textColor="#ff717171"
+                    android:textSize="16sp"
+                    android:text="Hello"
+                    android:layout_marginEnd="50dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/opponentDateTxt"
+                    android:layout_gravity="end"
+                    android:text="25-01-2012"
+                    android:padding="5dp"
+                    android:textSize="14sp"
+                    android:textStyle="italic"
+                    android:textColor="#ff717171"/>
+
+
+            </LinearLayout>
+            <TextView
+                android:id="@+id/opponentArrowTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/triangle_msg_from"
+                android:paddingRight="10dp"
+                android:textColor="#ffffff"
+                android:textSize="16dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="2dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="3dp" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
+            android:id="@+id/yourMessageLayout"
+            android:layout_marginStart="50dp"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_toStartOf="@+id/textView27"
+                android:background="@drawable/bg_msg_you">
+                <TextView
+                    android:id="@+id/yourChatTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="5dp"
+                    android:textColor="#ffffff"
+                    android:textSize="16sp"
+                    android:text="Hello"
+                    />
+                <TextView
+                    android:id="@+id/yourChatDateTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:paddingHorizontal="10dp"
+                    android:text="25-01-2012"
+                    android:textColor="#ffffff"
+                    android:paddingVertical="5dp"
+                    android:textSize="14sp"
+                    android:textStyle="italic"
+                    android:layout_marginStart="5dp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView27"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/triangle_msg_you"
+                android:paddingRight="10dp"
+                android:textColor="#ffffff"
+                android:textSize="16sp"
+                android:paddingLeft="10dp"
+                android:paddingTop="2dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="3dp" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

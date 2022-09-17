@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <color name="animalCareBackground">#20a7db</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
@@ -14,4 +14,5 @@
     <color name="theme_color_8">#142176FF</color>
     <color name="theme_color">#2176FF</color>
     <color name="light_8">#14000000</color>
+    <color name="text_input_stroke_color" tools:override="true">#20a7db</color>
 </resources>

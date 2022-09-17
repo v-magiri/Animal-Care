@@ -2,6 +2,7 @@ package com.magiri.animalcare;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -36,11 +37,13 @@ import com.magiri.animalcare.Session.Prevalent;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ViewVet extends AppCompatActivity {
     private static final String TAG = "View Vet";
     private ListView skillListView;
     private RelativeLayout forwardRelativeLayout;
-    private ImageView profilePic;
+    private CircleImageView profilePic;
     private TextView nameTextView,locationTextView,visitationFeeTextView;
     private Button consultBtn,requestBtn;
     String RegNum,visitationCharges;
@@ -52,6 +55,7 @@ public class ViewVet extends AppCompatActivity {
     ProgressDialog progressDialog;
     private DatabaseReference mRef;
     private BottomSheetDialog bottomSheetDialog;
+    private String vetLocation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,7 +132,10 @@ public class ViewVet extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // let the user view the vet on  maps
-
+                Uri mapUri= Uri.parse("google.navigation:q="+vetLocation);
+                Intent mapIntent=new Intent(Intent.ACTION_VIEW,mapUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                startActivity(mapIntent);
             }
         });
     }
@@ -202,6 +209,9 @@ public class ViewVet extends AppCompatActivity {
                 locationTextView.setText(location);
                 VetName=vet.getName();
                 nameTextView.setText(VetName);
+                String vetLatitude=snapshot.child("Location").child("Latitude").getValue(String.class);
+                String vetLongitude=snapshot.child("Longitude").child("Longitude").getValue(String.class);
+                vetLocation=vetLatitude+","+vetLongitude;
                 if(!vet.getProfilePicUrl().equals("")){
                     Glide.with(ViewVet.this).load(vet.getProfilePicUrl()).into(profilePic);
                 }else{

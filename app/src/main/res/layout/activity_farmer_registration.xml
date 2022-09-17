@@ -21,8 +21,7 @@
             android:layout_height="wrap_content"
             android:text="Register"
             android:textAlignment="center"
-            android:textSize="24sp"
-            android:textStyle="bold"
+            android:textSize="32sp"
             android:textColor="@color/black"/>
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -30,8 +29,9 @@
             android:layout_marginTop="50dp"
             android:hint="@string/FullName"
             android:id="@+id/fullNameEditTxt"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:textColorHint="@color/black">
+            app:hintTextColor="#454545"
+            app:boxStrokeColor="@color/text_input_stroke_color"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -43,7 +43,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:textColorHint="@color/black"
+            app:hintTextColor="#454545"
+            app:boxStrokeColor="@color/text_input_stroke_color"
             android:hint="@string/PhoneNumber"
             android:id="@+id/phoneNumberEditTxt"
             android:layout_marginTop="10dp">
@@ -58,8 +59,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:textColorHint="@color/black"
             android:hint="@string/Password"
+            app:hintTextColor="#454545"
+            app:boxStrokeColor="@color/text_input_stroke_color"
             android:id="@+id/passwordEditTxt"
             app:endIconMode="password_toggle"
             android:layout_marginTop="10dp">

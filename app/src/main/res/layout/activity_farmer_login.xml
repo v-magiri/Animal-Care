@@ -35,9 +35,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/PhoneNumber"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:textColorHint="@color/black"
-                app:boxStrokeWidth="3dp"
-                app:boxStrokeColor="@color/theme_color"
+                app:hintTextColor="#454545"
+                app:boxStrokeColor="@color/text_input_stroke_color"
                 android:id="@+id/farmerPhoneEditTxt"
                 android:layout_marginTop="10dp">
                 <com.google.android.material.textfield.TextInputEditText
@@ -49,12 +48,11 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorHint="@color/black"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:hint="@string/Password"
                 app:endIconMode="password_toggle"
-                app:boxStrokeColor="@color/theme_color"
-                app:boxStrokeWidth="3dp"
+                app:hintTextColor="#454545"
+                app:boxStrokeColor="@color/text_input_stroke_color"
                 android:id="@+id/farmerPassWordEditTxt"
                 android:layout_marginTop="10dp">
                 <com.google.android.material.textfield.TextInputEditText

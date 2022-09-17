@@ -17,10 +17,11 @@
             app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
             android:id="@+id/chatMaterialToolbar"/>
     </com.google.android.material.appbar.AppBarLayout>
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/chatRecyclerView"
+        android:layout_marginBottom="20dp"
         android:layout_below="@+id/chat_appBar"/>
     <LinearLayout
         android:id="@+id/send_message_layout"
