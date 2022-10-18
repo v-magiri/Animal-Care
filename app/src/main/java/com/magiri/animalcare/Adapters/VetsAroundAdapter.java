@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -34,9 +36,10 @@ import com.magiri.animalcare.R;
 import com.magiri.animalcare.Session.Prevalent;
 import com.magiri.animalcare.ViewVet;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class VetsAroundAdapter extends RecyclerView.Adapter<VetsAroundAdapter.MyViewHolder>{
+public class VetsAroundAdapter extends RecyclerView.Adapter<VetsAroundAdapter.MyViewHolder> implements Filterable {
     private static final String TAG = "VetsAroundAdapter";
     Context context;
     List<Veterinarian> veterinarianList;
@@ -49,6 +52,7 @@ public class VetsAroundAdapter extends RecyclerView.Adapter<VetsAroundAdapter.My
     private static DatabaseReference mRef;
     ProgressDialog progressDialog;
     BottomSheetDialog bottomSheetDialog;
+    List<Veterinarian> vetList;
 
     public VetsAroundAdapter(Context context, List<Veterinarian> veterinarianList) {
         this.context = context;
@@ -62,6 +66,7 @@ public class VetsAroundAdapter extends RecyclerView.Adapter<VetsAroundAdapter.My
         progressDialog.setTitle("Please Wait");
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setMessage("Saving Request in the System");
+        vetList=new ArrayList<>(veterinarianList);
     }
 
     @NonNull
@@ -196,6 +201,36 @@ public class VetsAroundAdapter extends RecyclerView.Adapter<VetsAroundAdapter.My
         return veterinarianList.size();
     }
 
+    @Override
+    public Filter getFilter() {
+        return vetFilter;
+    }
+    private final Filter vetFilter=new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Veterinarian> filterVets=new ArrayList<>();
+            if(constraint == null || constraint.length()==0 ){
+                filterVets.addAll(vetList);
+            }else{
+                String searchText=constraint.toString().toLowerCase();
+                for(Veterinarian vet:vetList){
+                    if(vet.getName().toLowerCase().contains(searchText)){
+                        filterVets.add(vet);
+                    }
+                }
+            }
+            FilterResults results=new FilterResults();
+            results.values=filterVets;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            veterinarianList.clear();
+            veterinarianList.addAll((List)results.values);
+            notifyDataSetChanged();
+        }
+    };
 
     protected class MyViewHolder extends RecyclerView.ViewHolder{
         private final ImageView vetProfilePic;

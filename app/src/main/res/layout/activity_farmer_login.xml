@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_image_one_signup"
     tools:context=".FarmerLogin">
     <ScrollView
         android:layout_width="match_parent"
@@ -29,7 +30,7 @@
                 android:textSize="40sp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="50dp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/white"/>
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

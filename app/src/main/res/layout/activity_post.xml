@@ -49,28 +49,31 @@
             android:background="@drawable/post_background"/>
 
     </RelativeLayout>
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_below="@+id/postActionsLayout"
-        android:orientation="horizontal"
         android:id="@+id/topicLayout"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/postActionsLayout"
+        android:orientation="horizontal">
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="32dp"
             android:layout_height="32dp"
+            android:layout_gravity="center_vertical"
             android:layout_marginHorizontal="5dp"
-            android:src="@drawable/ic_farmer"
-            android:layout_gravity="center_vertical"/>
+            android:src="@drawable/ic_farmer" />
+
         <Spinner
+            android:id="@+id/topicsSpinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_margin="10dp"
+            android:background="@color/accent"
             android:entries="@array/topic"
             android:padding="5dp"
-            android:id="@+id/topicsSpinner"
-            android:layout_gravity="center_vertical"
-            android:popupBackground="@color/accent"
-            android:background="@color/accent"/>
+            android:popupBackground="@color/accent" />
     </LinearLayout>
     <ScrollView
         android:layout_width="match_parent"
@@ -122,6 +125,7 @@
             android:layout_weight="1"
             android:src="@drawable/ic_video_insert"
             android:id="@+id/videoAttachImg"
+            android:visibility="invisible"
             android:layout_marginHorizontal="10dp"
             android:layout_margin="5dp"/>
         <ImageView
@@ -129,6 +133,7 @@
             android:layout_height="32dp"
             android:src="@drawable/ic_audio"
             android:layout_weight="1"
+            android:visibility="invisible"
             android:id="@+id/audioAttachImg"
             android:layout_marginHorizontal="10dp"
             android:layout_margin="5dp"/>

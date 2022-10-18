@@ -129,4 +129,6 @@ public class FarmerHome extends AppCompatActivity {
         drawerLayout.closeDrawer(GravityCompat.START);
     }
 
+    //todo user home to display the veterinary around the customer
+
 }

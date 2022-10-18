@@ -25,6 +25,7 @@
     <string name="request_visit" translatable="false">Invite Vet</string>
     <string name="receiverMessage" translatable="false">This is the meesage from the reciever</string>
     <string name="done_after" translatable="false">To be Done After Progess</string>
+    <string name="searchVet" translatable="false">Search Vet</string>
 
     //string for spinner
     <string-array name="topic">

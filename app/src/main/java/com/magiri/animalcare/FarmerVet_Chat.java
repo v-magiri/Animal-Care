@@ -100,7 +100,7 @@ public class FarmerVet_Chat extends AppCompatActivity {
         databaseReference.child(FarmerID).child("Vet").setValue(Reg_Num);
         databaseReference.child(FarmerID).child("Messages").child(chatID).setValue(chat).addOnCompleteListener(task -> {
             if(task.isSuccessful()){
-                chatList.add(chat);
+//                chatList.add(chat);
                 clientChatAdapter.notifyDataSetChanged();
             }
         }).addOnFailureListener(new OnFailureListener() {

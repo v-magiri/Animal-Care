@@ -25,6 +25,7 @@ import com.essam.simpleplacepicker.utils.SimplePlacePicker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -54,6 +55,7 @@ public class ViewVet extends AppCompatActivity {
     private static String []mSupportedAreas={""};
     ProgressDialog progressDialog;
     private DatabaseReference mRef;
+    private MaterialToolbar materialToolbar;
     private BottomSheetDialog bottomSheetDialog;
     private String vetLocation;
     @Override
@@ -69,6 +71,7 @@ public class ViewVet extends AppCompatActivity {
         visitationFeeTextView=findViewById(R.id.visitationFeeTextView);
         consultBtn=findViewById(R.id.consultBtn);
         requestBtn=findViewById(R.id.visitBtn);
+        materialToolbar=findViewById(R.id.materialToolBar);
 
         Country="Kenya";
         Language="English";
@@ -77,6 +80,12 @@ public class ViewVet extends AppCompatActivity {
         progressDialog.setMessage("Please Wait, while we save your Request");
         progressDialog.setCanceledOnTouchOutside(false);
         mRef=FirebaseDatabase.getInstance().getReference("VisitRequest");
+        materialToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         RegNum=getIntent().getStringExtra("Vet_RegNum");
         fetchData(RegNum);
@@ -100,8 +109,12 @@ public class ViewVet extends AppCompatActivity {
                 Button cancelBtn=bottomSheetDialog.findViewById(R.id.cancelBtn);
                 Button OkBtn=bottomSheetDialog.findViewById(R.id.okStatusBtn);
                 ImageView locationPickerImageView=bottomSheetDialog.findViewById(R.id.pickLocationImageView);
+                TextView feeTxt=bottomSheetDialog.findViewById(R.id.vetVisitationFeeTxt);
+                Button payBtn=bottomSheetDialog.findViewById(R.id.payBtn);
 
                 vetNameTextView.setText(VetName);
+                feeTxt.setText(visitationCharges);
+
                 locationPickerImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -113,6 +126,12 @@ public class ViewVet extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         bottomSheetDialog.dismiss();
+                    }
+                });
+                payBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        makePayment();
                     }
                 });
                 OkBtn.setOnClickListener(new View.OnClickListener() {
@@ -139,6 +158,11 @@ public class ViewVet extends AppCompatActivity {
             }
         });
     }
+
+    private void makePayment() {
+
+    }
+
     private void SelectLocation() {
         Intent intent = new Intent(this, MapActivity.class);
         Bundle bundle = new Bundle();
