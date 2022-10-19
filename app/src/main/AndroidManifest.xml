@@ -45,7 +45,7 @@
             android:name=".FarmerRecords"
             android:exported="false" />
         <activity
-            android:name=".Vets_Around"
+            android:name=".Home"
             android:exported="true" />
         <activity
             android:name=".FarmerHome"

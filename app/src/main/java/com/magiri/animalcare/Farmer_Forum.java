@@ -51,7 +51,7 @@ public class Farmer_Forum extends AppCompatActivity {
         materialToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),FarmerHome.class));
+                startActivity(new Intent(getApplicationContext(),Home.class));
                 finish();
             }
         });

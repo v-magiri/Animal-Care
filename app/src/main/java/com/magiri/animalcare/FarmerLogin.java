@@ -42,7 +42,7 @@ public class FarmerLogin extends AppCompatActivity {
         setContentView(R.layout.activity_farmer_login);
         initView();
         if(Prevalent.currentOnlineFarmer!=null){
-            Intent intent=new Intent(FarmerLogin.this,FarmerHome.class);
+            Intent intent=new Intent(FarmerLogin.this,Home.class);
             startActivity(intent);
             finish();
         }
@@ -111,7 +111,7 @@ public class FarmerLogin extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(),"Welcome "+farmerData.getFarmerName(),Toast.LENGTH_SHORT).show();
 
                             //redirect user to login activity
-                            Intent intent=new Intent(getApplicationContext(),FarmerHome.class);
+                            Intent intent=new Intent(getApplicationContext(),Home.class);
                             Session.getInstance(FarmerLogin.this).FarmerLogin(FarmerID,farmerData.getFarmerName());
                             Prevalent.currentOnlineFarmer=farmerData;
                             startActivity(intent);

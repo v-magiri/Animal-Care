@@ -1,15 +1,5 @@
 package com.magiri.animalcare;
 
-import static android.Manifest.permission.ACCESS_FINE_LOCATION;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -17,21 +7,28 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Looper;
 import android.provider.Settings;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.essam.simpleplacepicker.utils.SimplePlacePicker;
 import com.firebase.geofire.GeoFire;
@@ -39,28 +36,25 @@ import com.firebase.geofire.GeoLocation;
 import com.firebase.geofire.GeoQuery;
 import com.firebase.geofire.GeoQueryEventListener;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.magiri.animalcare.Adapters.VetsAroundAdapter;
-import com.magiri.animalcare.Model.MyLocationListener;
 import com.magiri.animalcare.Model.Veterinarian;
+import com.magiri.animalcare.Session.Prevalent;
+import com.magiri.animalcare.Session.Session;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Vets_Around extends AppCompatActivity {
+public class Home extends AppCompatActivity {
     private static final String TAG = "Vets Around";
     private RecyclerView vetsAroundRecyclerView;
     List<Veterinarian> veterinarianList;
@@ -68,18 +62,26 @@ public class Vets_Around extends AppCompatActivity {
     private DatabaseReference mRef, ref;
     Double farmerLocationLatitude;
     Double farmerLocationLongitude;
+    private DrawerLayout drawerLayout;;
     private MaterialSearchBar materialSearchBar;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private final int LOCATION_PERMISSION_CODE=123;
     private final int BACKGROUND_LOCATION_PERMISSION_CODE=124;
+    private MaterialToolbar materialToolbar;
+    private NavigationView navigationView;
+    private ImageView closeDrawerImageView,headerProfilePic;
+    private TextView nameTxt,headerFarmerNameTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_vets_around);
+        setContentView(R.layout.activity_home);
 
         vetsAroundRecyclerView = findViewById(R.id.vetsAroundRecyclerView);
-        materialSearchBar=findViewById(R.id.searchBar);
+//        materialSearchBar=findViewById(R.id.searchBar);
+        drawerLayout=findViewById(R.id.drawerLayout);
+        materialToolbar=findViewById(R.id.vetMaterialToolBar);
+        setSupportActionBar(materialToolbar);
         veterinarianList = new ArrayList<>();
         fusedLocationProviderClient=LocationServices.getFusedLocationProviderClient(this);
 
@@ -87,25 +89,84 @@ public class Vets_Around extends AppCompatActivity {
         vetsAroundRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRef = FirebaseDatabase.getInstance().getReference("Veterinarian");
         ref = FirebaseDatabase.getInstance().getReference("Geofire");
+        navigationView=findViewById(R.id.navigationView);
+        View header=navigationView.getHeaderView(0);
+        headerFarmerNameTxt=header.findViewById(R.id.FarmerNameTxt);
+        headerProfilePic=header.findViewById(R.id.profilePic);
 
-        fetchLocation();
+//        nameTxt.setText(Session.getInstance(this).getFarmerName());
+        headerFarmerNameTxt.setText(Session.getInstance(this).getFarmerName());
 
-        materialSearchBar.addTextChangeListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        closeDrawerImageView=header.findViewById(R.id.imgClose);
 
+        materialToolbar.setNavigationOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
+
+        closeDrawerImageView.setOnClickListener(v -> closeNavigationDrawer());
+        navigationView.setNavigationItemSelectedListener(item -> {
+            switch(item.getItemId()){
+                case R.id.home:
+                    closeNavigationDrawer();
+                    break;
+                case R.id.account:
+                    startActivity(new Intent(Home.this,Farmer_Account.class));
+                    closeNavigationDrawer();
+//                    finish();
+                    break;
+                case R.id.forumChat:
+                    startActivity(new Intent(Home.this,Farmer_Forum.class));
+                    closeNavigationDrawer();
+//                    finish();
+                    break;
+                case R.id.record:
+                    startActivity(new Intent(Home.this,FarmerRecords.class));
+                    closeNavigationDrawer();
+//                    finish();
+                    break;
+                case R.id.logout:
+                    SignoutUser();
+                    closeNavigationDrawer();
+                    break;
             }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                vetsAroundAdapter.getFilter().filter(s.toString());
-            }
+            return false;
         });
+        fetchLocation();
+//        materialSearchBar.addTextChangeListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                vetsAroundAdapter.getFilter().filter(s.toString());
+//            }
+//        });
+//        materialSearchBar.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                int id=v.getId();
+//                if(id== com.mancj.materialsearchbar.R.id.mt_nav){
+//                    Log.d(TAG, "onClick: Nav Icon Clicked");
+//                }
+//            }
+//        });
+    }
+
+    private void SignoutUser() {
+        //redirect the user to loginActivity
+        startActivity(new Intent(Home.this,FarmerLogin.class));
+        Session.getInstance(Home.this).logout();
+        Prevalent.currentOnlineFarmer=null;
+        finish();
+    }
+
+    private void closeNavigationDrawer() {
+        drawerLayout.closeDrawer(GravityCompat.START);
     }
 
     @SuppressLint("MissingPermission")
@@ -130,11 +191,11 @@ public class Vets_Around extends AppCompatActivity {
     }
 
     private void checkLocationPermission() {
-        if (ContextCompat.checkSelfPermission(Vets_Around.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(Home.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             // Fine Location permission is granted
             // Check if current android version >= 11, if >= 11 check for Background Location permission
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                if (ContextCompat.checkSelfPermission(Vets_Around.this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(Home.this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     // Background Location Permission is granted so do your work here
                 } else {
                     // Ask for Background Location Permission
@@ -148,14 +209,14 @@ public class Vets_Around extends AppCompatActivity {
     }
 
     private void askForLocationPermission() {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(Vets_Around.this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(Home.this, Manifest.permission.ACCESS_FINE_LOCATION)) {
             new AlertDialog.Builder(this)
                     .setTitle("Permission Needed!")
                     .setMessage("Location Permission Needed!")
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            ActivityCompat.requestPermissions(Vets_Around.this,
+                            ActivityCompat.requestPermissions(Home.this,
                                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_CODE);
                         }
                     })
@@ -173,14 +234,14 @@ public class Vets_Around extends AppCompatActivity {
     }
 
     private void askPermissionForBackgroundUsage() {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(Vets_Around.this, Manifest.permission.ACCESS_BACKGROUND_LOCATION)) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(Home.this, Manifest.permission.ACCESS_BACKGROUND_LOCATION)) {
             new AlertDialog.Builder(this)
                     .setTitle("Permission Needed!")
                     .setMessage("Background Location Permission Needed!, tap \"Allow all time in the next screen\"")
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            ActivityCompat.requestPermissions(Vets_Around.this,
+                            ActivityCompat.requestPermissions(Home.this,
                                     new String[]{Manifest.permission.ACCESS_BACKGROUND_LOCATION}, BACKGROUND_LOCATION_PERMISSION_CODE);
                         }
                     })
@@ -210,7 +271,7 @@ public class Vets_Around extends AppCompatActivity {
                 // User granted location permission
                 // Now check if android version >= 11, if >= 11 check for Background Location Permission
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                    if (ContextCompat.checkSelfPermission(Vets_Around.this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(Home.this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                         // Background Location Permission is granted so do your work here
                         fetchLocation();
                     } else {
@@ -244,7 +305,7 @@ public class Vets_Around extends AppCompatActivity {
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             Veterinarian vet=snapshot.getValue(Veterinarian.class);
                             veterinarianList.add(vet);
-                            vetsAroundAdapter=new VetsAroundAdapter(Vets_Around.this,veterinarianList);
+                            vetsAroundAdapter=new VetsAroundAdapter(Home.this,veterinarianList);
                             vetsAroundRecyclerView.setAdapter(vetsAroundAdapter);
                         }
 
@@ -289,5 +350,29 @@ public class Vets_Around extends AppCompatActivity {
             String longitude=String.valueOf(data.getDoubleExtra(SimplePlacePicker.LOCATION_LNG_EXTRA,-1));
             vetsAroundAdapter.UpdateLocation(locationAddress,latitude,longitude);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.vet_menu,menu);
+        MenuItem menuItem=menu.findItem(R.id.app_bar_search);
+
+        SearchView searchView= (SearchView) menuItem.getActionView();
+        searchView.setQueryHint("Search Vets");
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                vetsAroundAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+        return true;
     }
 }

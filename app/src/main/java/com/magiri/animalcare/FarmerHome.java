@@ -1,14 +1,11 @@
 package com.magiri.animalcare;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -61,7 +58,7 @@ public class FarmerHome extends AppCompatActivity {
 //            finish();
         });
         searchCard.setOnClickListener(v -> {
-            startActivity(new Intent(getApplicationContext(),Vets_Around.class));
+            startActivity(new Intent(getApplicationContext(), Home.class));
 //            finish();
         });
         herdLayout.setOnClickListener(v -> {
