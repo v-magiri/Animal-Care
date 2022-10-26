@@ -41,6 +41,9 @@ public class FarmerLogin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_farmer_login);
         initView();
+        phoneNumberLayout.getEditText().setText("0745236985");
+        passwordLayout.getEditText().setText("123456789");
+
         if(Prevalent.currentOnlineFarmer!=null){
             Intent intent=new Intent(FarmerLogin.this,Home.class);
             startActivity(intent);

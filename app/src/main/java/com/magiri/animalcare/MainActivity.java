@@ -1,28 +1,25 @@
 package com.magiri.animalcare;
 
-import static android.content.ContentValues.TAG;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.Manifest;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.android.material.appbar.MaterialToolbar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.DexterError;
 import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import java.util.List;
@@ -56,34 +53,43 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                AskPermission();
-                Intent intent=new Intent(MainActivity.this,FarmerLogin.class);
-                startActivity(intent);
-                finish();
-            }
-        },3500);
+        AskPermission();
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                Intent intent=new Intent(MainActivity.this,FarmerLogin.class);
+//                startActivity(intent);
+//                finish();
+//            }
+//        },3500);
     }
 
     private void AskPermission() {
-        Dexter.withContext(this)
+        Dexter.withContext(MainActivity.this)
                 .withPermissions(Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.ACCESS_COARSE_LOCATION)
-                .withListener(new MultiplePermissionsListener(){
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.ACCESS_FINE_LOCATION)
+                .withListener(new MultiplePermissionsListener() {
                     @Override
                     public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
                         if(multiplePermissionsReport.areAllPermissionsGranted()){
-//                            PermissionGranted=true;
-                            Log.e(TAG, "onPermissionsChecked: Permission Granted");
-                        }else if(multiplePermissionsReport.isAnyPermissionPermanentlyDenied()){
+                            Intent intent=new Intent(MainActivity.this,FarmerLogin.class);
+                            startActivity(intent);
+                            finish();
+                        }else{
+                            Toast.makeText(getApplicationContext(),"Please allow all app Permissions",Toast.LENGTH_SHORT).show();
                             showSettingsDialog();
                         }
                     }
+
                     @Override
                     public void onPermissionRationaleShouldBeShown(List<PermissionRequest> list, PermissionToken permissionToken) {
                         permissionToken.continuePermissionRequest();
+                    }
+                }).withErrorListener(new PermissionRequestErrorListener() {
+                    @Override
+                    public void onError(DexterError dexterError) {
+                        Log.e("Dexter", "There was an error : "+dexterError.toString());
                     }
                 }).check();
     }

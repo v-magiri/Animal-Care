@@ -62,7 +62,7 @@ public class Home extends AppCompatActivity {
     private DatabaseReference mRef, ref;
     Double farmerLocationLatitude;
     Double farmerLocationLongitude;
-    private DrawerLayout drawerLayout;;
+    private DrawerLayout drawerLayout;
     private MaterialSearchBar materialSearchBar;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private final int LOCATION_PERMISSION_CODE=123;
@@ -70,7 +70,7 @@ public class Home extends AppCompatActivity {
     private MaterialToolbar materialToolbar;
     private NavigationView navigationView;
     private ImageView closeDrawerImageView,headerProfilePic;
-    private TextView nameTxt,headerFarmerNameTxt;
+    private TextView headerFarmerNameTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,9 +92,9 @@ public class Home extends AppCompatActivity {
         navigationView=findViewById(R.id.navigationView);
         View header=navigationView.getHeaderView(0);
         headerFarmerNameTxt=header.findViewById(R.id.FarmerNameTxt);
+        vetsAroundAdapter=new VetsAroundAdapter(Home.this,veterinarianList);
+        vetsAroundRecyclerView.setAdapter(vetsAroundAdapter);
         headerProfilePic=header.findViewById(R.id.profilePic);
-
-//        nameTxt.setText(Session.getInstance(this).getFarmerName());
         headerFarmerNameTxt.setText(Session.getInstance(this).getFarmerName());
 
         closeDrawerImageView=header.findViewById(R.id.imgClose);
@@ -157,22 +157,30 @@ public class Home extends AppCompatActivity {
 //        });
     }
 
-    private void SignoutUser() {
-        //redirect the user to loginActivity
-        startActivity(new Intent(Home.this,FarmerLogin.class));
-        Session.getInstance(Home.this).logout();
-        Prevalent.currentOnlineFarmer=null;
-        finish();
-    }
-
-    private void closeNavigationDrawer() {
-        drawerLayout.closeDrawer(GravityCompat.START);
-    }
-
     @SuppressLint("MissingPermission")
     private void fetchLocation() {
         checkLocationPermission();
-        if(locationEnabled()){
+        if(!locationEnabled()){
+            new AlertDialog.Builder(this)
+                    .setTitle("Location Needed")
+                    .setMessage("Please Turn on Location Services on the application")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                            startActivity(intent);
+                            dialog.dismiss();
+                        }
+                    })
+                    .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // User declined for Background Location Permission.
+                            dialog.dismiss();
+                        }
+                    })
+                    .create().show();
+        }else{
             fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
                 @Override
                 public void onSuccess(Location location) {
@@ -180,32 +188,122 @@ public class Home extends AppCompatActivity {
                         farmerLocationLatitude=location.getLatitude();
                         farmerLocationLongitude=location.getLongitude();
                         fetchVets(farmerLocationLatitude,farmerLocationLongitude);
+                    }else{
+                        Toast.makeText(getApplicationContext(),"Something Wrong Happened.Try Again Later",Toast.LENGTH_SHORT).show();
+                        SignoutUser();
                     }
                 }
             });
-        }else{
-            Toast.makeText(getApplicationContext(),"Please Turn on Location",Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-            startActivity(intent);
         }
     }
 
+    private void fetchVets(Double latitude, Double longitude) {
+        if(latitude !=null && longitude != null){
+            GeoFire geoFire= new GeoFire(ref);
+            GeoQuery geoQuery=geoFire.queryAtLocation(new GeoLocation(farmerLocationLatitude,farmerLocationLongitude),10);
+            geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
+                @Override
+                public void onKeyEntered(String key, GeoLocation location) {
+                    mRef.child(key).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            Veterinarian vet=snapshot.getValue(Veterinarian.class);
+                            veterinarianList.add(vet);
+                            vetsAroundAdapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
+
+                @Override
+                public void onKeyExited(String key) {
+
+                }
+
+                @Override
+                public void onKeyMoved(String key, GeoLocation location) {
+
+                }
+
+                @Override
+                public void onGeoQueryReady() {
+
+                }
+
+                @Override
+                public void onGeoQueryError(DatabaseError error) {
+
+                }
+            });
+        }else{
+            Toast.makeText(getApplicationContext(),"Something wrong happened",Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private boolean locationEnabled() {
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    }
+
     private void checkLocationPermission() {
-        if (ContextCompat.checkSelfPermission(Home.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            // Fine Location permission is granted
-            // Check if current android version >= 11, if >= 11 check for Background Location permission
+        if (ContextCompat.checkSelfPermission(Home.this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 if (ContextCompat.checkSelfPermission(Home.this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     // Background Location Permission is granted so do your work here
                 } else {
                     // Ask for Background Location Permission
-                    askPermissionForBackgroundUsage();
+                    ActivityCompat.requestPermissions(Home.this,new String[]{Manifest.permission.ACCESS_BACKGROUND_LOCATION},BACKGROUND_LOCATION_PERMISSION_CODE);
                 }
             }
         } else {
             // Fine Location Permission is not granted so ask for permission
-            askForLocationPermission();
+//            askForLocationPermission();
+            ActivityCompat.requestPermissions(Home.this,
+                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, LOCATION_PERMISSION_CODE);
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == LOCATION_PERMISSION_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // User granted location permission
+                // Now check if android version >= 11, if >= 11 check for Background Location Permission
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    if (ContextCompat.checkSelfPermission(Home.this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                        // Background Location Permission is granted so do your work here
+                        fetchLocation();
+                    } else {
+                        // Ask for Background Location Permission
+                        askPermissionForBackgroundUsage();
+                    }
+                }
+            } else {
+                // User denied location permission
+            }
+        } else if (requestCode == BACKGROUND_LOCATION_PERMISSION_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // User granted for Background Location Permission.
+                fetchLocation();
+            } else {
+                // User declined for Background Location Permission.
+
+            }
+        }
+
+    }
+
+    private void SignoutUser() {
+        //redirect the user to loginActivity
+        startActivity(new Intent(Home.this,FarmerLogin.class));
+        Session.getInstance(Home.this).logout();
+        Prevalent.currentOnlineFarmer=null;
+        finish();
     }
 
     private void askForLocationPermission() {
@@ -258,100 +356,6 @@ public class Home extends AppCompatActivity {
         }
     }
 
-    private boolean locationEnabled() {
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == LOCATION_PERMISSION_CODE) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // User granted location permission
-                // Now check if android version >= 11, if >= 11 check for Background Location Permission
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                    if (ContextCompat.checkSelfPermission(Home.this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                        // Background Location Permission is granted so do your work here
-                        fetchLocation();
-                    } else {
-                        // Ask for Background Location Permission
-                        askPermissionForBackgroundUsage();
-                    }
-                }
-            } else {
-                // User denied location permission
-            }
-        } else if (requestCode == BACKGROUND_LOCATION_PERMISSION_CODE) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // User granted for Background Location Permission.
-                fetchLocation();
-            } else {
-                // User declined for Background Location Permission.
-            }
-        }
-
-    }
-
-    private void fetchVets(Double latitude, Double longitude) {
-        if(latitude !=null && longitude != null){
-            GeoFire geoFire= new GeoFire(ref);
-            GeoQuery geoQuery=geoFire.queryAtLocation(new GeoLocation(farmerLocationLatitude,farmerLocationLongitude),10);
-            geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
-                @Override
-                public void onKeyEntered(String key, GeoLocation location) {
-                    mRef.child(key).addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            Veterinarian vet=snapshot.getValue(Veterinarian.class);
-                            veterinarianList.add(vet);
-                            vetsAroundAdapter=new VetsAroundAdapter(Home.this,veterinarianList);
-                            vetsAroundRecyclerView.setAdapter(vetsAroundAdapter);
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-                }
-
-                @Override
-                public void onKeyExited(String key) {
-
-                }
-
-                @Override
-                public void onKeyMoved(String key, GeoLocation location) {
-
-                }
-
-                @Override
-                public void onGeoQueryReady() {
-
-                }
-
-                @Override
-                public void onGeoQueryError(DatabaseError error) {
-
-                }
-            });
-        }else{
-            Toast.makeText(getApplicationContext(),"Something wrong happened",Toast.LENGTH_LONG).show();
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==SimplePlacePicker.SELECT_LOCATION_REQUEST_CODE && resultCode==RESULT_OK && data!=null){
-            String locationAddress=data.getStringExtra(SimplePlacePicker.SELECTED_ADDRESS);
-            String latitude=String.valueOf(data.getDoubleExtra(SimplePlacePicker.LOCATION_LAT_EXTRA,-1));
-            String longitude=String.valueOf(data.getDoubleExtra(SimplePlacePicker.LOCATION_LNG_EXTRA,-1));
-            vetsAroundAdapter.UpdateLocation(locationAddress,latitude,longitude);
-        }
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -374,5 +378,20 @@ public class Home extends AppCompatActivity {
             }
         });
         return true;
+    }
+
+    private void closeNavigationDrawer() {
+        drawerLayout.closeDrawer(GravityCompat.START);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==SimplePlacePicker.SELECT_LOCATION_REQUEST_CODE && resultCode==RESULT_OK && data!=null){
+            String locationAddress=data.getStringExtra(SimplePlacePicker.SELECTED_ADDRESS);
+            String latitude=String.valueOf(data.getDoubleExtra(SimplePlacePicker.LOCATION_LAT_EXTRA,-1));
+            String longitude=String.valueOf(data.getDoubleExtra(SimplePlacePicker.LOCATION_LNG_EXTRA,-1));
+            vetsAroundAdapter.UpdateLocation(locationAddress,latitude,longitude);
+        }
     }
 }

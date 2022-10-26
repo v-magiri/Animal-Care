@@ -126,6 +126,6 @@ public class FarmerHome extends AppCompatActivity {
         drawerLayout.closeDrawer(GravityCompat.START);
     }
 
-    //todo user home to display the veterinary around the customer
+    //todo Update home UI to look more appealing as https://dribbble.com/shots/9455575-Job-Search-Mobile-App
 
 }

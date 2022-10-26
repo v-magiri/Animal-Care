@@ -53,6 +53,7 @@ public class VetsAroundAdapter extends RecyclerView.Adapter<VetsAroundAdapter.My
     ProgressDialog progressDialog;
     BottomSheetDialog bottomSheetDialog;
     List<Veterinarian> vetList;
+//    private
 
     public VetsAroundAdapter(Context context, List<Veterinarian> veterinarianList) {
         this.context = context;
@@ -128,6 +129,7 @@ public class VetsAroundAdapter extends RecyclerView.Adapter<VetsAroundAdapter.My
                     @Override
                     public void onClick(View v) {
                         //save the request to database
+                        makeVisitiationPayment(vet.getVisitationFee());
                         validatedSelectedLocation(vet.getRegistrationNumber(),vet.getVisitationFee());
 //                        bottomSheetDialog.dismiss();
                     }
@@ -135,6 +137,10 @@ public class VetsAroundAdapter extends RecyclerView.Adapter<VetsAroundAdapter.My
                 bottomSheetDialog.show();
             }
         });
+    }
+
+    private void makeVisitiationPayment(String visitationFee) {
+
     }
 
     private void SaveRequest(String RegistrationNumber,String Fee) {
