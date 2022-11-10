@@ -92,8 +92,6 @@ public class Home extends AppCompatActivity {
         navigationView=findViewById(R.id.navigationView);
         View header=navigationView.getHeaderView(0);
         headerFarmerNameTxt=header.findViewById(R.id.FarmerNameTxt);
-        vetsAroundAdapter=new VetsAroundAdapter(Home.this,veterinarianList);
-        vetsAroundRecyclerView.setAdapter(vetsAroundAdapter);
         headerProfilePic=header.findViewById(R.id.profilePic);
         headerFarmerNameTxt.setText(Session.getInstance(this).getFarmerName());
 
@@ -158,7 +156,7 @@ public class Home extends AppCompatActivity {
     }
 
     @SuppressLint("MissingPermission")
-    private void fetchLocation() {
+    private  void fetchLocation() {
         checkLocationPermission();
         if(!locationEnabled()){
             new AlertDialog.Builder(this)
@@ -209,7 +207,8 @@ public class Home extends AppCompatActivity {
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             Veterinarian vet=snapshot.getValue(Veterinarian.class);
                             veterinarianList.add(vet);
-                            vetsAroundAdapter.notifyDataSetChanged();
+                            vetsAroundAdapter=new VetsAroundAdapter(Home.this,veterinarianList);
+                            vetsAroundRecyclerView.setAdapter(vetsAroundAdapter);
                         }
 
                         @Override

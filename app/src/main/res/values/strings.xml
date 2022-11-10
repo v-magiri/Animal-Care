@@ -26,6 +26,9 @@
     <string name="receiverMessage" translatable="false">This is the meesage from the reciever</string>
     <string name="done_after" translatable="false">To be Done After Progess</string>
     <string name="searchVet" translatable="false">Search Vet</string>
+    <string name="examplePhone" translatable="false">0712345678</string>
+    <string name="mpesa_payment" translatable="false">Enter your Mpesa Pin on the prompt pop-up on your phone to complete the payment</string>
+    <string name="procedure" translatable="false">Confirm the checkout Phone number then click Proceed to checkout</string>
 
     //string for spinner
     <string-array name="topic">

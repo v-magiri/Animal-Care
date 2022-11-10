@@ -109,11 +109,11 @@ public class ViewVet extends AppCompatActivity {
                 Button cancelBtn=bottomSheetDialog.findViewById(R.id.cancelBtn);
                 Button OkBtn=bottomSheetDialog.findViewById(R.id.okStatusBtn);
                 ImageView locationPickerImageView=bottomSheetDialog.findViewById(R.id.pickLocationImageView);
-                TextView feeTxt=bottomSheetDialog.findViewById(R.id.vetVisitationFeeTxt);
-                Button payBtn=bottomSheetDialog.findViewById(R.id.payBtn);
+//                TextView feeTxt=bottomSheetDialog.findViewById(R.id.vetVisitationFeeTxt);
+//                Button payBtn=bottomSheetDialog.findViewById(R.id.payBtn);
 
                 vetNameTextView.setText(VetName);
-                feeTxt.setText(visitationCharges);
+//                feeTxt.setText(visitationCharges);
 
                 locationPickerImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -126,12 +126,6 @@ public class ViewVet extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         bottomSheetDialog.dismiss();
-                    }
-                });
-                payBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        makePayment();
                     }
                 });
                 OkBtn.setOnClickListener(new View.OnClickListener() {
@@ -159,10 +153,6 @@ public class ViewVet extends AppCompatActivity {
         });
     }
 
-    private void makePayment() {
-
-    }
-
     private void SelectLocation() {
         Intent intent = new Intent(this, MapActivity.class);
         Bundle bundle = new Bundle();
@@ -179,7 +169,7 @@ public class ViewVet extends AppCompatActivity {
             return;
         }
         progressDialog.show();
-        SaveRequest(RegistrationNumber,Fee);
+//        SaveRequest(RegistrationNumber,Fee);
     }
 
     private void SaveRequest(String registrationNumber, String fee) {

@@ -42,7 +42,7 @@ public class FarmerLogin extends AppCompatActivity {
         setContentView(R.layout.activity_farmer_login);
         initView();
         phoneNumberLayout.getEditText().setText("0745236985");
-        passwordLayout.getEditText().setText("123456789");
+        passwordLayout.getEditText().setText("12345678");
 
         if(Prevalent.currentOnlineFarmer!=null){
             Intent intent=new Intent(FarmerLogin.this,Home.class);
@@ -127,6 +127,11 @@ public class FarmerLogin extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),"Incorrect PhoneNumber",Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
                     }
+                }else{
+                    Toast.makeText(getApplicationContext(),"Account Does not Exist. Please Register",Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                    startActivity(new Intent(getApplicationContext(),FarmerRegistration.class));
+                    finish();
                 }
             }
 

@@ -67,52 +67,51 @@
             android:padding="4dp"/>
 
     </LinearLayout>
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:layout_margin="10dp"-->
+<!--        android:weightSum="2"-->
+<!--        android:layout_below="@+id/locationLayout"-->
+<!--        android:id="@+id/paymentLayout">-->
+<!--        <TextView-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Visitation Fee:"-->
+<!--            android:layout_weight="1"-->
+<!--            android:textSize="18sp"-->
+<!--            android:padding="3dp"-->
+<!--            android:maxLines="1"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:letterSpacing="0.1"-->
+<!--            android:id="@+id/visitationFeeTitle"/>-->
+<!--        <TextView-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:gravity="center|center_vertical"-->
+<!--            android:text="KSH 100"-->
+<!--            android:padding="3dp"-->
+<!--            android:layout_gravity="center_vertical"-->
+<!--            android:textSize="16sp"-->
+<!--            android:textColor="@color/theme_color"-->
+<!--            android:textStyle="bold"-->
+<!--            android:id="@+id/vetVisitationFeeTxt"/>-->
+<!--        <Button-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Pay"-->
+<!--            android:textSize="16sp"-->
+<!--            android:id="@+id/payBtn"-->
+<!--            android:background="@drawable/pay_btn"-->
+<!--            app:backgroundTint="@null"-->
+<!--            android:textColor="@color/white"/>-->
+<!--    </LinearLayout>-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="10dp"
-        android:visibility="gone"
         android:weightSum="2"
         android:layout_below="@+id/locationLayout"
-        android:id="@+id/paymentLayout">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Visitation Fee:"
-            android:layout_weight="1"
-            android:textSize="18sp"
-            android:padding="3dp"
-            android:maxLines="1"
-            android:textColor="@color/black"
-            android:letterSpacing="0.1"
-            android:id="@+id/visitationFeeTitle"/>
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center|center_vertical"
-            android:text="KSH 100"
-            android:padding="3dp"
-            android:layout_gravity="center_vertical"
-            android:textSize="16sp"
-            android:textColor="@color/theme_color"
-            android:textStyle="bold"
-            android:id="@+id/vetVisitationFeeTxt"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Pay"
-            android:textSize="16sp"
-            android:id="@+id/payBtn"
-            android:background="@drawable/pay_btn"
-            app:backgroundTint="@null"
-            android:textColor="@color/white"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:weightSum="2"
-        android:layout_below="@+id/paymentLayout"
         android:orientation="horizontal"
         android:layout_height="wrap_content">
 
@@ -121,6 +120,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_margin="10dp"
+            android:layout_gravity="center_vertical|center"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:background="@drawable/cancel_background"
@@ -133,7 +133,6 @@
             android:layout_weight="1"
             android:background="@drawable/post_background"
             android:text="OK"
-            android:enabled="false"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:layout_margin="10dp"
