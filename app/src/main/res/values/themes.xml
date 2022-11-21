@@ -17,5 +17,18 @@
         <item name="android:background">@color/underLineColor</item>
         <item name="android:layout_marginTop">15dp</item>
     </style>
+    <style name="formDropDown">
+        <item name="android:paddingRight">20dp</item>
+        <item name="android:paddingLeft">24dp</item>
+        <item name="android:paddingTop">20dp</item>
+        <item name="android:paddingBottom">20dp</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:background">@drawable/edit_text_background_dark_round</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:elevation">5dp</item>
+        <item name="android:drawableRight">@drawable/ic_drop_down</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
 
 </resources>

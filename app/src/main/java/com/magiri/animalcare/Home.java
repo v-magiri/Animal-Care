@@ -198,7 +198,7 @@ public class Home extends AppCompatActivity {
     private void fetchVets(Double latitude, Double longitude) {
         if(latitude !=null && longitude != null){
             GeoFire geoFire= new GeoFire(ref);
-            GeoQuery geoQuery=geoFire.queryAtLocation(new GeoLocation(farmerLocationLatitude,farmerLocationLongitude),10);
+            GeoQuery geoQuery=geoFire.queryAtLocation(new GeoLocation(farmerLocationLatitude,farmerLocationLongitude),20);
             geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
                 @Override
                 public void onKeyEntered(String key, GeoLocation location) {

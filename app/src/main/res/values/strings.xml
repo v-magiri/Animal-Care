@@ -29,6 +29,13 @@
     <string name="examplePhone" translatable="false">0712345678</string>
     <string name="mpesa_payment" translatable="false">Enter your Mpesa Pin on the prompt pop-up on your phone to complete the payment</string>
     <string name="procedure" translatable="false">Confirm the checkout Phone number then click Proceed to checkout</string>
+    <string name="HealthRecord">Health Record</string>
+    <string name="production">Milk Production</string>
+    <string name="breeding">Breeding</string>
+    <string name="health">Health</string>
+    <string name="visit_options">Choose Service that your need</string>
+    <string name="submit">Submit</string>
+    <string name="Diagnosis">Diagnose</string>
 
     //string for spinner
     <string-array name="topic">
@@ -37,5 +44,13 @@
         <item>Animal Health</item>
         <item>Animal Feeds</item>
         <item>Animal Record Keeping</item>
+    </string-array>
+    <string-array name="visitation_location_options">
+        <item>Current Location</item>
+        <item>Other Location</item>
+    </string-array>
+    <string-array name="service_options">
+        <item>Artificial Insemination</item>
+        <item>Disease Treatment</item>
     </string-array>
 </resources>
