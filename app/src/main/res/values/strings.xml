@@ -29,14 +29,22 @@
     <string name="examplePhone" translatable="false">0712345678</string>
     <string name="mpesa_payment" translatable="false">Enter your Mpesa Pin on the prompt pop-up on your phone to complete the payment</string>
     <string name="procedure" translatable="false">Confirm the checkout Phone number then click Proceed to checkout</string>
-    <string name="HealthRecord">Health Record</string>
-    <string name="production">Milk Production</string>
-    <string name="breeding">Breeding</string>
-    <string name="health">Health</string>
-    <string name="visit_options">Choose Service that your need</string>
-    <string name="submit">Submit</string>
-    <string name="Diagnosis">Diagnose</string>
-    <string name="location_options">Choose location option</string>
+    <string name="HealthRecord" translatable="false">Health Record</string>
+    <string name="production" translatable="false">Milk Production</string>
+    <string name="breeding" translatable="false">Breeding</string>
+    <string name="health" translatable="false">Health</string>
+    <string name="visit_options" translatable="false">Choose Service that your need</string>
+    <string name="submit" translatable="false">Submit</string>
+    <string name="Diagnosis" translatable="false">Diagnose</string>
+    <string name="location_options" translatable="false">Choose location option</string>
+    <string name="diagnose_title" translatable="false">Select Symptoms evident in the Animal</string>
+    <string name="generalSymptomText" translatable="false">General Symptoms</string>
+    <string name="gitSystem" translatable="false">Gastrointestinal Tract Symptom</string>
+    <string name="nerveous" translatable="false">Nerveous System Symptoms</string>
+    <string name="respiratory" translatable="false">Respiratory System Symptoms</string>
+    <string name="skin" translatable="false">Skin Symptoms</string>
+    <string name="circulatory" translatable="false">Circulatory System Symptoms</string>
+    <string name="udder" translatable="false">Udder System Symptom</string>
 
     //string for spinner
     <string-array name="topic">
@@ -53,5 +61,39 @@
     <string-array name="service_options">
         <item>Artificial Insemination</item>
         <item>Disease Treatment</item>
+    </string-array>
+    <string-array name="general_symptom">
+        <item>Loss of Consciousness</item>
+        <item>Dullness</item>
+        <item>Excess salivation</item>
+        <item>Frothing of mouth</item>
+        <item>Skin nodules</item>
+        <item>Staggering while moving</item>
+        <item>Reduced ability of the animal to mobilize</item>
+        <item>laying down of the animal on its side and the whole body stiffens</item>
+        <item>Decrease in milk Production in lactating animals</item>
+        <item>Swollen Lymph Nodes</item>
+        <item>Lameness</item>
+        <item>Muscular Weakness</item>
+        <item>Abortion</item>
+        <item>Vomiting</item>
+    </string-array>
+    <string-array name="respiratory_symptoms">
+
+    </string-array>
+    <string-array name="circulatory_symptoms">
+
+    </string-array>
+    <string-array name="git_symptoms">
+
+    </string-array>
+    <string-array name="udder_symptoms">
+
+    </string-array>
+    <string-array name="skin_symptoms">
+
+    </string-array>
+    <string-array name="nerveous_symptoms">
+
     </string-array>
 </resources>
