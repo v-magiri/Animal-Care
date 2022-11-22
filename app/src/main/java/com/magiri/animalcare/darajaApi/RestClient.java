@@ -22,9 +22,12 @@ public interface RestClient {
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     @POST("stk/push")
     Call<STKResponse> pushStk(
-            @Query("amount") String Amount,
+            @Query("amount") int Amount,
             @Query("phoneNumber") String PhoneNumber,
             @Query("acc_ref") String Account_Reference,
             @Query("ID") String visitID
             );
+
+//    @POST()
+
 }

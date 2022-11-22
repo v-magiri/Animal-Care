@@ -53,6 +53,7 @@ import com.magiri.animalcare.FarmerVet_Chat;
 import com.magiri.animalcare.Model.Veterinarian;
 import com.magiri.animalcare.Model.VisitRequest;
 import com.magiri.animalcare.R;
+import com.magiri.animalcare.RequestVisitation;
 import com.magiri.animalcare.Session.Prevalent;
 import com.magiri.animalcare.ViewVet;
 import com.magiri.animalcare.darajaApi.AccessToken;
@@ -146,37 +147,44 @@ public class VetsAroundAdapter extends RecyclerView.Adapter<VetsAroundAdapter.My
         holder.requestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder alertDialog=new AlertDialog.Builder(context);
-                alertDialog.setTitle("Choose Visitation Location");
-                int checkedItem=1;
-                alertDialog.setSingleChoiceItems(locationOptions, checkedItem, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which){
-                            case 0:
-                                getFarmerLocation();
-                                dialog.dismiss();
-                                if(Latitude!=null && Longitude!=null){
-                                    payVisit(vetID);
-                                }else{
-                                    Toast.makeText(context,"Something wrong happened",Toast.LENGTH_SHORT).show();
-                                }
-                                break;
-                            case 1:
-                                SelectLocation(context);
-                                dialog.dismiss();
-                                if(Latitude!=null && Longitude!=null){
-                                    payVisit(vetID);
-                                }else{
-                                    Toast.makeText(context,"Something wrong happened",Toast.LENGTH_SHORT).show();
-                                }
-                                break;
-                        }
-                    }
-                });
-                AlertDialog alert = alertDialog.create();
-                alert.setCanceledOnTouchOutside(false);
-                alert.show();
+                Intent newIntent=new Intent(context, RequestVisitation.class);
+                Bundle bundle=new Bundle();
+                bundle.putString("VetID",vetID);
+                bundle.putString("VetName",vet.getName());
+                bundle.putString("VetProfilePicUrl",vet.getProfilePicUrl());
+                newIntent.putExtras(bundle);
+                context.startActivity(newIntent);
+//                AlertDialog.Builder alertDialog=new AlertDialog.Builder(context);
+//                alertDialog.setTitle("Choose Visitation Location");
+//                int checkedItem=1;
+//                alertDialog.setSingleChoiceItems(locationOptions, checkedItem, new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        switch (which){
+//                            case 0:
+//                                getFarmerLocation();
+//                                dialog.dismiss();
+//                                if(Latitude!=null && Longitude!=null){
+//                                    payVisit(vetID);
+//                                }else{
+//                                    Toast.makeText(context,"Something wrong happened",Toast.LENGTH_SHORT).show();
+//                                }
+//                                break;
+//                            case 1:
+//                                SelectLocation(context);
+//                                dialog.dismiss();
+//                                if(Latitude!=null && Longitude!=null){
+//                                    payVisit(vetID);
+//                                }else{
+//                                    Toast.makeText(context,"Something wrong happened",Toast.LENGTH_SHORT).show();
+//                                }
+//                                break;
+//                        }
+//                    }
+//                });
+//                AlertDialog alert = alertDialog.create();
+//                alert.setCanceledOnTouchOutside(false);
+//                alert.show();
 //                if(Latitude!=null && Longitude!=null){
 //                    ref.child(vetID).child("Location").addValueEventListener(new ValueEventListener() {
 //                        @Override
@@ -365,7 +373,7 @@ public class VetsAroundAdapter extends RecyclerView.Adapter<VetsAroundAdapter.My
                                     visitationFee= (int) (distanceBtw * VISIT_COST_PER_ABOVE_10_KILOMETRE);
                                 }
                                 Log.i(TAG, "Visitation Fee: "+visitationFee+" Distance between"+distanceBtw);
-                                makeVisitationPayment(String.valueOf(visitationFee),RegistrationNumber,PhoneNumber);
+                                makeVisitationPayment(visitationFee,RegistrationNumber,PhoneNumber);
 //                            bottomSheetDialog.dismiss();
                             }
 
@@ -413,34 +421,34 @@ public class VetsAroundAdapter extends RecyclerView.Adapter<VetsAroundAdapter.My
 //        });
 //    }
 
-    private void makeVisitationPayment(String visitationFee,String RegistrationNumber,String phoneNumber) {
-        visitationFee="1";
+    private void makeVisitationPayment(int visitationFee,String RegistrationNumber,String phoneNumber) {
+        visitationFee=1;
         final DatabaseReference ref;
         String clientID= Prevalent.currentOnlineFarmer.getFarmerID();
 //        ref=mRef.child(RegistrationNumber);
         String visitID=mRef.push().getKey();
-        VisitRequest visitRequest=new VisitRequest(RegistrationNumber,Address,Latitude,Longitude,visitationFee,clientID,"Pending",visitID,false);
+//        VisitRequest visitRequest=new VisitRequest(RegistrationNumber,Address,Latitude,Longitude,visitationFee,clientID,"Pending",visitID,false);
         assert visitID != null;
-        mRef.child(visitID).setValue(visitRequest).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    Toast.makeText(context,"Request Recorded",Toast.LENGTH_SHORT).show();
-                }else{
-                    Log.d(TAG, "onComplete: Something Happened");
-                }
-                progressDialog.dismiss();
-                bottomSheetDialog.dismiss();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d(TAG, "onFailure: "+e.getMessage());
-                Toast.makeText(context,"Failed to Record your visit Request",Toast.LENGTH_SHORT).show();
-                progressDialog.dismiss();
-                bottomSheetDialog.dismiss();
-            }
-        });
+//        mRef.child(visitID).setValue(visitRequest).addOnCompleteListener(new OnCompleteListener<Void>() {
+//            @Override
+//            public void onComplete(@NonNull Task<Void> task) {
+//                if(task.isSuccessful()){
+//                    Toast.makeText(context,"Request Recorded",Toast.LENGTH_SHORT).show();
+//                }else{
+//                    Log.d(TAG, "onComplete: Something Happened");
+//                }
+//                progressDialog.dismiss();
+//                bottomSheetDialog.dismiss();
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Log.d(TAG, "onFailure: "+e.getMessage());
+//                Toast.makeText(context,"Failed to Record your visit Request",Toast.LENGTH_SHORT).show();
+//                progressDialog.dismiss();
+//                bottomSheetDialog.dismiss();
+//            }
+//        });
         Retrofit.Builder builder=new Retrofit.Builder()
                 .baseUrl("https://ani-care.herokuapp.com/")
                 .addConverterFactory(GsonConverterFactory.create());

@@ -21,6 +21,13 @@
         tools:replace="android:theme"
         tools:targetApi="32">
         <activity
+            android:name=".Diagnose"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".RequestVisitation"
             android:exported="true">
             <meta-data
@@ -62,7 +69,7 @@
             android:exported="false" />
         <activity
             android:name=".FarmerRegistration"
-            android:exported="true"></activity>
+            android:exported="true" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

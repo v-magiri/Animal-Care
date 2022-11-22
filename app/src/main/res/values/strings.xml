@@ -36,6 +36,7 @@
     <string name="visit_options">Choose Service that your need</string>
     <string name="submit">Submit</string>
     <string name="Diagnosis">Diagnose</string>
+    <string name="location_options">Choose location option</string>
 
     //string for spinner
     <string-array name="topic">

@@ -13,6 +13,8 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:id="@+id/requestVisitMaterialToolBar"
+            app:title="Vet Visit"
+            app:titleTextColor="@color/white"
             android:background="@color/animalCareBackground"
             app:navigationIcon="@drawable/ic_baseline_arrow_back_24"/>
     </com.google.android.material.appbar.AppBarLayout>
@@ -21,18 +23,26 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/requestVisitAppBarLayout"
         android:orientation="vertical"
+        android:layout_marginTop="40dp"
         android:layout_marginHorizontal="10dp"
         android:id="@+id/visitRequestFormLayout">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/ic_vet"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/vetProfilePicCircleImageView"/>
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_marginBottom="10dp"
+            app:errorEnabled="true"
             android:layout_height="wrap_content">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/VetNameTxt"
                 android:textSize="20sp"
-                android:paddingVertical="20dp"
+                android:paddingVertical="15dp"
                 android:textColor="@color/black"
                 android:text="FooBar"
                 android:paddingHorizontal="15dp"/>
@@ -42,57 +52,66 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:orientation="vertical">
-            <com.magiri.animalcare.UI.DropDown
-                style="@style/formDropDown"
+            <EditText
+                style="@style/editTextSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/servicesDropDown"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:editable="false"
+                android:cursorVisible="false"
                 android:hint="@string/visit_options"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:weightSum="2"
-                android:visibility="gone"
-                android:orientation="horizontal">
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_marginHorizontal="3dp"
-                    android:layout_marginVertical="10dp"
-                    android:layout_height="wrap_content"
-                    android:hint="Diagnosis">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/diagnosisTxt"
-                        android:textColor="@color/black"
-                        android:textSize="20sp"/>
-                </com.google.android.material.textfield.TextInputLayout>
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/button_background"
-                    android:layout_gravity="center_vertical"
-                    android:text="@string/Diagnosis"
-                    android:paddingVertical="10dp"
-                    app:backgroundTint="@null"
-                    android:id="@+id/diagnosisBtn"
-                    android:layout_marginHorizontal="20dp"
-                    android:textColor="@color/white"/>
-            </LinearLayout>
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:weightSum="2"-->
+<!--                android:id="@+id/servicesLayout"-->
+<!--                android:visibility="gone"-->
+<!--                android:orientation="horizontal">-->
+<!--                <com.google.android.material.textfield.TextInputLayout-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:layout_marginHorizontal="3dp"-->
+<!--                    android:layout_marginVertical="10dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:hint="Diagnosis">-->
+<!--                    <com.google.android.material.textfield.TextInputEditText-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:id="@+id/diagnosisTxt"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textSize="20sp"/>-->
+<!--                </com.google.android.material.textfield.TextInputLayout>-->
+<!--                <Button-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:background="@drawable/button_background"-->
+<!--                    android:layout_gravity="center_vertical"-->
+<!--                    android:text="@string/Diagnosis"-->
+<!--                    android:paddingVertical="10dp"-->
+<!--                    app:backgroundTint="@null"-->
+<!--                    android:id="@+id/diagnosisBtn"-->
+<!--                    android:layout_marginHorizontal="20dp"-->
+<!--                    android:textColor="@color/white"/>-->
+<!--            </LinearLayout>-->
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:orientation="vertical">
-            <com.magiri.animalcare.UI.DropDown
-                style="@style/formDropDown"
+            <EditText
+                style="@style/editTextSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/locationDropDown"
-                android:hint="@string/visit_options"/>
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:editable="false"
+                android:cursorVisible="false"
+                android:hint="@string/location_options"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -101,18 +120,13 @@
                 android:padding="10dp"
                 android:visibility="gone"
                 android:id="@+id/locationLayout">
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/ic_location_pin"
-                    android:id="@+id/pickLocationImageView"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Location Appears Here"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:visibility="gone"
+                    android:maxLines="1"
                     android:id="@+id/locationTxt"
                     android:padding="4dp"/>
 

@@ -177,28 +177,28 @@ public class ViewVet extends AppCompatActivity {
         String clientID= Prevalent.currentOnlineFarmer.getFarmerID();
 //        ref=mRef.child(RegistrationNumber);
         String visitID=mRef.push().getKey();
-        VisitRequest visitRequest=new VisitRequest(registrationNumber,Address,Latitude,Longitude,fee,clientID,"Pending",visitID,false);
-        assert visitID != null;
-        mRef.child(visitID).setValue(visitRequest).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    Toast.makeText(getApplicationContext(),"Request Recorded",Toast.LENGTH_SHORT).show();
-                }else{
-                    Log.d(TAG, "onComplete: Something Happened");
-                }
-                progressDialog.dismiss();
-                bottomSheetDialog.dismiss();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d(TAG, "onFailure: "+e.getMessage());
-                Toast.makeText(getApplicationContext(),"Failed to Record your visit Request",Toast.LENGTH_SHORT).show();
-                progressDialog.dismiss();
-                bottomSheetDialog.dismiss();
-            }
-        });
+//        VisitRequest visitRequest=new VisitRequest(registrationNumber,Address,Latitude,Longitude,fee,clientID,"Pending",visitID,false);
+//        assert visitID != null;
+//        mRef.child(visitID).setValue(visitRequest).addOnCompleteListener(new OnCompleteListener<Void>() {
+//            @Override
+//            public void onComplete(@NonNull Task<Void> task) {
+//                if(task.isSuccessful()){
+//                    Toast.makeText(getApplicationContext(),"Request Recorded",Toast.LENGTH_SHORT).show();
+//                }else{
+//                    Log.d(TAG, "onComplete: Something Happened");
+//                }
+//                progressDialog.dismiss();
+//                bottomSheetDialog.dismiss();
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Log.d(TAG, "onFailure: "+e.getMessage());
+//                Toast.makeText(getApplicationContext(),"Failed to Record your visit Request",Toast.LENGTH_SHORT).show();
+//                progressDialog.dismiss();
+//                bottomSheetDialog.dismiss();
+//            }
+//        });
     }
 
     @Override

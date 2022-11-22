@@ -1,12 +1,13 @@
 package com.magiri.animalcare.Model;
 
 public class VisitRequest {
-    String VetID,FarmerAddress,LocationLatitude,
-            LocationLongitude,VisitationFee,FarmerID,Status,VisitID;
+    String VetID,FarmerAddress,FarmerID,Status,VisitID,ServiceType;
+    int VisitationFee;
     Boolean isPaid;
+    double LocationLatitude,LocationLongitude;
 
     public VisitRequest(String vetID, String farmerAddress,
-                        String locationLatitude, String locationLongitude, String visitationFee, String farmerID, String status, String visitID, Boolean isPaid) {
+                        double locationLatitude, double locationLongitude, int visitationFee, String farmerID, String status, String visitID, Boolean isPaid,String serviceType) {
         this.VetID = vetID;
         this.FarmerAddress = farmerAddress;
         this.LocationLatitude = locationLatitude;
@@ -16,6 +17,7 @@ public class VisitRequest {
         this.Status = status;
         this.VisitID = visitID;
         this.isPaid = isPaid;
+        this.ServiceType=serviceType;
     }
 
     public VisitRequest() {
@@ -35,30 +37,6 @@ public class VisitRequest {
 
     public void setFarmerAddress(String farmerAddress) {
         FarmerAddress = farmerAddress;
-    }
-
-    public String getLocationLatitude() {
-        return LocationLatitude;
-    }
-
-    public void setLocationLatitude(String locationLatitude) {
-        LocationLatitude = locationLatitude;
-    }
-
-    public String getLocationLongitude() {
-        return LocationLongitude;
-    }
-
-    public void setLocationLongitude(String locationLongitude) {
-        LocationLongitude = locationLongitude;
-    }
-
-    public String getVisitationFee() {
-        return VisitationFee;
-    }
-
-    public void setVisitationFee(String visitationFee) {
-        VisitationFee = visitationFee;
     }
 
     public String getFarmerID() {
@@ -91,5 +69,37 @@ public class VisitRequest {
 
     public void setVisitID(String visitID) {
         VisitID = visitID;
+    }
+
+    public double getLocationLatitude() {
+        return LocationLatitude;
+    }
+
+    public void setLocationLatitude(double locationLatitude) {
+        LocationLatitude = locationLatitude;
+    }
+
+    public double getLocationLongitude() {
+        return LocationLongitude;
+    }
+
+    public void setLocationLongitude(double locationLongitude) {
+        LocationLongitude = locationLongitude;
+    }
+
+    public int getVisitationFee() {
+        return VisitationFee;
+    }
+
+    public void setVisitationFee(int visitationFee) {
+        VisitationFee = visitationFee;
+    }
+
+    public String getServiceType() {
+        return ServiceType;
+    }
+
+    public void setServiceType(String serviceType) {
+        ServiceType = serviceType;
     }
 }
