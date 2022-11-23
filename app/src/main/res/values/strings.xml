@@ -79,21 +79,44 @@
         <item>Vomiting</item>
     </string-array>
     <string-array name="respiratory_symptoms">
-
+        <item>Coughing</item>
+        <item>Nasal Discharge</item>
+        <item>Difficulty in Breathing</item>
     </string-array>
     <string-array name="circulatory_symptoms">
-
+        <item>Fever</item>
+        <item>Subnormal temperature</item>
+        <item>Increased heart rate</item>
     </string-array>
     <string-array name="git_symptoms">
-
+        <item>Loss of Apetite</item>
+        <item>Urination,defecation, and milk secretion stops</item>
+        <item>Diarrhea</item>
+        <item>Weight Loss</item>
+        <item>Weakness</item>
     </string-array>
     <string-array name="udder_symptoms">
-
+        <item>Swollen Udder</item>
+        <item>Blisters on teats</item>
+        <item>Pain in the udder</item>
+        <item>Milk Contains Pus</item>
+        <item>Milk contains blood</item>
+        <item>Milk turns watery</item>
+        <item>Death of infected quarter</item>
+        <item>Milk has a salty taste</item>
+        <item>Pain in the udder.</item>
+        <item>Redness of the udder</item>
+        <item>Flakes or clots in milk</item>
     </string-array>
     <string-array name="skin_symptoms">
-
+        <item>Sores and blisters on feet</item>
+        <item>Production of tears from eyes</item>
+        <item>White discoloration of the eyes and gums</item>
+        <item>Watery Eyes</item>
+        <item>Discharge of water from eyes and nose</item>
     </string-array>
     <string-array name="nerveous_symptoms">
-
+        <item>Depression</item>
+        <item>Quivering of lips</item>
     </string-array>
 </resources>

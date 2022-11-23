@@ -37,7 +37,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/generalSymptomLayout"
+                android:id="@+id/generalSymptom"
                 android:layout_below="@+id/diagnoseTxt"
                 android:orientation="vertical">
 
@@ -50,110 +50,118 @@
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
-                <CheckBox
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="Loss of Consciousness"
-                    android:padding="8dp"
-                    android:id="@+id/consciousnessCheckBox"/>
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="Dullness"
-                    android:padding="8dp"
-                    android:id="@+id/dullnessCheckBox"/>
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="Excess salivation"
-                    android:padding="8dp"
-                    android:id="@+id/salivationCheckBox"/>
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="Frothing of mouth"
-                    android:padding="8dp"
-                    android:id="@+id/FrothingCheckBox"/>
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="Skin nodules"
-                    android:padding="8dp"
-                    android:id="@+id/skinNodulesCheckBox"/>
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="Staggering while moving"
-                    android:padding="8dp"
-                    android:id="@+id/staggeringCheckBox"/>
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="reduced ability of the animal to mobilize"
-                    android:padding="8dp"
-                    android:id="@+id/mobilityCheckBox"/>
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="laying down of the animal on its side and the whole body stiffens"
-                    android:padding="8dp"
-                    android:id="@+id/bodyStiffensCheckBox"/>
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="Decrease in milk Production in lactating animals"
-                    android:padding="8dp"
-                    android:id="@+id/productionCheckBox"/>
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="Swollen Lymph Nodes"
-                    android:padding="8dp"
-                    android:id="@+id/swollenNodesCheckBox"/>
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="Lameness"
-                    android:padding="8dp"
-                    android:id="@+id/lamenessCheckBox"/>
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="Muscular Weakness"
-                    android:padding="8dp"
-                    android:id="@+id/muscleWeaknessCheckBox"/>
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="Abortion "
-                    android:padding="8dp"
-                    android:id="@+id/abortionCheckBox"/>
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="Vomiting "
-                    android:padding="8dp"
-                    android:id="@+id/vomitingCheckBox"/>
+                    android:id="@+id/generalSymptomLayout"
+                    android:layout_below="@+id/diagnoseTxt"
+                    android:orientation="vertical">
+<!--                    layout of general symptoms-->
+                </LinearLayout>
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="Loss of Consciousness"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/consciousnessCheckBox"/>-->
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="Dullness"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/dullnessCheckBox"/>-->
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="Excess salivation"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/salivationCheckBox"/>-->
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="Frothing of mouth"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/FrothingCheckBox"/>-->
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="Skin nodules"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/skinNodulesCheckBox"/>-->
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="Staggering while moving"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/staggeringCheckBox"/>-->
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="reduced ability of the animal to mobilize"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/mobilityCheckBox"/>-->
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="laying down of the animal on its side and the whole body stiffens"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/bodyStiffensCheckBox"/>-->
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="Decrease in milk Production in lactating animals"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/productionCheckBox"/>-->
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="Swollen Lymph Nodes"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/swollenNodesCheckBox"/>-->
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="Lameness"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/lamenessCheckBox"/>-->
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="Muscular Weakness"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/muscleWeaknessCheckBox"/>-->
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="Abortion "-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/abortionCheckBox"/>-->
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="Vomiting "-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/vomitingCheckBox"/>-->
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/gitSystem"
-                android:layout_below="@+id/generalSymptomLayout"
+                android:layout_below="@+id/generalSymptom"
                 android:orientation="vertical">
                 <TextView
                     android:layout_width="match_parent"
@@ -164,46 +172,54 @@
                     android:layout_marginVertical="15dp"
                     android:textSize="20sp"
                     android:textAlignment="center"/>
-                <CheckBox
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="Loss of Appetite"
-                    android:padding="8dp"
-                    android:id="@+id/appetite"/>
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="Urination, defecation, and milk secretion stop."
-                    android:padding="8dp"
-                    android:id="@+id/secretion"/>
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="Diarrhea"
-                    android:padding="8dp"
-                    android:id="@+id/Diarrhea"/>
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="Weight Loss"
-                    android:padding="8dp"
-                    android:id="@+id/weight"/>
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="Weakness"
-                    android:padding="8dp"
-                    android:id="@+id/weakness"/>
+                    android:id="@+id/gitSystemLayout"
+                    android:layout_below="@+id/diagnoseTxt"
+                    android:orientation="vertical">
+                    <!--                    layout of general symptoms-->
+                </LinearLayout>
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="Loss of Appetite"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/appetite"/>-->
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="Urination, defecation, and milk secretion stop."-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/secretion"/>-->
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="Diarrhea"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/Diarrhea"/>-->
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="Weight Loss"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/weight"/>-->
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="Weakness"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/weakness"/>-->
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/respiratoryLayout"
+                android:id="@+id/respiratory"
                 android:layout_below="@+id/gitSystem"
                 android:orientation="vertical">
                 <TextView
@@ -215,33 +231,41 @@
                     android:layout_marginVertical="15dp"
                     android:textSize="20sp"
                     android:textAlignment="center"/>
-                <CheckBox
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="Coughing"
-                    android:padding="8dp"
-                    android:id="@+id/cough"/>
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="Nasal Discharge"
-                    android:padding="8dp"
-                    android:id="@+id/discharge"/>
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="Difficulty In Breathing"
-                    android:padding="8dp"
-                    android:id="@+id/breathing"/>
+                    android:id="@+id/respiratoryLayout"
+                    android:layout_below="@+id/diagnoseTxt"
+                    android:orientation="vertical">
+                    <!--                    layout of respiratory symptoms-->
+                </LinearLayout>
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="Coughing"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/cough"/>-->
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="Nasal Discharge"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/discharge"/>-->
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="Difficulty In Breathing"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/breathing"/>-->
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/skinLayout"
-                android:layout_below="@+id/respiratoryLayout"
+                android:id="@+id/skin"
+                android:layout_below="@+id/respiratory"
                 android:orientation="vertical">
                 <TextView
                     android:layout_width="match_parent"
@@ -252,47 +276,55 @@
                     android:layout_marginVertical="15dp"
                     android:textSize="20sp"
                     android:textAlignment="center"/>
-                <CheckBox
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="sores and blisters on feet"
-                    android:padding="8dp"
-                    android:id="@+id/sores"/>
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="Production of tears from eyes"
-                    android:padding="8dp"
-                    android:id="@+id/cryingEyes"/>
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="White discoloration of the eyes and gums"
-                    android:padding="8dp"
-                    android:id="@+id/discoloration"/>
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="Watery eyes"
-                    android:padding="8dp"
-                    android:id="@+id/wateryEyes"/>
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="Discharge of water from eyes and nose"
-                    android:padding="8dp"
-                    android:id="@+id/nose_eyesDischarge"/>
+                    android:id="@+id/skinLayout"
+                    android:layout_below="@+id/diagnoseTxt"
+                    android:orientation="vertical">
+                    <!--                    layout of respiratory symptoms-->
+                </LinearLayout>
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="sores and blisters on feet"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/sores"/>-->
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="Production of tears from eyes"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/cryingEyes"/>-->
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="White discoloration of the eyes and gums"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/discoloration"/>-->
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="Watery eyes"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/wateryEyes"/>-->
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="Discharge of water from eyes and nose"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/nose_eyesDischarge"/>-->
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/circulatoryLayout"
-                android:layout_below="@+id/skinLayout"
+                android:id="@+id/circulatory"
+                android:layout_below="@+id/skin"
                 android:orientation="vertical">
                 <TextView
                     android:layout_width="match_parent"
@@ -303,33 +335,41 @@
                     android:textStyle="bold"
                     android:layout_marginVertical="15dp"
                     android:textAlignment="center"/>
-                <CheckBox
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="Fever"
-                    android:padding="8dp"
-                    android:id="@+id/fever"/>
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="subnormal temperature"
-                    android:padding="8dp"
-                    android:id="@+id/temperature"/>
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="increased heart rate"
-                    android:padding="8dp"
-                    android:id="@+id/heartRate"/>
+                    android:id="@+id/circulatoryLayout"
+                    android:layout_below="@+id/diagnoseTxt"
+                    android:orientation="vertical">
+                    <!--                    layout of respiratory symptoms-->
+                </LinearLayout>
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="Fever"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/fever"/>-->
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="subnormal temperature"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/temperature"/>-->
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="increased heart rate"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/heartRate"/>-->
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/udderLayout"
-                android:layout_below="@+id/circulatoryLayout"
+                android:id="@+id/udder"
+                android:layout_below="@+id/circulatory"
                 android:orientation="vertical">
                 <TextView
                     android:layout_width="match_parent"
@@ -340,82 +380,90 @@
                     android:textStyle="bold"
                     android:layout_marginVertical="15dp"
                     android:textAlignment="center"/>
-                <CheckBox
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="Swollen Udder"
-                    android:padding="8dp"
-                    android:id="@+id/swollenUdder"/>
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="Blisters on teats"
-                    android:padding="8dp"
-                    android:id="@+id/blisters"/>
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="Pain in the udder"
-                    android:padding="8dp"
-                    android:id="@+id/pain"/>
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="Redness of the udder"
-                    android:padding="8dp"
-                    android:id="@+id/redness"/>
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="Milk Contains Pus"
-                    android:padding="8dp"
-                    android:id="@+id/pus"/>
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="Death of infected quarter"
-                    android:padding="8dp"
-                    android:id="@+id/deathQuarter"/>
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="Flakes or clots in milk"
-                    android:padding="8dp"
-                    android:id="@+id/flakes"/>
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="Milk has a salty taste"
-                    android:padding="8dp"
-                    android:id="@+id/saltyTaste"/>
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="Milk contains blood"
-                    android:padding="8dp"
-                    android:id="@+id/bloodyMilk"/>
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="Milk turns watery"
-                    android:padding="8dp"
-                    android:id="@+id/wateryMilk"/>
+                    android:id="@+id/udderLayout"
+                    android:layout_below="@+id/diagnoseTxt"
+                    android:orientation="vertical">
+                    <!--                    layout of respiratory symptoms-->
+                </LinearLayout>
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="Swollen Udder"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/swollenUdder"/>-->
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="Blisters on teats"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/blisters"/>-->
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="Pain in the udder"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/pain"/>-->
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="Redness of the udder"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/redness"/>-->
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="Milk Contains Pus"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/pus"/>-->
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="Death of infected quarter"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/deathQuarter"/>-->
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="Flakes or clots in milk"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/flakes"/>-->
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="Milk has a salty taste"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/saltyTaste"/>-->
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="Milk contains blood"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/bloodyMilk"/>-->
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="Milk turns watery"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/wateryMilk"/>-->
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/nerveousLayout"
-                android:layout_below="@+id/udderLayout"
+                android:id="@+id/nerveous"
+                android:layout_below="@+id/udder"
                 android:orientation="vertical">
                 <TextView
                     android:layout_width="match_parent"
@@ -426,20 +474,28 @@
                     android:textStyle="bold"
                     android:layout_marginVertical="15dp"
                     android:textAlignment="center"/>
-                <CheckBox
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="Depression"
-                    android:padding="8dp"
-                    android:id="@+id/depression"/>
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckClicked"
-                    android:text="Quivering of lips"
-                    android:padding="8dp"
-                    android:id="@+id/quivering"/>
+                    android:id="@+id/nerveousLayout"
+                    android:layout_below="@+id/diagnoseTxt"
+                    android:orientation="vertical">
+                    <!--                    layout of respiratory symptoms-->
+                </LinearLayout>
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="Depression"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/depression"/>-->
+<!--                <CheckBox-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onCheckClicked"-->
+<!--                    android:text="Quivering of lips"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:id="@+id/quivering"/>-->
             </LinearLayout>
             <Button
                 android:layout_width="match_parent"
@@ -447,7 +503,7 @@
                 android:background="@drawable/button_background"
                 app:backgroundTint="@null"
                 android:layout_marginVertical="20dp"
-                android:layout_below="@+id/nerveousLayout"
+                android:layout_below="@+id/nerveous"
                 android:text="Diagnose"
                 android:textColor="@color/white"
                 android:id="@+id/diagnoseBtn"/>
