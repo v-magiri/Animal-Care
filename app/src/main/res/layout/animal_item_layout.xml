@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="4">
+        android:weightSum="5">
         <ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
@@ -44,9 +44,17 @@
             android:textSize="18sp"
             android:text="Animal status"
             android:layout_gravity="center_vertical"/>
+        <ImageButton
+            android:layout_width="20dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_dots"
+            android:layout_weight="1"
+            android:id="@+id/actionsBtn"
+            android:background="@color/white"
+            android:layout_marginRight="10dp"/>
+
 
     </LinearLayout>
-    <
-
 
 </RelativeLayout>

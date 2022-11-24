@@ -45,6 +45,19 @@
     <string name="skin" translatable="false">Skin Symptoms</string>
     <string name="circulatory" translatable="false">Circulatory System Symptoms</string>
     <string name="udder" translatable="false">Udder System Symptom</string>
+    <string name="animalAdd" translatable="false">Add Animal to Herd</string>
+    <string name="animalName" translatable="false">Animal Name</string>
+    <string name="animalBreed" translatable="false">Choose Animal Breed</string>
+    <string name="status" translatable="false">Choose Animal Status</string>
+    <string name="addAnimal" translatable="false">Add Animal</string>
+    <string name="animalGroup" translatable="false">Choose Animal Group</string>
+    <string name="DOB" translatable="false">Pick Date of Birth</string>
+    <string name="saveMilkProduction" translatable="false">Save</string>
+    <string name="addMilk" translatable="false">Record Milk Production</string>
+    <string name="dayOfMonth" translatable="false">Date</string>
+    <string name="addTreatment" translatable="false">Record Treatment</string>
+    <string name="addBreedingRecord">Add Breeding Record</string>
+    <string name="breedType">Choose Breed Type</string>
 
     //string for spinner
     <string-array name="topic">
@@ -118,5 +131,29 @@
     <string-array name="nerveous_symptoms">
         <item>Depression</item>
         <item>Quivering of lips</item>
+    </string-array>
+    <string-array name="age_group">
+        <item>Above 18 months</item>
+        <item>Below 18 months</item>
+    </string-array>
+    <string-array name="breed">
+        <item>Freshian</item>
+        <item>Ayrshire</item>
+        <item>Guernsey</item>
+        <item>Jersey</item>
+    </string-array>
+    <string-array name="animal_status">
+        <item>Dry</item>
+        <item>Lactating</item>
+        <item>In Calf</item>
+    </string-array>
+    <string-array name="gender">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+    <string-array name="actions">
+        <item>Add Health Record</item>
+        <item>Add Milk Record</item>
+        <item>Add Breeding Record</item>
     </string-array>
 </resources>
