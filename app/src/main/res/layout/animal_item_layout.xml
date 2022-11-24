@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="4">
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_vet"
+            android:padding="8dp"
+            android:id="@+id/animalImage"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/animalNameTxt"
+            android:textColor="@color/black"
+            android:layout_marginHorizontal="8dp"
+            android:layout_weight="1"
+            android:textSize="18sp"
+            android:text="Animal Name"
+            android:layout_gravity="center_vertical"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/animalAge"
+            android:textColor="@color/black"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="8dp"
+            android:textSize="18sp"
+            android:text="Animal Age"
+            android:layout_gravity="center_vertical"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/animalStatus"
+            android:textColor="@color/black"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="8dp"
+            android:textSize="18sp"
+            android:text="Animal status"
+            android:layout_gravity="center_vertical"/>
+
+    </LinearLayout>
+    <
+
+
+</RelativeLayout>

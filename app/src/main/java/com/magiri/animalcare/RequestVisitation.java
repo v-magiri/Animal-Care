@@ -242,18 +242,19 @@ public class RequestVisitation extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()){
-                                if(serviceType.equals("Artificial Insemination")){
-                                    Toast.makeText(RequestVisitation.this, "Request Successfully Added", Toast.LENGTH_SHORT).show();
-                                    PromptPayment(visitID,visitationFee,VETID);
-                                }else{
-                                    Intent intent=new Intent(RequestVisitation.this,Diagnose.class);
-                                    Bundle bundle=new Bundle();
-                                    bundle.putString("VISITID",visitID);
-                                    bundle.putInt("FEE",visitationFee);
-                                    intent.putExtras(intent);
-                                    startActivity(intent);
-                                    finish();
-                                }
+//                                if(serviceType.equals("Artificial Insemination")){
+//                                    Toast.makeText(RequestVisitation.this, "Request Successfully Added", Toast.LENGTH_SHORT).show();
+////                                    PromptPayment(visitID,visitationFee,VETID);
+//                                }else{
+//                                    Intent intent=new Intent(RequestVisitation.this,Diagnose.class);
+//                                    Bundle bundle=new Bundle();
+//                                    bundle.putString("VISITID",visitID);
+//                                    bundle.putInt("FEE",visitationFee);
+//                                    intent.putExtras(intent);
+//                                    startActivity(intent);
+//                                    finish();
+//                                }
+                                PromptPayment(visitID,visitationFee,VETID,serviceType);
                                 mProgressDialog.dismiss();
                             }
                         }
@@ -273,7 +274,7 @@ public class RequestVisitation extends AppCompatActivity {
         }
     }
 
-    private void PromptPayment(String visitID, int visitationFee, String vetid) {
+    private void PromptPayment(String visitID, int visitationFee, String vetid,String serviceType) {
         AlertDialog.Builder paymentDailogBuilder=new AlertDialog.Builder(RequestVisitation.this);
         LayoutInflater layoutInflater= (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view=layoutInflater.inflate(R.layout.checkout_layout,null);
@@ -299,17 +300,28 @@ public class RequestVisitation extends AppCompatActivity {
                     Call<STKResponse> call=restClient.pushStk(
                             visitationFee,
                             Utils.refactorPhoneNumber(PhoneNumber),
-                            VETID,
+                            vetid,
                             visitID
                     );
                     call.enqueue(new Callback<STKResponse>() {
                         @Override
-                        public void onResponse(Call<STKResponse> call, Response<STKResponse> response) {
+                        public void onResponse(@NonNull Call<STKResponse> call, @NonNull Response<STKResponse> response) {
+                            assert response.body() != null;
                             if(response.body().getResponseCode().equals("0")){
                                 progressDialog.dismiss();
                                 Toast.makeText(getApplicationContext(),"Visit Request Recorded",Toast.LENGTH_SHORT).show();
                                 Timber.tag(TAG).i("Mpesa Worked: ");
                                 paymentDailog.dismiss();
+                                if(serviceType.equals("Disease Treatment")){
+                                    Intent intent=new Intent(RequestVisitation.this,Diagnose.class);
+                                    Bundle bundle=new Bundle();
+                                    bundle.putString("VISITID",visitID);
+                                    intent.putExtras(intent);
+                                    startActivity(intent);
+                                    finish();
+                                }else{
+                                    finish();
+                                }
 
                             }else{
                                 Toast.makeText(getApplicationContext(),"Something Wrong Happened Please Try Again",Toast.LENGTH_SHORT).show();
@@ -320,6 +332,7 @@ public class RequestVisitation extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Call<STKResponse> call, Throwable t) {
+                            Toast.makeText(getApplicationContext(),"Something Wrong Happened Please Try Again",Toast.LENGTH_SHORT).show();
                             Timber.tag(TAG).d("onFailure: Something wrong Happened");
                             paymentDailog.dismiss();
                         }

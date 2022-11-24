@@ -15,6 +15,7 @@
             android:background="@color/animalCareBackground"
             app:titleTextColor="@color/white"
             app:title="Diagnose Disease"
+            app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
             android:id="@+id/diagnoseMaterialToolBar"/>
     </com.google.android.material.appbar.AppBarLayout>
     <ScrollView

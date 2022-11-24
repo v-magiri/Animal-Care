@@ -96,23 +96,21 @@
                 android:src="@drawable/dropdown"/>
         </LinearLayout>
     </LinearLayout>
-    <RelativeLayout
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/filterLayout">
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/herdRecyclerView"/>
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_add_circle_24"
-            android:backgroundTint="@color/animalCareBackground"
-            app:fabSize="normal"
-            android:id="@+id/addAnimalFloatingBar"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"/>
-    </RelativeLayout>
+        android:layout_below="@+id/filterLayout"
+        android:layout_marginTop="20dp"
+        android:id="@+id/herdRecyclerView"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_add_circle_24"
+        android:backgroundTint="@color/animalCareBackground"
+        app:fabSize="normal"
+        android:layout_margin="16dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/addAnimalFloatingBar" />
 
 </RelativeLayout>

@@ -1,36 +1,61 @@
 package com.magiri.animalcare;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.magiri.animalcare.Model.DiseaseDiagnosis;
+import com.magiri.animalcare.darajaApi.RestClient;
+import com.magiri.animalcare.darajaApi.STKResponse;
+import com.magiri.animalcare.darajaApi.Utils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class Diagnose extends AppCompatActivity {
+    private static final String TAG = "Diagnose";
     MaterialToolbar diagnoseMaterialToolBar;
     private Button diagnoseBtn;
-    List symptomList;
+    List<String> symptomList;
     String[] generalSymptoms,gitSystemSymptoms,respiratorySymptoms,nerveousSymptoms,udderSymptoms,skinSymptoms,circulatorySymptoms;
     List<CheckBox> checkBoxList;
     LinearLayout generalLayout,gitLayout,circulatoryLayout,nerveousLayout,udderLayout,respiratoryLayout,skinLayout;
     CheckBox[] checkBoxes,skinCheckBoxes,gitCheckBoxes,respiratoryCheckBoxes,circulatoryCheckBoxes,nerveousCheckBoxes,udderCheckBoxes;
-    CheckBox consciousness,dullnessCheckBox,salivationCheckBox,FrothingCheckBox,skinNodulesCheckBox,staggeringCheckBox,mobilityCheckBox,bodyStiffensCheckBox;
-    CheckBox productionCheckBox,swollenNodesCheckBox,lamenessCheckBox,muscleWeaknessCheckBox,abortionCheckBox,vomitingCheckBox;
-    CheckBox appetite,secretion,Diarrhea,weight,weakness,cough,discharge;
+    ProgressDialog progressDialog;
+    String VisitID;
+    private DatabaseReference mRef;
+    AlertDialog alert;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diagnose);
         diagnoseMaterialToolBar=findViewById(R.id.diagnoseMaterialToolBar);
-        diagnoseBtn=findViewById(R.id.diagnoseBtn);
         generalLayout=findViewById(R.id.generalSymptomLayout);
         gitLayout=findViewById(R.id.gitSystemLayout);
         respiratoryLayout=findViewById(R.id.respiratoryLayout);
@@ -38,9 +63,16 @@ public class Diagnose extends AppCompatActivity {
         nerveousLayout=findViewById(R.id.nerveousLayout);
         udderLayout=findViewById(R.id.udderLayout);
         skinLayout=findViewById(R.id.skinLayout);
-        symptomList=new ArrayList();
         checkBoxList=new ArrayList<>();
+        symptomList=new ArrayList<>();
+        progressDialog=new ProgressDialog(Diagnose.this);
+        progressDialog.setTitle("Diagnose Disease");
+        progressDialog.setMessage("Diagnosing Disease From Symptoms");
+        progressDialog.setCanceledOnTouchOutside(false);
+        diagnoseBtn=findViewById(R.id.diagnoseBtn);
 
+//        Bundle bundle=getIntent().getExtras();
+//        VisitID=bundle.getString("VISITID");
         generalSymptoms=getResources().getStringArray(R.array.general_symptom);
         gitSystemSymptoms=getResources().getStringArray(R.array.git_symptoms);
         circulatorySymptoms=getResources().getStringArray(R.array.circulatory_symptoms);
@@ -48,6 +80,7 @@ public class Diagnose extends AppCompatActivity {
         respiratorySymptoms=getResources().getStringArray(R.array.respiratory_symptoms);
         nerveousSymptoms=getResources().getStringArray(R.array.nerveous_symptoms);
         skinSymptoms=getResources().getStringArray(R.array.skin_symptoms);
+        mRef= FirebaseDatabase.getInstance().getReference();
 
         //dynamically add general symptoms
         checkBoxes=new CheckBox[generalSymptoms.length];
@@ -199,7 +232,6 @@ public class Diagnose extends AppCompatActivity {
                         symptomList.add(skinSymptoms[checkboxID]);
                     }else{
                         symptomList.remove(skinSymptoms[checkboxID]);
-
                     }
                 }
             });
@@ -234,15 +266,87 @@ public class Diagnose extends AppCompatActivity {
         diagnoseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List checkedSymptoms=symptomList;
-                diagnoseDiseaseFromSymptoms(checkedSymptoms);
+                if(symptomList.size()>0){
+                    progressDialog.show();
+                    diagnoseDiseaseFromSymptoms(symptomList);
+                }
+                else{
+                    Toast.makeText(Diagnose.this, "Please Check Symptom occurring on your Livestock", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+        diagnoseMaterialToolBar.setNavigationOnClickListener(v -> finish());
     }
 
-    private void diagnoseDiseaseFromSymptoms(List checkedSymptoms) {
+    public void diagnoseDiseaseFromSymptoms(List<String> checkedSymptoms) {
         //make a post request to diagnose disease through naivebayes classifier
+        String Symptoms="";
+        for(String s:checkedSymptoms){
+            Symptoms+=s+"n";
+        }
+        Retrofit.Builder builder=new Retrofit.Builder()
+                .baseUrl("https://ede2-2c0f-fe38-2409-18e8-563a-8440-d0a3-c087.in.ngrok.io")
+                .addConverterFactory(GsonConverterFactory.create());
 
+        Retrofit retrofit=builder.build();
+        RestClient restClient=retrofit.create(RestClient.class);
+        Call<DiseaseDiagnosis> call=restClient.diagnoseDisease(Symptoms);
+
+        call.enqueue(new Callback<DiseaseDiagnosis>() {
+            @Override
+            public void onResponse(@NonNull Call<DiseaseDiagnosis> call, @NonNull Response<DiseaseDiagnosis> response) {
+                assert response.body() != null;
+                String disease= String.valueOf(response.body().getDisease());
+                int prob=response.body().getCertaintyFactor();
+                HashMap<String,Object> map=new HashMap<>();
+                map.put("Disease",disease);
+                map.put("Certainty_Factor",prob);
+                Log.i(TAG, "onResponse: "+disease);
+                showAlertDialog(disease,prob);
+//                if(VisitID!=null){
+//                    mRef.child(VisitID).child("Diagnosis").setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<Void> task) {
+//                            if(task.isSuccessful()){
+//                                Log.i(TAG, "onComplete: Saved Diagnosis ");
+//                            }
+//                        }
+//                    });
+//                }
+                Toast.makeText(getApplicationContext(), "Disease Diagnosed "+disease, Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<DiseaseDiagnosis> call, @NonNull Throwable t) {
+                Toast.makeText(getApplicationContext(),"Could Not Diagnose Disease",Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+            }
+        });
+
+    }
+
+    private void showAlertDialog(String disease, int prob) {
+        AlertDialog.Builder alertDialogBuilder=new AlertDialog.Builder(Diagnose.this);
+        LayoutInflater layoutInflater= (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view=layoutInflater.inflate(R.layout.diagnosis_alert_dialog,null);
+        alertDialogBuilder.setView(view);
+        alertDialogBuilder.setCancelable(false);
+        TextView diseaseTextView=view.findViewById(R.id.diseaseTxt);
+        TextView factorTextVIew=view.findViewById(R.id.certaintyTxt);
+        Button successBtn=view.findViewById(R.id.okeyBtn);
+        factorTextVIew.setText(String.valueOf(prob));
+        diseaseTextView.setText(disease);
+        successBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alert.dismiss();
+                finish();
+            }
+        });
+        alert=alertDialogBuilder.create();
+        alert.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        alert.show();
     }
 
 
