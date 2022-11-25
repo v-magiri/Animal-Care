@@ -22,6 +22,9 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -45,6 +48,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.magiri.animalcare.Model.Animal;
 import com.magiri.animalcare.Model.VisitRequest;
 import com.magiri.animalcare.Session.Prevalent;
 import com.magiri.animalcare.UI.DropDown;
@@ -54,6 +58,7 @@ import com.magiri.animalcare.darajaApi.Utils;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -76,7 +81,7 @@ public class RequestVisitation extends AppCompatActivity {
     private double Latitude=0,Longitude=0;
     private static final String []mSupportedAreas={""};
     private LinearLayout locationLayout;
-    private DatabaseReference mRef,ref;
+    private DatabaseReference mRef,ref,databaseReference;
     private ProgressDialog progressDialog,mProgressDialog;
     String[] locationOptions,serviceOptions;
     FusedLocationProviderClient fusedLocationProviderClient;
@@ -85,6 +90,12 @@ public class RequestVisitation extends AppCompatActivity {
     int visitationFee;
     double distanceBtw;
     AlertDialog paymentDailog;
+    AutoCompleteTextView animalSelectionTxt;
+    String FarmerID,SelectedAnimal;
+    ArrayList<String> listAnimal;
+    ProgressDialog animalProgressDialog;
+    ArrayAdapter arrayAdapter;
+    LinearLayout animalLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +112,23 @@ public class RequestVisitation extends AppCompatActivity {
         serviceOptions=getResources().getStringArray(R.array.service_options);
         fusedLocationProviderClient= LocationServices.getFusedLocationProviderClient(RequestVisitation.this);
         locationLayout=findViewById(R.id.locationLayout);
+        animalSelectionTxt=findViewById(R.id.animalChoiceTxt);
+        FarmerID=Prevalent.currentOnlineFarmer.getFarmerID();
+        animalLayout=findViewById(R.id.animalChoiceLayout);
+
+        databaseReference=FirebaseDatabase.getInstance().getReference("Animals").child(FarmerID);
+        listAnimal=new ArrayList<>();
+        animalProgressDialog=new ProgressDialog(RequestVisitation.this);
+        animalProgressDialog.setMessage("Loading Animal Names");
+        animalProgressDialog.setCanceledOnTouchOutside(false);
+        animalProgressDialog.show();
+        loadMyHerd();
+        animalSelectionTxt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                SelectedAnimal=parent.getItemAtPosition(position).toString();
+            }
+        });
 
         Bundle bundle=getIntent().getExtras();
         VetNameTxt.setText(bundle.getString("VetName","FooBar"));
@@ -191,6 +219,32 @@ public class RequestVisitation extends AppCompatActivity {
 
     }
 
+    private void loadMyHerd() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot3:snapshot.getChildren()){
+                    Animal myAnimal=dataSnapshot3.getValue(Animal.class);
+                    listAnimal.add(myAnimal.getAnimalName());
+                }
+                animalProgressDialog.dismiss();
+                if(listAnimal.size()==0){
+                    animalLayout.setVisibility(View.GONE);
+                    Toast.makeText(RequestVisitation.this,"Please register Animals",Toast.LENGTH_SHORT).show();
+                }else{
+                    arrayAdapter=new ArrayAdapter(getApplicationContext(),R.layout.item,listAnimal);
+                    animalSelectionTxt.setAdapter(arrayAdapter);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d(TAG, "onCancelled: "+error.getMessage());
+                animalProgressDialog.dismiss();
+            }
+        });
+    }
+
     private void validateFields() {
         if(TextUtils.isEmpty(visitAddress)){
             NameInputLayout.setError("Please Choose Location");
@@ -203,14 +257,17 @@ public class RequestVisitation extends AppCompatActivity {
         }else if(Latitude==0 && Longitude==0){
             Toast.makeText(getApplicationContext(), "Something wrong Happened Please Try again Later", Toast.LENGTH_SHORT).show();
             return;
-        }else {
+        }else if(TextUtils.isEmpty(SelectedAnimal)){
+            Toast.makeText(getApplicationContext(), "Something wrong Happened Please Try again Later", Toast.LENGTH_SHORT).show();
+        }
+        else {
             mProgressDialog.show();
-            SaveVisitRequest(visitAddress,Longitude,Latitude,serviceType);
+            SaveVisitRequest(visitAddress,Longitude,Latitude,serviceType,SelectedAnimal);
         }
 
     }
 
-    private void SaveVisitRequest(String visitAddress, double longitude, double latitude, String serviceType) {
+    private void SaveVisitRequest(String visitAddress, double longitude, double latitude, String serviceType,String animalID) {
         String clientID= Prevalent.currentOnlineFarmer.getFarmerID();
 //        ref=mRef.child(RegistrationNumber);
         String visitID=mRef.push().getKey();
@@ -237,28 +294,29 @@ public class RequestVisitation extends AppCompatActivity {
                     }else{
                         visitationFee= (int) (distanceBtw * VISIT_COST_PER_ABOVE_10_KILOMETRE);
                     }
-                    VisitRequest request=new VisitRequest(VETID,visitAddress,latitude,longitude,visitationFee,clientID,"Pending",visitID,false,serviceType);
-                    mRef.child(visitID).setValue(request).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
-//                                if(serviceType.equals("Artificial Insemination")){
-//                                    Toast.makeText(RequestVisitation.this, "Request Successfully Added", Toast.LENGTH_SHORT).show();
-////                                    PromptPayment(visitID,visitationFee,VETID);
-//                                }else{
-//                                    Intent intent=new Intent(RequestVisitation.this,Diagnose.class);
-//                                    Bundle bundle=new Bundle();
-//                                    bundle.putString("VISITID",visitID);
-//                                    bundle.putInt("FEE",visitationFee);
-//                                    intent.putExtras(intent);
-//                                    startActivity(intent);
-//                                    finish();
-//                                }
-                                PromptPayment(visitID,visitationFee,VETID,serviceType);
-                                mProgressDialog.dismiss();
-                            }
-                        }
-                    });
+                    VisitRequest request=new VisitRequest(VETID,visitAddress,latitude,longitude,visitationFee,clientID,"Pending",visitID,false,serviceType,animalID);
+                    PromptPayment(visitID,visitationFee,VETID,serviceType,request);
+//                    mRef.child(visitID).setValue(request).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<Void> task) {
+//                            if(task.isSuccessful()){
+////                                if(serviceType.equals("Artificial Insemination")){
+////                                    Toast.makeText(RequestVisitation.this, "Request Successfully Added", Toast.LENGTH_SHORT).show();
+//////                                    PromptPayment(visitID,visitationFee,VETID);
+////                                }else{
+////                                    Intent intent=new Intent(RequestVisitation.this,Diagnose.class);
+////                                    Bundle bundle=new Bundle();
+////                                    bundle.putString("VISITID",visitID);
+////                                    bundle.putInt("FEE",visitationFee);
+////                                    intent.putExtras(intent);
+////                                    startActivity(intent);
+////                                    finish();
+////                                }
+////                                PromptPayment(visitID,visitationFee,VETID,serviceType);
+////                                mProgressDialog.dismiss();
+//                            }
+//                        }
+//                    });
                 }
 
                 @Override
@@ -274,7 +332,7 @@ public class RequestVisitation extends AppCompatActivity {
         }
     }
 
-    private void PromptPayment(String visitID, int visitationFee, String vetid,String serviceType) {
+    private void PromptPayment(String visitID, int visitationFee, String vetid,String serviceType,VisitRequest request) {
         AlertDialog.Builder paymentDailogBuilder=new AlertDialog.Builder(RequestVisitation.this);
         LayoutInflater layoutInflater= (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view=layoutInflater.inflate(R.layout.checkout_layout,null);
@@ -291,6 +349,7 @@ public class RequestVisitation extends AppCompatActivity {
                     phoneNumberTxt.setError("Invalid Phone Number");
                     return;
                 }else {
+                    progressDialog.show();
                     Retrofit.Builder builder=new Retrofit.Builder()
                             .baseUrl("https://ani-care.herokuapp.com/")
                             .addConverterFactory(GsonConverterFactory.create());
@@ -311,19 +370,27 @@ public class RequestVisitation extends AppCompatActivity {
                                 progressDialog.dismiss();
                                 Toast.makeText(getApplicationContext(),"Visit Request Recorded",Toast.LENGTH_SHORT).show();
                                 Timber.tag(TAG).i("Mpesa Worked: ");
-                                paymentDailog.dismiss();
-                                if(serviceType.equals("Disease Treatment")){
-                                    Intent intent=new Intent(RequestVisitation.this,Diagnose.class);
-                                    Bundle bundle=new Bundle();
-                                    bundle.putString("VISITID",visitID);
-                                    intent.putExtras(intent);
-                                    startActivity(intent);
-                                    finish();
-                                }else{
-                                    finish();
-                                }
+                                mRef.child(visitID).setValue(request).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful()){
+                                            paymentDailog.dismiss();
+                                            if(serviceType.equals("Disease Treatment")){
+                                                Intent intent=new Intent(RequestVisitation.this,Diagnose.class);
+                                                Bundle bundle=new Bundle();
+                                                bundle.putString("VISITID",visitID);
+                                                intent.putExtras(bundle);
+                                                startActivity(intent);
+                                                finish();
+                                            }else{
+                                                finish();
+                                            }
 
+                                        }
+                                    }
+                                });
                             }else{
+                                progressDialog.dismiss();
                                 Toast.makeText(getApplicationContext(),"Something Wrong Happened Please Try Again",Toast.LENGTH_SHORT).show();
                                 Timber.tag(TAG).i("Mpesa Failed: ");
                                 paymentDailog.dismiss();

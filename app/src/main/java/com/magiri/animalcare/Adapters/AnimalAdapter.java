@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +15,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +30,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.magiri.animalcare.AnimalProfile;
 import com.magiri.animalcare.Model.Animal;
 import com.magiri.animalcare.Model.MilkRecord;
 import com.magiri.animalcare.R;
@@ -35,6 +39,7 @@ import com.magiri.animalcare.Session.Prevalent;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -134,6 +139,17 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.MyViewHold
                 optionAlert = alertDialogBuilder.create();
                 optionAlert.setCanceledOnTouchOutside(false);
                 optionAlert.show();
+            }
+        });
+
+        holder.animalItemLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context, AnimalProfile.class);
+                Bundle bundle=new Bundle();
+                bundle.putString("AnimalID",animal.getAnimalName());
+                intent.putExtras(bundle);
+                context.startActivity(intent);
             }
         });
     }
@@ -258,6 +274,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.MyViewHold
         private CircleImageView animalImageView;
         private TextView ageTextView,NameTextView,statusTextView;
         private ImageButton actionImageButton;
+        private LinearLayout animalItemLayout;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             animalImageView=itemView.findViewById(R.id.animalImage);
@@ -265,6 +282,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.MyViewHold
             NameTextView=itemView.findViewById(R.id.animalNameTxt);
             statusTextView=itemView.findViewById(R.id.animalStatus);
             actionImageButton=itemView.findViewById(R.id.actionsBtn);
+            animalItemLayout=itemView.findViewById(R.id.animalItemLayout);
         }
     }
 }

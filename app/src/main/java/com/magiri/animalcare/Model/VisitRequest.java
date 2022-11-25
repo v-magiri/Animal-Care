@@ -1,13 +1,14 @@
 package com.magiri.animalcare.Model;
 
 public class VisitRequest {
-    String VetID,FarmerAddress,FarmerID,Status,VisitID,ServiceType;
+    String VetID,FarmerAddress,FarmerID,Status,VisitID,ServiceType,AnimalID;
     int VisitationFee;
     Boolean isPaid;
     double LocationLatitude,LocationLongitude;
 
     public VisitRequest(String vetID, String farmerAddress,
-                        double locationLatitude, double locationLongitude, int visitationFee, String farmerID, String status, String visitID, Boolean isPaid,String serviceType) {
+                        double locationLatitude, double locationLongitude, int visitationFee,
+                        String farmerID, String status, String visitID, Boolean isPaid,String serviceType,String animalID) {
         this.VetID = vetID;
         this.FarmerAddress = farmerAddress;
         this.LocationLatitude = locationLatitude;
@@ -18,6 +19,7 @@ public class VisitRequest {
         this.VisitID = visitID;
         this.isPaid = isPaid;
         this.ServiceType=serviceType;
+        this.AnimalID=animalID;
     }
 
     public VisitRequest() {
@@ -101,5 +103,13 @@ public class VisitRequest {
 
     public void setServiceType(String serviceType) {
         ServiceType = serviceType;
+    }
+
+    public String getAnimalID() {
+        return AnimalID;
+    }
+
+    public void setAnimalID(String animalID) {
+        AnimalID = animalID;
     }
 }

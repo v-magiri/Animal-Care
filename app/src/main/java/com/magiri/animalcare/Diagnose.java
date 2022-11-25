@@ -71,8 +71,8 @@ public class Diagnose extends AppCompatActivity {
         progressDialog.setCanceledOnTouchOutside(false);
         diagnoseBtn=findViewById(R.id.diagnoseBtn);
 
-//        Bundle bundle=getIntent().getExtras();
-//        VisitID=bundle.getString("VISITID");
+        Bundle bundle=getIntent().getExtras();
+        VisitID=bundle.getString("VISITID");
         generalSymptoms=getResources().getStringArray(R.array.general_symptom);
         gitSystemSymptoms=getResources().getStringArray(R.array.git_symptoms);
         circulatorySymptoms=getResources().getStringArray(R.array.circulatory_symptoms);
@@ -80,7 +80,7 @@ public class Diagnose extends AppCompatActivity {
         respiratorySymptoms=getResources().getStringArray(R.array.respiratory_symptoms);
         nerveousSymptoms=getResources().getStringArray(R.array.nerveous_symptoms);
         skinSymptoms=getResources().getStringArray(R.array.skin_symptoms);
-        mRef= FirebaseDatabase.getInstance().getReference();
+        mRef= FirebaseDatabase.getInstance().getReference("VisitRequest");
 
         //dynamically add general symptoms
         checkBoxes=new CheckBox[generalSymptoms.length];
@@ -285,7 +285,7 @@ public class Diagnose extends AppCompatActivity {
             Symptoms+=s+"n";
         }
         Retrofit.Builder builder=new Retrofit.Builder()
-                .baseUrl("https://ede2-2c0f-fe38-2409-18e8-563a-8440-d0a3-c087.in.ngrok.io")
+                .baseUrl("https://19a4-41-89-227-170.eu.ngrok.io")
                 .addConverterFactory(GsonConverterFactory.create());
 
         Retrofit retrofit=builder.build();
@@ -303,16 +303,16 @@ public class Diagnose extends AppCompatActivity {
                 map.put("Certainty_Factor",prob);
                 Log.i(TAG, "onResponse: "+disease);
                 showAlertDialog(disease,prob);
-//                if(VisitID!=null){
-//                    mRef.child(VisitID).child("Diagnosis").setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<Void> task) {
-//                            if(task.isSuccessful()){
-//                                Log.i(TAG, "onComplete: Saved Diagnosis ");
-//                            }
-//                        }
-//                    });
-//                }
+                if(VisitID!=null){
+                    mRef.child(VisitID).child("Diagnosis").setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                Log.i(TAG, "onComplete: Saved Diagnosis ");
+                            }
+                        }
+                    });
+                }
                 Toast.makeText(getApplicationContext(), "Disease Diagnosed "+disease, Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
             }

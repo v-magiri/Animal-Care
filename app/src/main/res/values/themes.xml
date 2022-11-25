@@ -10,6 +10,9 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="colorPrimary">@color/animalCareBackground</item>
+        <item name="colorPrimaryDark">@color/animalCareBackground</item>
+        <item name="colorAccent">@color/colorAccent</item>
         <!-- Customize your theme here. -->
     </style>
     <style name="divider">

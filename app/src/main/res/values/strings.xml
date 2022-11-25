@@ -56,8 +56,11 @@
     <string name="addMilk" translatable="false">Record Milk Production</string>
     <string name="dayOfMonth" translatable="false">Date</string>
     <string name="addTreatment" translatable="false">Record Treatment</string>
-    <string name="addBreedingRecord">Add Breeding Record</string>
-    <string name="breedType">Choose Breed Type</string>
+    <string name="addBreedingRecord" translatable="false">Add Breeding Record</string>
+    <string name="breedType" translatable="false">Choose Breed Type</string>
+    <string name="animalProfile" translatable="false">Animal Profile</string>
+    <string name="diseaseAnimalText" translatable="false">Animal requiring intervention</string>
+    <string name="animalChoose">Select Animal</string>
 
     //string for spinner
     <string-array name="topic">
