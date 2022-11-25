@@ -68,7 +68,7 @@ import java.util.List;
 public class Herd extends AppCompatActivity {
     private static final String TAG = "Herd";
     private MaterialToolbar herdMaterialToolBar;
-    private LinearLayout breedFilter,statusFilter,ageFilter;
+//    private LinearLayout breedFilter,statusFilter,ageFilter;
     private FloatingActionButton addAnimalFAB;
     private RecyclerView animalRecyclerView;
     private AnimalAdapter animalAdapter;
@@ -99,9 +99,9 @@ public class Herd extends AppCompatActivity {
         setContentView(R.layout.activity_herd);
 
         herdMaterialToolBar=findViewById(R.id.herdMaterialToolBar);
-        breedFilter=findViewById(R.id.breedFilter);
-        statusFilter=findViewById(R.id.statusFilter);
-        ageFilter=findViewById(R.id.ageFilter);
+//        breedFilter=findViewById(R.id.breedFilter);
+//        statusFilter=findViewById(R.id.statusFilter);
+//        ageFilter=findViewById(R.id.ageFilter);
         addAnimalFAB=findViewById(R.id.addAnimalFloatingBar);
         animalRecyclerView=findViewById(R.id.herdRecyclerView);
         FarmerID= Prevalent.currentOnlineFarmer.getFarmerID();

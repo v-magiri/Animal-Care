@@ -27,19 +27,20 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.magiri.animalcare.Herd;
 import com.magiri.animalcare.Model.Animal;
 import com.magiri.animalcare.Model.MilkRecord;
 import com.magiri.animalcare.R;
 import com.magiri.animalcare.Session.Prevalent;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.MyViewHolder> {
     private static final String TAG = "AnimalAdapter";
@@ -52,6 +53,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.MyViewHold
     AlertDialog milkAlertDialog;
     String str;
     DateFormat formatter;
+    SimpleDateFormat sdf;
 
     public AnimalAdapter(Context context, List<Animal> animalList) {
         this.context = context;
@@ -61,6 +63,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.MyViewHold
         ref= FirebaseDatabase.getInstance().getReference("Animals").child(FarmerID);
         databaseReference=FirebaseDatabase.getInstance().getReference("MilkProduction");
         formatter = new SimpleDateFormat("dd/MM/yy");
+        sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
         Calendar obj = Calendar.getInstance();
         str = formatter.format(obj.getTime());
     }
@@ -78,13 +81,24 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.MyViewHold
         holder.NameTextView.setText(animal.getAnimalName());
         String DOB=animal.getDOB();
 //        Long Age;
-
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            LocalDate date1=LocalDate.parse(DOB);
-            LocalDate date2=LocalDate.parse(str);
-            holder.ageTextView.setText(""+ChronoUnit.MONTHS.between(date2,date1)+"months");
-//            Age= ChronoUnit.MONTHS.between(date2,date1);
+        try {
+            Date date1=formatter.parse(DOB);
+            Date date2=formatter.parse(str);
+            Calendar m_calendar=Calendar.getInstance();
+            m_calendar.setTime(date1);
+            int nMonth1=12*m_calendar.get(Calendar.YEAR)+m_calendar.get(Calendar.MONTH);
+            m_calendar.setTime(date2);
+            int nMonth2=12*m_calendar.get(Calendar.YEAR)+m_calendar.get(Calendar.MONTH);
+                    holder.ageTextView.setText(java.lang.Math.abs(nMonth2-nMonth1)+" months");
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+//            LocalDate date1=LocalDate.parse(DOB);
+//            LocalDate date2=LocalDate.parse(str);
+//            holder.ageTextView.setText(""+ChronoUnit.MONTHS.between(date2,date1)+"months");
+////            Age= ChronoUnit.MONTHS.between(date2,date1);
+//        }
         String imageUrl=animal.getAnimalImageUrl();
         if(imageUrl!=null){
             Glide.with(context).load(imageUrl).into(holder.animalImageView);
@@ -241,7 +255,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.MyViewHold
         return animalList.size();
     }
     static class MyViewHolder extends RecyclerView.ViewHolder{
-        private ImageView animalImageView;
+        private CircleImageView animalImageView;
         private TextView ageTextView,NameTextView,statusTextView;
         private ImageButton actionImageButton;
         public MyViewHolder(@NonNull View itemView) {
