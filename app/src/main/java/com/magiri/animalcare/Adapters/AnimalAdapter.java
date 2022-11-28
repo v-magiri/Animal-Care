@@ -244,7 +244,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.MyViewHold
         final DatabaseReference mRef;
         mRef=databaseReference.child(FarmerID);
         String recordID=mRef.push().getKey();
-        MilkRecord milkRecord=new MilkRecord(animalName,milkTime,date,quantity);
+        MilkRecord milkRecord=new MilkRecord(animalName,milkTime,date,quantity,recordID);
         mRef.child(recordID).setValue(milkRecord).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

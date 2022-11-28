@@ -1,14 +1,18 @@
 package com.magiri.animalcare.Model;
 
 public class MilkRecord {
-    String AnimalName,MilkTime,Date;
+    String AnimalName,MilkTime,Date,MilkRecordID;
     int Quantity;
 
-    public MilkRecord(String animalName, String milkTime, String date, int quantity) {
+    public MilkRecord(String animalName, String milkTime, String date, int quantity,String milkRecordID) {
         this.AnimalName = animalName;
         this.MilkTime = milkTime;
         this.Date = date;
         this.Quantity = quantity;
+        this.MilkRecordID=milkRecordID;
+    }
+
+    public MilkRecord() {
     }
 
     public String getAnimalName() {
@@ -41,6 +45,14 @@ public class MilkRecord {
 
     public void setQuantity(int quantity) {
         Quantity = quantity;
+    }
+
+    public String getMilkRecordID() {
+        return MilkRecordID;
+    }
+
+    public void setMilkRecordID(String milkRecordID) {
+        MilkRecordID = milkRecordID;
     }
 }
 

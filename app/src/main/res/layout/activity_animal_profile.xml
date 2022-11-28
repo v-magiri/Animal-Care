@@ -69,7 +69,24 @@
             app:tabBackground="@color/light_grey"
             app:tabIndicatorColor="@color/animalCareBackground"
             app:tabSelectedTextColor="@color/animalCareBackground"
-            app:tabTextColor="@color/black" />
+            app:tabTextColor="@color/black">
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Profile"/>
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Milk"/>
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Health"/>
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Breeding"/>
+        </com.google.android.material.tabs.TabLayout>
 
         <FrameLayout
             android:id="@+id/simpleFrameLayout"

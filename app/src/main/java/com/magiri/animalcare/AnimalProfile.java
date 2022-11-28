@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -24,16 +25,17 @@ import com.google.firebase.database.ValueEventListener;
 import com.magiri.animalcare.Model.Animal;
 import com.magiri.animalcare.Session.Prevalent;
 
-public class AnimalProfile extends AppCompatActivity {
+public class AnimalProfile extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
     private static final String TAG = "AnimalProfile";
     FrameLayout frameLayout;
     TabLayout tabLayout;
     ImageView animalImageView;
-    String AnimalID;
+    public String AnimalID;
     DatabaseReference mRef;
     String FarmerID;
     private MaterialToolbar materialToolbar;
     private TextView animalNameTxt;
+    private Fragment currentFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,58 +52,48 @@ public class AnimalProfile extends AppCompatActivity {
         AnimalID=bundle.getString("AnimalID",null);
         animalNameTxt.setText(AnimalID);
         fetchAnimalDetails(AnimalID);
+        currentFragment=new Animal_Profile();
+        tabLayout.addOnTabSelectedListener(this);
+        setUpWithFragment(currentFragment);
 
-        TabLayout.Tab profile=tabLayout.newTab();
-        profile.setText("Profile");
-        tabLayout.addTab(profile);
-
-        TabLayout.Tab productionTab=tabLayout.newTab();
-        productionTab.setText("Milk");
-        tabLayout.addTab(productionTab);
-
-        TabLayout.Tab healthTab=tabLayout.newTab();
-        healthTab.setText("Health");
-        tabLayout.addTab(healthTab);
-
-        TabLayout.Tab breedingTab=tabLayout.newTab();
-        breedingTab.setText("Breeding");
-        tabLayout.addTab(breedingTab);
-
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                Fragment fragment=null;
-                switch(tab.getPosition()){
-                    case 0:
-                        fragment=new Animal_Profile();
-                        break;
-                    case 1:
-                        fragment=new Production();
-                        break;
-                    case 2:
-                        fragment=new Health();
-                        break;
-                    case 3:
-                        fragment=new Breeding();
-                        break;
-                }
-                FragmentManager fm=getSupportFragmentManager();
-                FragmentTransaction transaction=fm.beginTransaction();
-                transaction.replace(R.id.simpleFrameLayout,fragment);
-                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                transaction.commit();
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
+//        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+//            @Override
+//            public void onTabSelected(TabLayout.Tab tab) {
+//                Fragment fragment=null;
+//                switch(tab.getPosition()){
+//                    case 0:
+//                        fragment=new Animal_Profile();
+//                        break;
+//                    case 1:
+//                        fragment=new Production();
+//                        break;
+//                    case 2:
+//                        fragment=new Health();
+//                        break;
+//                    case 3:
+//                        fragment=new Breeding();
+//                        break;
+//                }
+//                Bundle animalIDBundle=new Bundle();
+//                animalIDBundle.putString("AnimalID",AnimalID);
+//                FragmentManager fm=getSupportFragmentManager();
+//                FragmentTransaction transaction=fm.beginTransaction();
+//                transaction.replace(R.id.simpleFrameLayout,fragment);
+//                fragment.setArguments(animalIDBundle);
+//                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+//                transaction.commit();
+//            }
+//
+//            @Override
+//            public void onTabUnselected(TabLayout.Tab tab) {
+//
+//            }
+//
+//            @Override
+//            public void onTabReselected(TabLayout.Tab tab) {
+//
+//            }
+//        });
 
         materialToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,6 +103,17 @@ public class AnimalProfile extends AppCompatActivity {
         });
     }
 
+    private void setUpWithFragment(Fragment currentFragment) {
+        Bundle animalIDBundle=new Bundle();
+        animalIDBundle.putString("AnimalID",AnimalID);
+        FragmentManager fm=getSupportFragmentManager();
+        currentFragment.setArguments(animalIDBundle);
+        FragmentTransaction transaction=fm.beginTransaction();
+        transaction.replace(R.id.simpleFrameLayout,currentFragment);
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.commit();
+    }
+
     private void fetchAnimalDetails(String animalID) {
         mRef.child(animalID).addValueEventListener(new ValueEventListener() {
             @Override
@@ -118,6 +121,7 @@ public class AnimalProfile extends AppCompatActivity {
                 Animal animal=snapshot.getValue(Animal.class);
                 String animalImageUrl=animal.getAnimalImageUrl();
                 Glide.with(getApplicationContext()).load(animalImageUrl).into(animalImageView);
+                animalNameTxt.setText(animal.getAnimalName());
             }
 
             @Override
@@ -125,5 +129,33 @@ public class AnimalProfile extends AppCompatActivity {
                 Log.d(TAG, "onCancelled: "+error.getMessage());
             }
         });
+    }
+
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+        switch (tab.getPosition()){
+            case 0:
+                setUpWithFragment(new Animal_Profile());
+                break;
+            case 1:
+                setUpWithFragment(new Production());
+                break;
+            case 2:
+                setUpWithFragment(new Health());
+                break;
+            case 4:
+                setUpWithFragment(new Breeding());
+                break;
+        }
+    }
+
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+
     }
 }
