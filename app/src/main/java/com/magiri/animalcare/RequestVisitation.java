@@ -333,6 +333,7 @@ public class RequestVisitation extends AppCompatActivity {
     }
 
     private void PromptPayment(String visitID, int visitationFee, String vetid,String serviceType,VisitRequest request) {
+//        visitationFee=1;
         AlertDialog.Builder paymentDailogBuilder=new AlertDialog.Builder(RequestVisitation.this);
         LayoutInflater layoutInflater= (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view=layoutInflater.inflate(R.layout.checkout_layout,null);
@@ -357,7 +358,7 @@ public class RequestVisitation extends AppCompatActivity {
                     Retrofit retrofit=builder.build();
                     RestClient restClient=retrofit.create(RestClient.class);
                     Call<STKResponse> call=restClient.pushStk(
-                            visitationFee,
+                            1,
                             Utils.refactorPhoneNumber(PhoneNumber),
                             vetid,
                             visitID
