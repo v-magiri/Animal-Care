@@ -32,7 +32,7 @@ public class MilkRecordAdapter extends RecyclerView.Adapter<MilkRecordAdapter.My
     @Override
     public void onBindViewHolder(@NonNull MilkRecordAdapter.MyViewHolder holder, int position) {
         MilkRecord milkRecord=milkRecordList.get(position);
-        holder.QuantityTxt.setText(milkRecord.getQuantity());
+        holder.QuantityTxt.setText(String.valueOf(milkRecord.getQuantity()));
         holder.milkTimeTxt.setText(milkRecord.getMilkTime());
         holder.milkDateTxt.setText(milkRecord.getDate());
     }

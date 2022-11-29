@@ -55,45 +55,6 @@ public class AnimalProfile extends AppCompatActivity implements TabLayout.OnTabS
         tabLayout.addOnTabSelectedListener(this);
         setUpWithFragment(currentFragment);
 
-//        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-//            @Override
-//            public void onTabSelected(TabLayout.Tab tab) {
-//                Fragment fragment=null;
-//                switch(tab.getPosition()){
-//                    case 0:
-//                        fragment=new Animal_Profile();
-//                        break;
-//                    case 1:
-//                        fragment=new Production();
-//                        break;
-//                    case 2:
-//                        fragment=new Health();
-//                        break;
-//                    case 3:
-//                        fragment=new BreedingFragment();
-//                        break;
-//                }
-//                Bundle animalIDBundle=new Bundle();
-//                animalIDBundle.putString("AnimalID",AnimalID);
-//                FragmentManager fm=getSupportFragmentManager();
-//                FragmentTransaction transaction=fm.beginTransaction();
-//                transaction.replace(R.id.simpleFrameLayout,fragment);
-//                fragment.setArguments(animalIDBundle);
-//                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-//                transaction.commit();
-//            }
-//
-//            @Override
-//            public void onTabUnselected(TabLayout.Tab tab) {
-//
-//            }
-//
-//            @Override
-//            public void onTabReselected(TabLayout.Tab tab) {
-//
-//            }
-//        });
-
         materialToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,13 +63,13 @@ public class AnimalProfile extends AppCompatActivity implements TabLayout.OnTabS
         });
     }
 
-    private void setUpWithFragment(Fragment currentFragment) {
+    private void setUpWithFragment(Fragment specificFragment) {
         Bundle animalIDBundle=new Bundle();
         animalIDBundle.putString("AnimalID",AnimalID);
         FragmentManager fm=getSupportFragmentManager();
-        currentFragment.setArguments(animalIDBundle);
+        specificFragment.setArguments(animalIDBundle);
         FragmentTransaction transaction=fm.beginTransaction();
-        transaction.replace(R.id.simpleFrameLayout,currentFragment);
+        transaction.replace(R.id.simpleFrameLayout,specificFragment);
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.commit();
     }
@@ -142,7 +103,7 @@ public class AnimalProfile extends AppCompatActivity implements TabLayout.OnTabS
             case 2:
                 setUpWithFragment(new Health());
                 break;
-            case 4:
+            case 3:
                 setUpWithFragment(new BreedingFragment());
                 break;
         }

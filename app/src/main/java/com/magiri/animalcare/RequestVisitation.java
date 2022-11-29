@@ -425,6 +425,7 @@ public class RequestVisitation extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Call<STKResponse> call, Throwable t) {
+                            progressDialog.dismiss();
                             Toast.makeText(getApplicationContext(),"Something Wrong Happened Please Try Again",Toast.LENGTH_SHORT).show();
                             Timber.tag(TAG).d("onFailure: Something wrong Happened");
                             paymentDailog.dismiss();

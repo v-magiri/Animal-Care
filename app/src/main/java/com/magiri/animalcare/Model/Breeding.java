@@ -10,13 +10,14 @@ public class Breeding {
                     String bullName, String vetID, String cost, String bullCode,
                     String strawNumber, String breedingID) {
         this.AnimalID = animalID;
-        this.BreedingDate = breedType;
+        this.BreedingDate = breedingDate;
+        this.BreedType = breedType;
         this.BullName = bullName;
         this.VetID = vetID;
         this.Cost = cost;
         this.BullCode = bullCode;
         this.StrawNumber = strawNumber;
-        this.BreedingID=breedingID;
+        this.BreedingID = breedingID;
     }
 
     public String getAnimalID() {
