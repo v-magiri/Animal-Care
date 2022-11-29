@@ -72,7 +72,7 @@ import timber.log.Timber;
 
 public class RequestVisitation extends AppCompatActivity {
     private static final String TAG = "RequestVisitation";
-    private EditText locationDropDown, servicesDropDown;
+//    private EditText locationDropDown, servicesDropDown;
     private Button submitBtn;
     private TextView locationTxt,VetNameTxt;
     private static String Country,Language,Api_Key;
@@ -82,7 +82,7 @@ public class RequestVisitation extends AppCompatActivity {
     private static final String []mSupportedAreas={""};
     private LinearLayout locationLayout;
     private DatabaseReference mRef,ref,databaseReference;
-    private ProgressDialog progressDialog,mProgressDialog;
+    private ProgressDialog progressDialog,mProgressDialog,mapProgressDialog;
     String[] locationOptions,serviceOptions;
     FusedLocationProviderClient fusedLocationProviderClient;
     String VETID,visitAddress,serviceType;
@@ -90,11 +90,11 @@ public class RequestVisitation extends AppCompatActivity {
     int visitationFee;
     double distanceBtw;
     AlertDialog paymentDailog;
-    AutoCompleteTextView animalSelectionTxt;
+    AutoCompleteTextView animalSelectionTxt,locationDropDown,servicesDropDown;
     String FarmerID,SelectedAnimal;
     ArrayList<String> listAnimal;
     ProgressDialog animalProgressDialog;
-    ArrayAdapter arrayAdapter;
+    ArrayAdapter arrayAdapter,locationOptionsAdapter,servicesOptionsAdapter;
     LinearLayout animalLayout;
 
     @Override
@@ -110,11 +110,15 @@ public class RequestVisitation extends AppCompatActivity {
         profilePic=findViewById(R.id.vetProfilePicCircleImageView);
         locationOptions=getResources().getStringArray(R.array.visitation_location_options);
         serviceOptions=getResources().getStringArray(R.array.service_options);
+        locationOptionsAdapter=new ArrayAdapter(getApplicationContext(),R.layout.item,locationOptions);
+        servicesOptionsAdapter=new ArrayAdapter(getApplicationContext(),R.layout.item,serviceOptions);
         fusedLocationProviderClient= LocationServices.getFusedLocationProviderClient(RequestVisitation.this);
         locationLayout=findViewById(R.id.locationLayout);
         animalSelectionTxt=findViewById(R.id.animalChoiceTxt);
         FarmerID=Prevalent.currentOnlineFarmer.getFarmerID();
         animalLayout=findViewById(R.id.animalChoiceLayout);
+        locationDropDown.setAdapter(locationOptionsAdapter);
+        servicesDropDown.setAdapter(servicesOptionsAdapter);
 
         databaseReference=FirebaseDatabase.getInstance().getReference("Animals").child(FarmerID);
         listAnimal=new ArrayList<>();
@@ -122,11 +126,32 @@ public class RequestVisitation extends AppCompatActivity {
         animalProgressDialog.setMessage("Loading Animal Names");
         animalProgressDialog.setCanceledOnTouchOutside(false);
         animalProgressDialog.show();
+        mapProgressDialog=new ProgressDialog(this);
+        mapProgressDialog.setMessage("Opening Map");
+        mapProgressDialog.setCanceledOnTouchOutside(false);
         loadMyHerd();
         animalSelectionTxt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 SelectedAnimal=parent.getItemAtPosition(position).toString();
+            }
+        });
+        servicesDropDown.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                serviceType=parent.getItemAtPosition(position).toString();
+            }
+        });
+        locationDropDown.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String locationOptionSelected=parent.getItemAtPosition(position).toString();
+                if(locationOptionSelected.equals("Current Location")){
+                    getFarmerLocation();
+                }else{
+                    mapProgressDialog.dismiss();
+                    SelectLocation();
+                }
             }
         });
 
@@ -158,64 +183,64 @@ public class RequestVisitation extends AppCompatActivity {
                 validateFields();
             }
         });
-        locationDropDown.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder alertDialog=new AlertDialog.Builder(RequestVisitation.this);
-                alertDialog.setTitle("Choose Visitation Location");
-                int checkedItem=1;
-                alertDialog.setSingleChoiceItems(locationOptions, checkedItem, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which){
-                            case 0:
-                                getFarmerLocation();
-                                dialog.dismiss();
-                                break;
-                            case 1:
-                                progressDialog.show();
-                                dialog.dismiss();
-                                SelectLocation();
-//                                if(Latitude!=null && Longitude!=null){
-//                                  payVisit(vetID);
-//                                }else{
-//                                    Toast.makeText(getApplicationContext(),"Something wrong happened",Toast.LENGTH_SHORT).show();
-//
-                                break;
-                        }
-                        locationDropDown.setText(locationOptions[which]);
-                    }
-                });
-                AlertDialog alert = alertDialog.create();
-                alert.setCanceledOnTouchOutside(false);
-                alert.show();
-            }
-        });
-        servicesDropDown.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder alertDialog=new AlertDialog.Builder(RequestVisitation.this);
-                alertDialog.setTitle("Choose Service You Need");
-                int checkedItem=1;
-                alertDialog.setSingleChoiceItems(serviceOptions, checkedItem, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which){
-                            case 0:
-                            case 1:
-                                dialog.dismiss();
-                                serviceType=serviceOptions[which];
-                                break;
-                            //                                servicesLayout.setVisibility(View.VISIBLE);
-                        }
-                        servicesDropDown.setText(serviceOptions[which]);
-                    }
-                });
-                AlertDialog alert = alertDialog.create();
-                alert.setCanceledOnTouchOutside(false);
-                alert.show();
-            }
-        });
+//        locationDropDown.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                AlertDialog.Builder alertDialog=new AlertDialog.Builder(RequestVisitation.this);
+//                alertDialog.setTitle("Choose Visitation Location");
+//                int checkedItem=1;
+//                alertDialog.setSingleChoiceItems(locationOptions, checkedItem, new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        switch (which){
+//                            case 0:
+//                                getFarmerLocation();
+//                                dialog.dismiss();
+//                                break;
+//                            case 1:
+//                                progressDialog.show();
+//                                dialog.dismiss();
+//                                SelectLocation();
+////                                if(Latitude!=null && Longitude!=null){
+////                                  payVisit(vetID);
+////                                }else{
+////                                    Toast.makeText(getApplicationContext(),"Something wrong happened",Toast.LENGTH_SHORT).show();
+////
+//                                break;
+//                        }
+//                        locationDropDown.setText(locationOptions[which]);
+//                    }
+//                });
+//                AlertDialog alert = alertDialog.create();
+//                alert.setCanceledOnTouchOutside(false);
+//                alert.show();
+//            }
+//        });
+//        servicesDropDown.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                AlertDialog.Builder alertDialog=new AlertDialog.Builder(RequestVisitation.this);
+//                alertDialog.setTitle("Choose Service You Need");
+//                int checkedItem=1;
+//                alertDialog.setSingleChoiceItems(serviceOptions, checkedItem, new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        switch (which){
+//                            case 0:
+//                            case 1:
+//                                dialog.dismiss();
+//                                serviceType=serviceOptions[which];
+//                                break;
+//                            //                                servicesLayout.setVisibility(View.VISIBLE);
+//                        }
+//                        servicesDropDown.setText(serviceOptions[which]);
+//                    }
+//                });
+//                AlertDialog alert = alertDialog.create();
+//                alert.setCanceledOnTouchOutside(false);
+//                alert.show();
+//            }
+//        });
 
     }
 
@@ -461,6 +486,7 @@ public class RequestVisitation extends AppCompatActivity {
         intent.putExtras(bundle);
         startActivityForResult(intent, SimplePlacePicker.SELECT_LOCATION_REQUEST_CODE);
         progressDialog.dismiss();
+        mapProgressDialog.dismiss();
     }
 
     @SuppressLint("MissingPermission")

@@ -10,7 +10,6 @@ public class Breeding {
                     String bullName, String vetID, String cost, String bullCode,
                     String strawNumber, String breedingID) {
         this.AnimalID = animalID;
-        this.BreedingDate = breedingDate;
         this.BreedingDate = breedType;
         this.BullName = bullName;
         this.VetID = vetID;

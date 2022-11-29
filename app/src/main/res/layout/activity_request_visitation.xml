@@ -87,7 +87,7 @@
                     android:hint="@string/animalChoose"
                     android:padding="8dp"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
-                    android:layout_marginVertical="10dp">
+                    android:layout_marginVertical="6dp">
                     <AutoCompleteTextView
                         android:id="@+id/animalChoiceTxt"
                         android:inputType="none"
@@ -96,133 +96,45 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                 </com.google.android.material.textfield.TextInputLayout>
-
-                <!--                    <RadioGroup-->
-                <!--                        android:layout_width="match_parent"-->
-                <!--                        android:orientation="horizontal"-->
-                <!--                        android:layout_height="wrap_content">-->
-                <!--                        <RadioButton-->
-                <!--                            android:layout_width="wrap_content"-->
-                <!--                            android:layout_height="wrap_content"-->
-                <!--                            android:padding="10dp"-->
-                <!--                            android:drawableTop="@drawable/ic_morning"-->
-                <!--                            android:text="Morning"-->
-                <!--                            android:layout_marginHorizontal="5dp"-->
-                <!--                            android:drawablePadding="10dp"-->
-                <!--                            android:textAlignment="center"-->
-                <!--                            android:background="@drawable/radio_selector"-->
-                <!--                            android:textColor="@drawable/text_color"-->
-                <!--                            android:layout_marginVertical="10dp"-->
-                <!--                            android:button="@android:color/transparent"-->
-                <!--                            android:id="@+id/morningBtn"/>-->
-                <!--                        <RadioButton-->
-                <!--                            android:layout_width="wrap_content"-->
-                <!--                            android:layout_height="wrap_content"-->
-                <!--                            android:padding="10dp"-->
-                <!--                            android:drawableTop="@drawable/ic_noon"-->
-                <!--                            android:text="Afternoon"-->
-                <!--                            android:background="@drawable/radio_selector"-->
-                <!--                            android:textColor="@drawable/text_color"-->
-                <!--                            android:layout_marginVertical="10dp"-->
-                <!--                            android:layout_marginHorizontal="5dp"-->
-                <!--                            android:drawablePadding="10dp"-->
-                <!--                            android:button="@android:color/transparent"-->
-                <!--                            android:id="@+id/noonBtn"/>-->
-                <!--                        <RadioButton-->
-                <!--                            android:layout_width="wrap_content"-->
-                <!--                            android:layout_height="wrap_content"-->
-                <!--                            android:padding="10dp"-->
-                <!--                            android:drawableTop="@drawable/ic_evening"-->
-                <!--                            android:text="Evening"-->
-                <!--                            android:drawablePadding="10dp"-->
-                <!--                            android:background="@drawable/radio_selector"-->
-                <!--                            android:textColor="@drawable/text_color"-->
-                <!--                            android:layout_marginVertical="10dp"-->
-                <!--                            android:layout_marginHorizontal="5dp"-->
-                <!--                            android:textAlignment="center"-->
-                <!--                            android:button="@android:color/transparent"-->
-                <!--                            android:id="@+id/eveningBtn"/>-->
-                <!--                        <RadioButton-->
-                <!--                            android:layout_width="wrap_content"-->
-                <!--                            android:layout_height="wrap_content"-->
-                <!--                            android:padding="10dp"-->
-                <!--                            android:drawableTop="@drawable/ic_allday"-->
-                <!--                            android:text="All Day"-->
-                <!--                            android:background="@drawable/radio_selector"-->
-                <!--                            android:textColor="@drawable/text_color"-->
-                <!--                            android:layout_marginVertical="10dp"-->
-                <!--                            android:textAlignment="center"-->
-                <!--                            android:drawablePadding="10dp"-->
-                <!--                            android:layout_marginHorizontal="5dp"-->
-                <!--                            android:button="@android:color/transparent"-->
-                <!--                            android:id="@+id/allDayBtn"/>-->
-                <!--                    </RadioGroup>-->
             </LinearLayout>
-            <LinearLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:orientation="vertical">
-                <EditText
+                android:padding="8dp"
+                android:hint="@string/visit_options"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                android:layout_marginBottom="8dp">
+                <AutoCompleteTextView
                     style="@style/editTextSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/servicesDropDown"
                     android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:editable="false"
-                    android:cursorVisible="false"
-                    android:hint="@string/visit_options"/>
-                <!--            <LinearLayout-->
-                <!--                android:layout_width="match_parent"-->
-                <!--                android:layout_height="wrap_content"-->
-                <!--                android:weightSum="2"-->
-                <!--                android:id="@+id/servicesLayout"-->
-                <!--                android:visibility="gone"-->
-                <!--                android:orientation="horizontal">-->
-                <!--                <com.google.android.material.textfield.TextInputLayout-->
-                <!--                    android:layout_width="0dp"-->
-                <!--                    android:layout_weight="1"-->
-                <!--                    android:layout_marginHorizontal="3dp"-->
-                <!--                    android:layout_marginVertical="10dp"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:hint="Diagnosis">-->
-                <!--                    <com.google.android.material.textfield.TextInputEditText-->
-                <!--                        android:layout_width="match_parent"-->
-                <!--                        android:layout_height="wrap_content"-->
-                <!--                        android:id="@+id/diagnosisTxt"-->
-                <!--                        android:textColor="@color/black"-->
-                <!--                        android:textSize="20sp"/>-->
-                <!--                </com.google.android.material.textfield.TextInputLayout>-->
-                <!--                <Button-->
-                <!--                    android:layout_width="0dp"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_weight="1"-->
-                <!--                    android:background="@drawable/button_background"-->
-                <!--                    android:layout_gravity="center_vertical"-->
-                <!--                    android:text="@string/Diagnosis"-->
-                <!--                    android:paddingVertical="10dp"-->
-                <!--                    app:backgroundTint="@null"-->
-                <!--                    android:id="@+id/diagnosisBtn"-->
-                <!--                    android:layout_marginHorizontal="20dp"-->
-                <!--                    android:textColor="@color/white"/>-->
-                <!--            </LinearLayout>-->
-            </LinearLayout>
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:cursorVisible="false"/>
+            </com.google.android.material.textfield.TextInputLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:orientation="vertical">
-                <EditText
-                    style="@style/editTextSpinner"
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/locationDropDown"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:editable="false"
-                    android:cursorVisible="false"
-                    android:hint="@string/location_options"/>
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                    android:hint="@string/location_options">
+                    <AutoCompleteTextView
+                        style="@style/editTextSpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/locationDropDown"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:cursorVisible="false" />
+                </com.google.android.material.textfield.TextInputLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

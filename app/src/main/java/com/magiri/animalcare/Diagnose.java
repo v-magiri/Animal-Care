@@ -282,10 +282,10 @@ public class Diagnose extends AppCompatActivity {
         //make a post request to diagnose disease through naivebayes classifier
         String Symptoms="";
         for(String s:checkedSymptoms){
-            Symptoms+=s+"n";
+            Symptoms+=s+"\n";
         }
         Retrofit.Builder builder=new Retrofit.Builder()
-                .baseUrl("https://cdaa-105-160-82-33.in.ngrok.io")
+                .baseUrl("https://f1e6-41-89-227-170.eu.ngrok.io/")
                 .addConverterFactory(GsonConverterFactory.create());
 
         Retrofit retrofit=builder.build();

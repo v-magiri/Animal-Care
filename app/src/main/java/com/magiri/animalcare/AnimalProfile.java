@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -71,7 +70,7 @@ public class AnimalProfile extends AppCompatActivity implements TabLayout.OnTabS
 //                        fragment=new Health();
 //                        break;
 //                    case 3:
-//                        fragment=new Breeding();
+//                        fragment=new BreedingFragment();
 //                        break;
 //                }
 //                Bundle animalIDBundle=new Bundle();
@@ -144,7 +143,7 @@ public class AnimalProfile extends AppCompatActivity implements TabLayout.OnTabS
                 setUpWithFragment(new Health());
                 break;
             case 4:
-                setUpWithFragment(new Breeding());
+                setUpWithFragment(new BreedingFragment());
                 break;
         }
     }

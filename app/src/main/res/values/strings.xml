@@ -31,7 +31,7 @@
     <string name="procedure" translatable="false">Confirm the checkout Phone number then click Proceed to checkout</string>
     <string name="HealthRecord" translatable="false">Health Record</string>
     <string name="production" translatable="false">Milk Production</string>
-    <string name="breeding" translatable="false">Breeding</string>
+    <string name="breedingFragment" translatable="false">Breeding</string>
     <string name="health" translatable="false">Health</string>
     <string name="visit_options" translatable="false">Choose Service that your need</string>
     <string name="submit" translatable="false">Submit</string>

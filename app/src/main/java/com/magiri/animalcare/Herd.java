@@ -43,6 +43,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.datepicker.CalendarConstraints;
+import com.google.android.material.datepicker.DateValidatorPointBackward;
+import com.google.android.material.datepicker.DateValidatorPointForward;
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -60,15 +65,17 @@ import com.magiri.animalcare.Session.Prevalent;
 import com.magiri.animalcare.UI.DropDown;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class Herd extends AppCompatActivity {
     private static final String TAG = "Herd";
     private MaterialToolbar herdMaterialToolBar;
-//    private LinearLayout breedFilter,statusFilter,ageFilter;
     private FloatingActionButton addAnimalFAB;
     private RecyclerView animalRecyclerView;
     private AnimalAdapter animalAdapter;
@@ -76,9 +83,6 @@ public class Herd extends AppCompatActivity {
     StorageTask storageTask;
     private DatabaseReference mRef,databaseReference;
     String FarmerID;
-//    ImageButton imageUploadBtn;
-//    TextInputEditText animalNameTxt,dateTxt;
-//    DropDown statusDropDown,groupDropDown,breedDropDown;
     String[] breed,group,status;
     ProgressDialog progressDialog,mProgressDialog;
     AlertDialog alertDialog;
@@ -99,9 +103,6 @@ public class Herd extends AppCompatActivity {
         setContentView(R.layout.activity_herd);
 
         herdMaterialToolBar=findViewById(R.id.herdMaterialToolBar);
-//        breedFilter=findViewById(R.id.breedFilter);
-//        statusFilter=findViewById(R.id.statusFilter);
-//        ageFilter=findViewById(R.id.ageFilter);
         addAnimalFAB=findViewById(R.id.addAnimalFloatingBar);
         animalRecyclerView=findViewById(R.id.herdRecyclerView);
         FarmerID= Prevalent.currentOnlineFarmer.getFarmerID();
@@ -159,18 +160,23 @@ public class Herd extends AppCompatActivity {
                 dateText.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        final Calendar calendar=Calendar.getInstance();
-                        int year= calendar.get(Calendar.YEAR);
-                        int month=calendar.get(Calendar.MONTH);
-                        int day=calendar.get(Calendar.DAY_OF_MONTH);
+                        MaterialDatePicker.Builder<Long> builder = MaterialDatePicker.Builder.datePicker();
+                        CalendarConstraints.Builder calendarConstraintBuilder = new CalendarConstraints.Builder();
+                        builder.setTitleText("Animal Date of Birth");
+                        calendarConstraintBuilder.setValidator(DateValidatorPointBackward.now());
+                        builder.setCalendarConstraints(calendarConstraintBuilder.build());
 
-                        DatePickerDialog datePickerDialog=new DatePickerDialog(Herd.this, new DatePickerDialog.OnDateSetListener() {
+                        final MaterialDatePicker<Long> materialDatePicker = builder.build();
+                        materialDatePicker.show(getSupportFragmentManager(),materialDatePicker.toString());
+                        materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Long>() {
                             @Override
-                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                dateText.setText(dayOfMonth+"/"+(month+1)+"/"+year);
+                            public void onPositiveButtonClick(Long selection) {
+                                Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+                                calendar.setTimeInMillis(selection);
+                                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
+                                dateText.setText(sdf.format(calendar.getTime()));
                             }
-                        }, year,month,day);
-                        datePickerDialog.show();
+                        });
                     }
                 });
                 Button addBtn=view.findViewById(R.id.addAnimalBtn);
