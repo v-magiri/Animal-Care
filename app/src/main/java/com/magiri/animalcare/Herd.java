@@ -25,6 +25,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -104,13 +105,12 @@ public class Herd extends AppCompatActivity {
 
         herdMaterialToolBar=findViewById(R.id.herdMaterialToolBar);
         addAnimalFAB=findViewById(R.id.addAnimalFloatingBar);
-        animalRecyclerView=findViewById(R.id.herdRecyclerView);
         FarmerID= Prevalent.currentOnlineFarmer.getFarmerID();
+        setSupportActionBar(herdMaterialToolBar);
         animalList=new ArrayList<>();
-        animalAdapter=new AnimalAdapter(Herd.this,animalList);
+        animalRecyclerView=findViewById(R.id.herdRecyclerView);
         animalRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         animalRecyclerView.setHasFixedSize(true);
-        animalRecyclerView.setAdapter(animalAdapter);
         mRef= FirebaseDatabase.getInstance().getReference("Animals").child(FarmerID);
         databaseReference=FirebaseDatabase.getInstance().getReference("Animal");
         breed=getResources().getStringArray(R.array.breed);
@@ -150,6 +150,15 @@ public class Herd extends AppCompatActivity {
                 AutoCompleteTextView groupDropDown=view.findViewById(R.id.animalGroup);
                 AutoCompleteTextView breedDropDown=view.findViewById(R.id.breedSpinner);
                 AutoCompleteTextView statusDropDown=view.findViewById(R.id.statusDropDown);
+                ImageView closeAlertDialogImageView=view.findViewById(R.id.closeBtn);
+                Button addBtn=view.findViewById(R.id.addAnimalBtn);
+
+                closeAlertDialogImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                    }
+                });
                 animalImageBtn=view.findViewById(R.id.animalImageUpload);
                 animalImageBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -179,7 +188,6 @@ public class Herd extends AppCompatActivity {
                         });
                     }
                 });
-                Button addBtn=view.findViewById(R.id.addAnimalBtn);
                 groupDropDown.setAdapter(groupsAdapter);
                 breedDropDown.setAdapter(breedAdapter);
                 statusDropDown.setAdapter(statusAdapter);
@@ -377,6 +385,8 @@ public class Herd extends AppCompatActivity {
                     Animal myAnimal=dataSnapshot.getValue(Animal.class);
                     if(myAnimal.getOwnerID().equals(FarmerID)){
                         animalList.add(myAnimal);
+                        animalAdapter=new AnimalAdapter(Herd.this,animalList);
+                        animalRecyclerView.setAdapter(animalAdapter);
                     }
                 }
                 animalAdapter.notifyDataSetChanged();
@@ -411,7 +421,7 @@ public class Herd extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                //todo update with the recyclerView Adapter
+                animalAdapter.getFilter().filter(newText);
                 return false;
             }
         });

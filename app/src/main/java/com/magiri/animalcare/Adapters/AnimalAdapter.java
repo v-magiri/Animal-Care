@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,18 +23,25 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.datepicker.CalendarConstraints;
+import com.google.android.material.datepicker.DateValidatorPointBackward;
+import com.google.android.material.datepicker.DateValidatorPointForward;
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.magiri.animalcare.AnimalProfile;
 import com.magiri.animalcare.Model.Animal;
 import com.magiri.animalcare.Model.MilkRecord;
+import com.magiri.animalcare.Model.Veterinarian;
 import com.magiri.animalcare.R;
 import com.magiri.animalcare.Session.Prevalent;
 
@@ -44,10 +53,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.MyViewHolder> {
+public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.MyViewHolder> implements Filterable {
     private static final String TAG = "AnimalAdapter";
     Context context;
     List<Animal> animalList;
@@ -59,6 +69,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.MyViewHold
     String str;
     DateFormat formatter;
     SimpleDateFormat sdf;
+    List<Animal> aniList;
 
     public AnimalAdapter(Context context, List<Animal> animalList) {
         this.context = context;
@@ -71,6 +82,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.MyViewHold
         sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
         Calendar obj = Calendar.getInstance();
         str = formatter.format(obj.getTime());
+        aniList=new ArrayList<>(animalList);
     }
 
     @NonNull
@@ -172,6 +184,14 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.MyViewHold
         RadioButton noonRadio=view.findViewById(R.id.noonBtn);
         RadioButton eveningRadio=view.findViewById(R.id.eveningBtn);
         RadioButton allDayRadio=view.findViewById(R.id.allDayBtn);
+        ImageView closeImageView=view.findViewById(R.id.closeBtn);
+
+        closeImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                milkAlertDialog.dismiss();
+            }
+        });
         animalNameTxt.setText(animalName);
 
         //set Current Date to the DateEditText
@@ -180,18 +200,22 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.MyViewHold
         dateEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Calendar calendar=Calendar.getInstance();
-                int year= calendar.get(Calendar.YEAR);
-                int month=calendar.get(Calendar.MONTH);
-                int day=calendar.get(Calendar.DAY_OF_MONTH);
+                MaterialDatePicker.Builder<Long> builder = MaterialDatePicker.Builder.datePicker();
+                CalendarConstraints.Builder calendarConstraintBuilder = new CalendarConstraints.Builder();
+                builder.setTitleText("Milk Date");
+                calendarConstraintBuilder.setValidator(DateValidatorPointBackward.now());
+                builder.setCalendarConstraints(calendarConstraintBuilder.build());
 
-                DatePickerDialog datePickerDialog=new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
+                final MaterialDatePicker<Long> materialDatePicker = builder.build();
+                materialDatePicker.show(((AppCompatActivity) context).getSupportFragmentManager(),materialDatePicker.toString());
+                materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Long>() {
                     @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        dateEditText.setText(dayOfMonth+"/"+(month+1)+"/"+year);
+                    public void onPositiveButtonClick(Long selection) {
+                        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+                        calendar.setTimeInMillis(selection);
+                        dateEditText.setText(sdf.format(calendar.getTime()));
                     }
-                }, year,month,day);
-                datePickerDialog.show();
+                });
             }
         });
 
@@ -270,6 +294,38 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.MyViewHold
     public int getItemCount() {
         return animalList.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return herdFilter;
+    }
+    private final Filter herdFilter=new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Animal> filterAnimals=new ArrayList<>();
+            if(constraint == null || constraint.length()==0 ){
+                filterAnimals.addAll(aniList);
+            }else{
+                String searchText=constraint.toString().toLowerCase();
+                for(Animal animal:aniList){
+                    if(animal.getAnimalName().toLowerCase().contains(searchText)){
+                        filterAnimals.add(animal);
+                    }
+                }
+            }
+            FilterResults results=new FilterResults();
+            results.values=filterAnimals;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            animalList.clear();
+            animalList.addAll((List)results.values);
+            notifyDataSetChanged();
+        }
+    };
+
     static class MyViewHolder extends RecyclerView.ViewHolder{
         private CircleImageView animalImageView;
         private TextView ageTextView,NameTextView,statusTextView;
