@@ -67,7 +67,6 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.MyViewHold
     String FarmerID;
     AlertDialog milkAlertDialog;
     String str;
-    DateFormat formatter;
     SimpleDateFormat sdf;
     List<Animal> aniList;
 
@@ -78,10 +77,9 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.MyViewHold
         FarmerID= Prevalent.currentOnlineFarmer.getFarmerID();
         ref= FirebaseDatabase.getInstance().getReference("Animals").child(FarmerID);
         databaseReference=FirebaseDatabase.getInstance().getReference("MilkProduction");
-        formatter = new SimpleDateFormat("dd/MM/yy");
         sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
         Calendar obj = Calendar.getInstance();
-        str = formatter.format(obj.getTime());
+        str = sdf.format(obj.getTime());
         aniList=new ArrayList<>(animalList);
     }
 
@@ -99,8 +97,8 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.MyViewHold
         String DOB=animal.getDOB();
 //        Long Age;
         try {
-            Date date1=formatter.parse(DOB);
-            Date date2=formatter.parse(str);
+            Date date1=sdf.parse(DOB);
+            Date date2=sdf.parse(str);
             Calendar m_calendar=Calendar.getInstance();
             m_calendar.setTime(date1);
             int nMonth1=12*m_calendar.get(Calendar.YEAR)+m_calendar.get(Calendar.MONTH);

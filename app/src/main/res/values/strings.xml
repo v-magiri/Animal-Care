@@ -61,6 +61,7 @@
     <string name="animalProfile" translatable="false">Animal Profile</string>
     <string name="diseaseAnimalText" translatable="false">Animal requiring intervention</string>
     <string name="animalChoose">Select Animal</string>
+    <string name="totalMilkProduction">Total Milk Production</string>
 
     //string for spinner
     <string-array name="topic">
@@ -158,5 +159,11 @@
         <item>Add Health Record</item>
         <item>Add Milk Record</item>
         <item>Add Breeding Record</item>
+    </string-array>
+    <string-array name="milkFilterButtons">
+        <item>Today</item>
+        <item>This Week</item>
+        <item>This Month</item>
+        <item>Total</item>
     </string-array>
 </resources>
