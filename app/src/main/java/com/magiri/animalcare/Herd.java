@@ -27,6 +27,8 @@ import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -97,6 +99,9 @@ public class Herd extends AppCompatActivity {
     String selectedBreed;
     String animalGroup;
     boolean animalExists;
+    LinearLayout filterLayout;
+    RadioButton pregnantRadioBtn,dryRadioBtn,lactatingRadioBtn;
+    RadioGroup animalStatusRadioGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +122,33 @@ public class Herd extends AppCompatActivity {
         status=getResources().getStringArray(R.array.animal_status);
         group=getResources().getStringArray(R.array.age_group);
         storageReference= FirebaseStorage.getInstance().getReference();
+        filterLayout=findViewById(R.id.filterLayout);
+        mProgressDialog=new ProgressDialog(this);
+        mProgressDialog.setCanceledOnTouchOutside(false);
+        mProgressDialog.setMessage("Filtering Animals");
+
+        pregnantRadioBtn=findViewById(R.id.pregnantRadioBtn);
+        lactatingRadioBtn=findViewById(R.id.lactatingRadioBtn);
+        dryRadioBtn=findViewById(R.id.dryRadioBtn);
+        animalStatusRadioGroup=findViewById(R.id.filterLayout);
+
+        animalStatusRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId){
+                    case R.id.pregnantRadioBtn:
+                        filterAnimalByStatus("Pregnant");
+                        break;
+                    case R.id.dryRadioBtn:
+                        filterAnimalByStatus("Dry");
+                        break;
+                    case R.id.lactatingRadioBtn:
+                        filterAnimalByStatus("Lactating");
+                        break;
+                }
+            }
+        });
+
 
         groupsAdapter=new ArrayAdapter(Herd.this,R.layout.item,getResources().getStringArray(R.array.age_group));
         breedAdapter=new ArrayAdapter(Herd.this,R.layout.item,getResources().getStringArray(R.array.breed));
@@ -252,6 +284,32 @@ public class Herd extends AppCompatActivity {
                 alertDialog=alertDailogBuilder.create();
                 alertDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                 alertDialog.show();
+            }
+        });
+    }
+
+    private void filterAnimalByStatus(String Status) {
+        mProgressDialog.show();
+        mRef.orderByChild("status").equalTo(Status).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                animalList.clear();
+                for(DataSnapshot dataSnapshot:snapshot.getChildren()){
+                    Animal myAnimal=dataSnapshot.getValue(Animal.class);
+                    if(myAnimal.getOwnerID().equals(FarmerID)){
+                        animalList.add(myAnimal);
+                        animalAdapter=new AnimalAdapter(Herd.this,animalList);
+                        animalRecyclerView.setAdapter(animalAdapter);
+                    }
+                }
+                mProgressDialog.dismiss();
+                animalAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(Herd.this, "Something wrong Happened", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onCancelled: "+error.getMessage());
             }
         });
     }
@@ -408,7 +466,7 @@ public class Herd extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.vet_menu,menu);
+        getMenuInflater().inflate(R.menu.animal_menu,menu);
         MenuItem menuItem=menu.findItem(R.id.app_bar_search);
 
         SearchView searchView= (SearchView) menuItem.getActionView();
@@ -427,5 +485,20 @@ public class Herd extends AppCompatActivity {
         });
 
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.filter:
+                if(filterLayout.getVisibility()==View.VISIBLE){
+                    filterLayout.setVisibility(View.GONE);
+                }else {
+                    filterLayout.setVisibility(View.VISIBLE);
+                    getMyHerd();
+                }
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

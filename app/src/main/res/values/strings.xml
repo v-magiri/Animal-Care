@@ -148,7 +148,7 @@
     <string-array name="animal_status">
         <item>Dry</item>
         <item>Lactating</item>
-        <item>In Calf</item>
+        <item>Pregnant</item>
     </string-array>
     <string-array name="gender">
         <item>Male</item>
