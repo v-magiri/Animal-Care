@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,7 +25,7 @@ import com.magiri.animalcare.R;
 
 import java.util.List;
 
-public class BreedingAdapter extends RecyclerView.Adapter<BreedingAdapter.MyViewHolder> {
+public class BreedingAdapter extends RecyclerView.Adapter<BreedingAdapter.MyViewHolder>{
 
     private static final String TAG = "BreedingAdapter";
     Context context;
@@ -70,6 +72,7 @@ public class BreedingAdapter extends RecyclerView.Adapter<BreedingAdapter.MyView
     public int getItemCount() {
         return breedingList.size();
     }
+
 
     class MyViewHolder extends RecyclerView.ViewHolder{
         private TextView bullNameTxt,vetNameTxt,costTxt,DateTxt;

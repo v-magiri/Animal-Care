@@ -29,11 +29,29 @@ public class FarmerRecords extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(),Herd.class));
             }
         });
+        breedingCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),BreedingRecord.class));
+            }
+        });
+        productionCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),ProductionRecord.class));
+            }
+        });
 
         recordMaterialToolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        healthCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),HealthRecords.class));
             }
         });
     }

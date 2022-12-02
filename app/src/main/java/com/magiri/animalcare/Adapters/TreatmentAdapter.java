@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,7 +17,7 @@ import com.magiri.animalcare.R;
 
 import java.util.List;
 
-public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.MyViewHolder> {
+public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.MyViewHolder>{
     Context context;
     List<DiseaseTreatment> diseaseTreatmentList;
 
@@ -50,6 +52,7 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.MyVi
     public int getItemCount() {
         return diseaseTreatmentList.size();
     }
+
     class MyViewHolder extends RecyclerView.ViewHolder{
         private TextView DiagnosisTxt,treatmentTxt,costTxt,DateTxt;
         private CardView healthCard;

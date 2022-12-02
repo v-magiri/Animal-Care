@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,7 +16,7 @@ import com.magiri.animalcare.R;
 
 import java.util.List;
 
-public class MilkRecordAdapter extends RecyclerView.Adapter<MilkRecordAdapter.MyViewHolder> {
+public class MilkRecordAdapter extends RecyclerView.Adapter<MilkRecordAdapter.MyViewHolder>{
     Context context;
     List<MilkRecord> milkRecordList;
 
@@ -41,6 +43,8 @@ public class MilkRecordAdapter extends RecyclerView.Adapter<MilkRecordAdapter.My
     public int getItemCount() {
         return milkRecordList.size();
     }
+
+
     class MyViewHolder extends RecyclerView.ViewHolder{
         TextView milkDateTxt,milkTimeTxt,QuantityTxt;
         public MyViewHolder(@NonNull View itemView) {
