@@ -23,6 +23,7 @@ import com.magiri.animalcare.Model.Animal;
 import com.magiri.animalcare.Model.Breeding;
 import com.magiri.animalcare.Model.Veterinarian;
 import com.magiri.animalcare.R;
+import com.magiri.animalcare.Session.Prevalent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,12 +37,14 @@ public class AnimalBreedingAdapter extends RecyclerView.Adapter<AnimalBreedingAd
     private final DatabaseReference ref;
     List<Breeding> breedList;
     private final DatabaseReference databaseReference;
+    private String FarmerID;
 
     public AnimalBreedingAdapter(Context context, List<Breeding> breedingList) {
         this.context = context;
         this.breedingList = breedingList;
+        FarmerID= Prevalent.currentOnlineFarmer.getFarmerID();
         ref= FirebaseDatabase.getInstance().getReference("Veterinarian");
-        databaseReference=FirebaseDatabase.getInstance().getReference("Animals");
+        databaseReference=FirebaseDatabase.getInstance().getReference("Animals").child(FarmerID);
         breedList=new ArrayList<>(breedingList);
     }
 
@@ -80,6 +83,7 @@ public class AnimalBreedingAdapter extends RecyclerView.Adapter<AnimalBreedingAd
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Animal animal=snapshot.getValue(Animal.class);
+                assert animal != null;
                 String animalProfileImgUrl=animal.getAnimalImageUrl();
 
                 if(TextUtils.isEmpty(animalProfileImgUrl)){

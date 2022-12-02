@@ -42,7 +42,6 @@ public class BreedingRecord extends AppCompatActivity {
         materialToolbar=findViewById(R.id.breedingMaterialToolBar);
         setSupportActionBar(materialToolbar);
         breedingList=new ArrayList<>();
-        breedingAdapter=new AnimalBreedingAdapter(BreedingRecord.this,breedingList);
         materialToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,8 +52,6 @@ public class BreedingRecord extends AppCompatActivity {
         breedRecyclerView=findViewById(R.id.breedingRecordRecyclerView);
         breedRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         breedRecyclerView.setHasFixedSize(true);
-        breedRecyclerView.setAdapter(breedingAdapter);
-
         getBreedingRecord();
 
     }
@@ -66,6 +63,9 @@ public class BreedingRecord extends AppCompatActivity {
                 for(DataSnapshot dataSnapshot:snapshot.getChildren()){
                     Breeding breeding=dataSnapshot.getValue(Breeding.class);
                     breedingList.add(breeding);
+                    breedingAdapter=new AnimalBreedingAdapter(BreedingRecord.this,breedingList);
+                    breedRecyclerView.setAdapter(breedingAdapter);
+
                 }
                 breedingAdapter.notifyDataSetChanged();
 
