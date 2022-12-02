@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.database.DataSnapshot;
@@ -50,6 +51,12 @@ public class HealthRecords extends AppCompatActivity {
         mRef= FirebaseDatabase.getInstance().getReference("Health_Record").child(FarmerID);
 
         getTreatmentRecord();
+        materialToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void getTreatmentRecord() {
@@ -73,10 +80,12 @@ public class HealthRecords extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.vet_menu,menu);
         MenuItem menuItem=menu.findItem(R.id.app_bar_search);
 
         SearchView searchView= (SearchView) menuItem.getActionView();
-        searchView.setQueryHint("Search Vets");
+        searchView.setQueryHint("Search Record by Name");
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -90,6 +99,6 @@ public class HealthRecords extends AppCompatActivity {
                 return false;
             }
         });
-        return super.onCreateOptionsMenu(menu);
+        return true;
     }
 }

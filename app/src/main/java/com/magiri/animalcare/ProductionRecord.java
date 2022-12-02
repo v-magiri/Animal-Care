@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.database.DataSnapshot;
@@ -49,6 +50,12 @@ public class ProductionRecord extends AppCompatActivity {
         FarmerID= Prevalent.currentOnlineFarmer.getFarmerID();
         ref= FirebaseDatabase.getInstance().getReference("MilkProduction").child(FarmerID);
         getMilkProduction();
+        materialToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void getMilkProduction() {
@@ -71,6 +78,8 @@ public class ProductionRecord extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.vet_menu,menu);
         MenuItem menuItem=menu.findItem(R.id.app_bar_search);
 
         SearchView searchView= (SearchView) menuItem.getActionView();
@@ -88,6 +97,6 @@ public class ProductionRecord extends AppCompatActivity {
                 return false;
             }
         });
-        return super.onCreateOptionsMenu(menu);
+        return true;
     }
 }

@@ -11,19 +11,23 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.magiri.animalcare.Model.DiseaseTreatment;
 import com.magiri.animalcare.Model.MilkRecord;
 import com.magiri.animalcare.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductionAdapter extends RecyclerView.Adapter<ProductionAdapter.MyViewHolder> implements Filterable {
 
     Context context;
     List<MilkRecord> milkRecordList;
+    List<MilkRecord> prodList;
 
     public ProductionAdapter(Context context, List<MilkRecord> milkRecordList) {
         this.context = context;
         this.milkRecordList = milkRecordList;
+        prodList=new ArrayList<>(milkRecordList);
     }
 
     @NonNull
@@ -53,11 +57,27 @@ public class ProductionAdapter extends RecyclerView.Adapter<ProductionAdapter.My
     private final Filter productionFilter=new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            return null;
+            List<MilkRecord> filterProduction=new ArrayList<>();
+            if(constraint==null || constraint.length()==0){
+                filterProduction.addAll(prodList);
+            }else{
+                String searchText=constraint.toString().toLowerCase();
+                for(MilkRecord record:prodList){
+                    if(record.getAnimalName().toLowerCase().contains(searchText)){
+                        filterProduction.add(record);
+                    }
+                }
+            }
+            FilterResults results=new FilterResults();
+            results.values=filterProduction;
+            return results;
         }
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
+            milkRecordList.clear();
+            milkRecordList.addAll((List)results.values);
+            notifyDataSetChanged();
 
         }
     };

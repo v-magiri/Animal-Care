@@ -80,6 +80,8 @@ public class BreedingRecord extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.vet_menu,menu);
         MenuItem menuItem=menu.findItem(R.id.app_bar_search);
 
         SearchView searchView= (SearchView) menuItem.getActionView();
@@ -97,6 +99,6 @@ public class BreedingRecord extends AppCompatActivity {
                 return false;
             }
         });
-        return super.onCreateOptionsMenu(menu);
+        return true;
     }
 }
