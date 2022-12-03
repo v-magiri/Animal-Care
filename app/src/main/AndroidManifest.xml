@@ -21,6 +21,13 @@
         tools:replace="android:theme"
         tools:targetApi="32">
         <activity
+            android:name=".FarmerVisitRequests"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ProductionRecord"
             android:exported="false">
             <meta-data

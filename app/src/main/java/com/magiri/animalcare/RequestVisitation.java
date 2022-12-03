@@ -149,7 +149,7 @@ public class RequestVisitation extends AppCompatActivity {
                 if(locationOptionSelected.equals("Current Location")){
                     getFarmerLocation();
                 }else{
-                    mapProgressDialog.dismiss();
+                    mapProgressDialog.show();
                     SelectLocation();
                 }
             }
@@ -183,64 +183,6 @@ public class RequestVisitation extends AppCompatActivity {
                 validateFields();
             }
         });
-//        locationDropDown.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                AlertDialog.Builder alertDialog=new AlertDialog.Builder(RequestVisitation.this);
-//                alertDialog.setTitle("Choose Visitation Location");
-//                int checkedItem=1;
-//                alertDialog.setSingleChoiceItems(locationOptions, checkedItem, new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        switch (which){
-//                            case 0:
-//                                getFarmerLocation();
-//                                dialog.dismiss();
-//                                break;
-//                            case 1:
-//                                progressDialog.show();
-//                                dialog.dismiss();
-//                                SelectLocation();
-////                                if(Latitude!=null && Longitude!=null){
-////                                  payVisit(vetID);
-////                                }else{
-////                                    Toast.makeText(getApplicationContext(),"Something wrong happened",Toast.LENGTH_SHORT).show();
-////
-//                                break;
-//                        }
-//                        locationDropDown.setText(locationOptions[which]);
-//                    }
-//                });
-//                AlertDialog alert = alertDialog.create();
-//                alert.setCanceledOnTouchOutside(false);
-//                alert.show();
-//            }
-//        });
-//        servicesDropDown.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                AlertDialog.Builder alertDialog=new AlertDialog.Builder(RequestVisitation.this);
-//                alertDialog.setTitle("Choose Service You Need");
-//                int checkedItem=1;
-//                alertDialog.setSingleChoiceItems(serviceOptions, checkedItem, new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        switch (which){
-//                            case 0:
-//                            case 1:
-//                                dialog.dismiss();
-//                                serviceType=serviceOptions[which];
-//                                break;
-//                            //                                servicesLayout.setVisibility(View.VISIBLE);
-//                        }
-//                        servicesDropDown.setText(serviceOptions[which]);
-//                    }
-//                });
-//                AlertDialog alert = alertDialog.create();
-//                alert.setCanceledOnTouchOutside(false);
-//                alert.show();
-//            }
-//        });
 
     }
 
@@ -294,11 +236,8 @@ public class RequestVisitation extends AppCompatActivity {
 
     private void SaveVisitRequest(String visitAddress, double longitude, double latitude, String serviceType,String animalID) {
         String clientID= Prevalent.currentOnlineFarmer.getFarmerID();
-//        ref=mRef.child(RegistrationNumber);
         String visitID=mRef.push().getKey();
         if(VETID!=null){
-//            String visitationFee=CalculateVisitationFee(latitude,longitude,VETID);
-//            CalculateVisitationFee(latitude,longitude,VETID);
             ref.child(VETID).child("Location").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -319,29 +258,9 @@ public class RequestVisitation extends AppCompatActivity {
                     }else{
                         visitationFee= (int) (distanceBtw * VISIT_COST_PER_ABOVE_10_KILOMETRE);
                     }
+                    System.out.println("The Visitation Fee is: "+visitationFee);
                     VisitRequest request=new VisitRequest(VETID,visitAddress,latitude,longitude,visitationFee,clientID,"Pending",visitID,false,serviceType,animalID);
                     PromptPayment(visitID,visitationFee,VETID,serviceType,request);
-//                    mRef.child(visitID).setValue(request).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<Void> task) {
-//                            if(task.isSuccessful()){
-////                                if(serviceType.equals("Artificial Insemination")){
-////                                    Toast.makeText(RequestVisitation.this, "Request Successfully Added", Toast.LENGTH_SHORT).show();
-//////                                    PromptPayment(visitID,visitationFee,VETID);
-////                                }else{
-////                                    Intent intent=new Intent(RequestVisitation.this,Diagnose.class);
-////                                    Bundle bundle=new Bundle();
-////                                    bundle.putString("VISITID",visitID);
-////                                    bundle.putInt("FEE",visitationFee);
-////                                    intent.putExtras(intent);
-////                                    startActivity(intent);
-////                                    finish();
-////                                }
-////                                PromptPayment(visitID,visitationFee,VETID,serviceType);
-////                                mProgressDialog.dismiss();
-//                            }
-//                        }
-//                    });
                 }
 
                 @Override
@@ -377,7 +296,7 @@ public class RequestVisitation extends AppCompatActivity {
                 }else {
                     progressDialog.show();
                     Retrofit.Builder builder=new Retrofit.Builder()
-                            .baseUrl("https://ani-care.herokuapp.com/")
+                            .baseUrl("https://697b-41-89-227-170.eu.ngrok.io")
                             .addConverterFactory(GsonConverterFactory.create());
 
                     Retrofit retrofit=builder.build();
@@ -446,36 +365,6 @@ public class RequestVisitation extends AppCompatActivity {
         });
     }
 
-//    private void CalculateVisitationFee(double latitude, double longitude, String vetid) {
-//        ref.child(vetid).child("Location").addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                double vetLatitude= Double.parseDouble(snapshot.child("Latitude").getValue(String.class));
-//                double vetLongitude=Double.parseDouble(snapshot.child("Longitude").getValue(String.class));
-//                Location vetLocation=new Location("VetLocation");
-//                vetLocation.setLatitude(vetLatitude);
-//                vetLocation.setLongitude(vetLongitude);
-//                Location farmerLocation=new Location("FarmerLocation");
-//                farmerLocation.setLatitude(latitude);
-//                farmerLocation.setLongitude(longitude);
-//                distanceBtw=(vetLocation.distanceTo(farmerLocation))/1000;
-//                System.out.println("The Distance Between Them is "+distanceBtw);
-//                if(distanceBtw>0 && distanceBtw<=5){
-//                    visitationFee= (int) (distanceBtw * VISIT_COST_PER_5_KILOMETRE);
-//                }else if(distanceBtw>5 && distanceBtw<=10){
-//                    visitationFee= (int) (distanceBtw * VISIT_COST_PER_10_KILOMETRE);
-//                }else{
-//                    visitationFee= (int) (distanceBtw * VISIT_COST_PER_ABOVE_10_KILOMETRE);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Timber.tag(TAG).d("onCancelled: " + error.getMessage());
-//                Toast.makeText(getApplicationContext(),"Something wrong Happened.Please try Again Later",Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
 
     private void SelectLocation() {
         Intent intent = new Intent(getApplicationContext(), MapActivity.class);

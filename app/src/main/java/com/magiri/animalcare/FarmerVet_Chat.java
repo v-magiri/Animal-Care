@@ -61,7 +61,6 @@ public class FarmerVet_Chat extends AppCompatActivity {
         chatRecyclerView.setHasFixedSize(true);
         sendFAB=findViewById(R.id.btn_send);
         chatList=new ArrayList<>();
-//        chatAdapter=new ChatAdapter(this,chatList);
         databaseReference= FirebaseDatabase.getInstance().getReference("Chats");
         clientChatAdapter=new VetClientChatAdapter(this,chatList);
         chatRecyclerView.setAdapter(clientChatAdapter);
@@ -100,7 +99,6 @@ public class FarmerVet_Chat extends AppCompatActivity {
         databaseReference.child(FarmerID).child("Vet").setValue(Reg_Num);
         databaseReference.child(FarmerID).child("Messages").child(chatID).setValue(chat).addOnCompleteListener(task -> {
             if(task.isSuccessful()){
-//                chatList.add(chat);
                 clientChatAdapter.notifyDataSetChanged();
             }
         }).addOnFailureListener(new OnFailureListener() {

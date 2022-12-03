@@ -285,7 +285,7 @@ public class Diagnose extends AppCompatActivity {
             Symptoms+=s+"\n";
         }
         Retrofit.Builder builder=new Retrofit.Builder()
-                .baseUrl("https://f1e6-41-89-227-170.eu.ngrok.io/")
+                .baseUrl("https://9712-41-89-227-170.eu.ngrok.io/")
                 .addConverterFactory(GsonConverterFactory.create());
 
         Retrofit retrofit=builder.build();

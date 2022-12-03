@@ -56,7 +56,9 @@
             android:id="@+id/btn_send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/send"
+            app:tint="@null"
+            android:backgroundTint="@color/animalCareBackground"
+            android:src="@drawable/ic_send"
             android:text="Send" />
     </LinearLayout>
 

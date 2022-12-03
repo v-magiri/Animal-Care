@@ -20,6 +20,11 @@
         android:title="Farm Records"
         />
     <item
+        android:id="@+id/request"
+        android:icon="@drawable/ic_request"
+        android:title="Visit Requests"
+        />
+    <item
         android:id="@+id/logout"
         android:icon="@drawable/ic_logout"
         android:title="Logout"/>

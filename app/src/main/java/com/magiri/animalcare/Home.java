@@ -125,6 +125,10 @@ public class Home extends AppCompatActivity {
                     closeNavigationDrawer();
 //                    finish();
                     break;
+                case R.id.request:
+                    startActivity(new Intent(Home.this,FarmerVisitRequests.class));
+                    closeNavigationDrawer();
+                    break;
                 case R.id.logout:
                     SignoutUser();
                     closeNavigationDrawer();

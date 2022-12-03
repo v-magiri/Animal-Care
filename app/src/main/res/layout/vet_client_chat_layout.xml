@@ -62,7 +62,6 @@
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="20dp"
             android:id="@+id/yourMessageLayout"
             android:layout_marginStart="50dp"
             android:layout_height="wrap_content">
@@ -103,7 +102,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/triangle_msg_you"
-                android:paddingRight="10dp"
+                android:paddingRight="8dp"
                 android:textColor="#ffffff"
                 android:textSize="16sp"
                 android:paddingLeft="10dp"
