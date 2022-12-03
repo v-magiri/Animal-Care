@@ -6,6 +6,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -34,6 +35,7 @@ public class BreedingRecord extends AppCompatActivity {
     private MaterialToolbar materialToolbar;
     DatabaseReference mRef;
     String FarmerID;
+    ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +54,10 @@ public class BreedingRecord extends AppCompatActivity {
         breedRecyclerView=findViewById(R.id.breedingRecordRecyclerView);
         breedRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         breedRecyclerView.setHasFixedSize(true);
+        progressDialog=new ProgressDialog(this);
+        progressDialog.setMessage("Loading Breeding Records");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
         getBreedingRecord();
 
     }
@@ -60,6 +66,7 @@ public class BreedingRecord extends AppCompatActivity {
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                breedingList.clear();
                 for(DataSnapshot dataSnapshot:snapshot.getChildren()){
                     Breeding breeding=dataSnapshot.getValue(Breeding.class);
                     breedingList.add(breeding);
@@ -67,6 +74,7 @@ public class BreedingRecord extends AppCompatActivity {
                     breedRecyclerView.setAdapter(breedingAdapter);
 
                 }
+                progressDialog.dismiss();
                 breedingAdapter.notifyDataSetChanged();
 
             }

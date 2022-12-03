@@ -6,6 +6,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -35,6 +36,7 @@ public class HealthRecords extends AppCompatActivity {
     DatabaseReference mRef;
     String FarmerID;
     private MaterialToolbar materialToolbar;
+    ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,10 +48,11 @@ public class HealthRecords extends AppCompatActivity {
         healthRecyclerView.setHasFixedSize(true);
         FarmerID= Prevalent.currentOnlineFarmer.getFarmerID();
         treatmentList=new ArrayList<>();
-        treatmentAdapter=new AnimalHealthRecordAdapter(HealthRecords.this,treatmentList);
-        healthRecyclerView.setAdapter(treatmentAdapter);
         mRef= FirebaseDatabase.getInstance().getReference("Health_Record").child(FarmerID);
 
+        progressDialog.setMessage("Loading Health Records");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
         getTreatmentRecord();
         materialToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,10 +66,14 @@ public class HealthRecords extends AppCompatActivity {
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                treatmentList.clear();
                 for(DataSnapshot dataSnapshot:snapshot.getChildren()){
                     DiseaseTreatment diseaseTreatmentRecord=dataSnapshot.getValue(DiseaseTreatment.class);
                     treatmentList.add(diseaseTreatmentRecord);
+                    treatmentAdapter=new AnimalHealthRecordAdapter(HealthRecords.this,treatmentList);
+                    healthRecyclerView.setAdapter(treatmentAdapter);
                 }
+                progressDialog.dismiss();
                 treatmentAdapter.notifyDataSetChanged();
 
             }

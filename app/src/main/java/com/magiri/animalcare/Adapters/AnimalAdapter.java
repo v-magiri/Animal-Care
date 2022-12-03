@@ -147,7 +147,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.MyViewHold
                     }
                 });
                 optionAlert = alertDialogBuilder.create();
-                optionAlert.setCanceledOnTouchOutside(false);
+//                optionAlert.setCanceledOnTouchOutside(false);
                 optionAlert.show();
             }
         });
@@ -173,7 +173,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.MyViewHold
         LayoutInflater layoutInflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view=layoutInflater.inflate(R.layout.add_milk_production,null);
         alertDailogBuilder.setView(view);
-        alertDailogBuilder.setCancelable(false);
+//        alertDailogBuilder.setCancelable(false);
         TextView animalNameTxt=view.findViewById(R.id.animalNameTxt);
         TextInputEditText dateEditText=view.findViewById(R.id.dateText);
         TextInputEditText quantityEditText=view.findViewById(R.id.milkQuantityTxt);

@@ -87,7 +87,7 @@ public class Herd extends AppCompatActivity {
     private DatabaseReference mRef,databaseReference;
     String FarmerID;
     String[] breed,group,status;
-    ProgressDialog progressDialog,mProgressDialog;
+    ProgressDialog progressDialog,mProgressDialog,startProgressDialog;
     AlertDialog alertDialog;
     private static final int image_Pick_Code=2;
     private static final int IMAGE_REQUEST_CODE=123;
@@ -126,6 +126,10 @@ public class Herd extends AppCompatActivity {
         mProgressDialog=new ProgressDialog(this);
         mProgressDialog.setCanceledOnTouchOutside(false);
         mProgressDialog.setMessage("Filtering Animals");
+        startProgressDialog=new ProgressDialog(this);
+        startProgressDialog.setMessage("Loading Animals");
+        startProgressDialog.setCanceledOnTouchOutside(false);
+        startProgressDialog.show();
 
         pregnantRadioBtn=findViewById(R.id.pregnantRadioBtn);
         lactatingRadioBtn=findViewById(R.id.lactatingRadioBtn);
@@ -447,6 +451,7 @@ public class Herd extends AppCompatActivity {
                         animalRecyclerView.setAdapter(animalAdapter);
                     }
                 }
+                startProgressDialog.dismiss();
                 animalAdapter.notifyDataSetChanged();
             }
 

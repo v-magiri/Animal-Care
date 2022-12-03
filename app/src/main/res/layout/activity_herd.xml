@@ -212,15 +212,19 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/header"
         android:id="@+id/herdRecyclerView"/>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addAnimalFloatingBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_baseline_add_circle_24"
-        android:backgroundTint="@color/animalCareBackground"
-        app:fabSize="normal"
-        android:layout_margin="16dp"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:id="@+id/addAnimalFloatingBar" />
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/animalCareBackground"
+        android:src="@drawable/ic_baseline_add_circle_24"
+        app:fabSize="normal" />
 
 </RelativeLayout>

@@ -3,6 +3,7 @@ package com.magiri.animalcare;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -71,7 +72,7 @@ public class Home extends AppCompatActivity {
     private NavigationView navigationView;
     private ImageView closeDrawerImageView,headerProfilePic;
     private TextView headerFarmerNameTxt;
-
+    private ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +95,10 @@ public class Home extends AppCompatActivity {
         headerFarmerNameTxt=header.findViewById(R.id.FarmerNameTxt);
         headerProfilePic=header.findViewById(R.id.profilePic);
         headerFarmerNameTxt.setText(Session.getInstance(this).getFarmerName());
+        progressDialog=new ProgressDialog(this);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Loading Vets");
+        progressDialog.show();
 
         closeDrawerImageView=header.findViewById(R.id.imgClose);
 
@@ -174,6 +179,7 @@ public class Home extends AppCompatActivity {
         if(latitude !=null && longitude != null){
             GeoFire geoFire= new GeoFire(ref);
             GeoQuery geoQuery=geoFire.queryAtLocation(new GeoLocation(farmerLocationLatitude,farmerLocationLongitude),20);
+            veterinarianList.clear();
             geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
                 @Override
                 public void onKeyEntered(String key, GeoLocation location) {
@@ -213,6 +219,7 @@ public class Home extends AppCompatActivity {
 
                 }
             });
+            progressDialog.dismiss();
         }else{
             Toast.makeText(getApplicationContext(),"Something wrong happened",Toast.LENGTH_LONG).show();
         }

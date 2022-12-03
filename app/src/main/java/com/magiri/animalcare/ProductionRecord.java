@@ -41,12 +41,10 @@ public class ProductionRecord extends AppCompatActivity {
         materialToolbar=findViewById(R.id.productionMaterialToolBar);
         setSupportActionBar(materialToolbar);
         milkRecordList=new ArrayList<>();
-        productionAdapter=new ProductionAdapter(ProductionRecord.this,milkRecordList);
         milkRecyclerView=findViewById(R.id.productionRecordRecyclerView);
 
         milkRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         milkRecyclerView.setHasFixedSize(true);
-        milkRecyclerView.setAdapter(productionAdapter);
         FarmerID= Prevalent.currentOnlineFarmer.getFarmerID();
         ref= FirebaseDatabase.getInstance().getReference("MilkProduction").child(FarmerID);
         getMilkProduction();
@@ -62,9 +60,12 @@ public class ProductionRecord extends AppCompatActivity {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                milkRecordList.clear();
                 for(DataSnapshot dataSnapshot:snapshot.getChildren()){
                     MilkRecord milkRecord=dataSnapshot.getValue(MilkRecord.class);
                     milkRecordList.add(milkRecord);
+                    productionAdapter=new ProductionAdapter(ProductionRecord.this,milkRecordList);
+                    milkRecyclerView.setAdapter(productionAdapter);
                 }
                 productionAdapter.notifyDataSetChanged();
             }
