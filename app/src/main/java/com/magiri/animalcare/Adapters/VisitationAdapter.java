@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -104,6 +105,9 @@ public class VisitationAdapter extends RecyclerView.Adapter<VisitationAdapter.My
         if(status.equals("Delivered")){
             holder.actionBtn.setVisibility(View.GONE);
             holder.reviewBtn.setVisibility(View.VISIBLE);
+        }else if(status.equals("Reviewed")){
+            holder.actionBtn.setVisibility(View.GONE);
+            holder.reviewBtn.setVisibility(View.GONE);
         }
         getVetDetails(visit.getVetID(),holder.vetImageView,holder.vetNameTxt);
         holder.statusTxt.setText(visit.getStatus());
@@ -155,7 +159,7 @@ public class VisitationAdapter extends RecyclerView.Adapter<VisitationAdapter.My
                 View view=layoutInflater.inflate(R.layout.rating_layout,null);
                 alertDialogBuilder.setView(view);
                 alertDialogBuilder.setCancelable(false);
-                TextInputEditText commentEditTxt=view.findViewById(R.id.commentEditTxt);
+                EditText commentEditTxt=view.findViewById(R.id.commentEditTxt);
                 Button reviewBtn=view.findViewById(R.id.submitReviewBtn);
                 ImageView closeImageView=view.findViewById(R.id.closeBtn);
                 RatingBar serviceRating=view.findViewById(R.id.rating);
@@ -183,7 +187,34 @@ public class VisitationAdapter extends RecyclerView.Adapter<VisitationAdapter.My
                         ratingMap.put("Rating",rating);
                         ratingMap.put("FarmerID",FarmerID);
                         reviewProgressDialog.show();
-                        saveRating(visit.getVetID(),ratingMap);
+                        ref.child(visit.getVetID()).push().setValue(ratingMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isComplete()){
+                                    databaseReference.child(visit.getVisitID()).child("status").setValue("Reviewed")
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if(task.isComplete()){
+                                                holder.reviewBtn.setVisibility(View.GONE);
+                                                Toast.makeText(context,"Review Successful",Toast.LENGTH_SHORT).show();
+                                                reviewAlertDialog.dismiss();
+                                                holder.reviewBtn.setVisibility(View.GONE);
+                                                reviewProgressDialog.dismiss();
+                                            }
+                                        }
+                                    });
+                                }
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(context,"Something wrong Happened",Toast.LENGTH_SHORT).show();
+                                reviewAlertDialog.dismiss();
+                                reviewProgressDialog.dismiss();
+                                Log.d(TAG, "onFailure: "+e.getMessage());
+                            }
+                        });
                     }
                 });
 
@@ -193,26 +224,6 @@ public class VisitationAdapter extends RecyclerView.Adapter<VisitationAdapter.My
             }
         });
 
-    }
-
-    private void saveRating(String VETID, HashMap<String, Object> ratingMap) {
-//        String pushID=ref.child(VETID).push().getKey();
-        ref.child(VETID).push().setValue(ratingMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isComplete()){
-                    Toast.makeText(context,"Review Successful",Toast.LENGTH_SHORT).show();
-                    reviewAlertDialog.dismiss();
-                    reviewProgressDialog.dismiss();
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(context,"Something wrong Happened",Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "onFailure: "+e.getMessage());
-            }
-        });
     }
 
     private void updateRecord(String visitID) {

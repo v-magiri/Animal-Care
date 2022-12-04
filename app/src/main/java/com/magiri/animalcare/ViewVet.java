@@ -87,7 +87,7 @@ public class ViewVet extends AppCompatActivity {
             }
         });
 
-        RegNum=getIntent().getStringExtra("Vet_RegNum");
+        RegNum=getIntent().getStringExtra("VETID");
         fetchData(RegNum);
 
         consultBtn.setOnClickListener(new View.OnClickListener() {

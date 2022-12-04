@@ -369,14 +369,14 @@ public class Home extends AppCompatActivity {
         drawerLayout.closeDrawer(GravityCompat.START);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==SimplePlacePicker.SELECT_LOCATION_REQUEST_CODE && resultCode==RESULT_OK && data!=null){
-            String locationAddress=data.getStringExtra(SimplePlacePicker.SELECTED_ADDRESS);
-            String latitude=String.valueOf(data.getDoubleExtra(SimplePlacePicker.LOCATION_LAT_EXTRA,-1));
-            String longitude=String.valueOf(data.getDoubleExtra(SimplePlacePicker.LOCATION_LNG_EXTRA,-1));
-            vetsAroundAdapter.UpdateLocation(locationAddress,latitude,longitude);
-        }
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if(requestCode==SimplePlacePicker.SELECT_LOCATION_REQUEST_CODE && resultCode==RESULT_OK && data!=null){
+//            String locationAddress=data.getStringExtra(SimplePlacePicker.SELECTED_ADDRESS);
+//            String latitude=String.valueOf(data.getDoubleExtra(SimplePlacePicker.LOCATION_LAT_EXTRA,-1));
+//            String longitude=String.valueOf(data.getDoubleExtra(SimplePlacePicker.LOCATION_LNG_EXTRA,-1));
+//            vetsAroundAdapter.UpdateLocation(locationAddress,latitude,longitude);
+//        }
+//    }
 }
