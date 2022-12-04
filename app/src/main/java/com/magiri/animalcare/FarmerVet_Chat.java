@@ -91,13 +91,11 @@ public class FarmerVet_Chat extends AppCompatActivity {
         currentTimeStamp= DateFormat.getInstance().format(new Date());
         final DatabaseReference ref;
         String chatID= String.valueOf(System.currentTimeMillis());
-
-        String chatKey=Reg_Num.substring(3);
         ChatMemory.saveLastChat(chatID,FarmerID,FarmerVet_Chat.this);
         Chat chat=new Chat(message,currentTimeStamp,FarmerID,Reg_Num,true,false);
         databaseReference.child(FarmerID).child("client").setValue(FarmerID);
         databaseReference.child(FarmerID).child("Vet").setValue(Reg_Num);
-        databaseReference.child(FarmerID).child("Messages").child(chatID).setValue(chat).addOnCompleteListener(task -> {
+        databaseReference.child(FarmerID).child(Reg_Num).child("Messages").child(chatID).setValue(chat).addOnCompleteListener(task -> {
             if(task.isSuccessful()){
                 clientChatAdapter.notifyDataSetChanged();
             }
@@ -112,7 +110,7 @@ public class FarmerVet_Chat extends AppCompatActivity {
 
     private void getMessages() {
         String FarmerID=Prevalent.currentOnlineFarmer.getFarmerID();
-        databaseReference.child(FarmerID).child("Messages").addValueEventListener(new ValueEventListener() {
+        databaseReference.child(FarmerID).child(Reg_Num).child("Messages").addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

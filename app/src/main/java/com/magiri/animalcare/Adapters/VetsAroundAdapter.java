@@ -159,44 +159,44 @@ public class VetsAroundAdapter extends RecyclerView.Adapter<VetsAroundAdapter.My
         });
     }
 
-    private void makeVisitationPayment(int visitationFee,String RegistrationNumber,String phoneNumber) {
-        visitationFee=1;
-        final DatabaseReference ref;
-        String clientID= Prevalent.currentOnlineFarmer.getFarmerID();
-        String visitID=mRef.push().getKey();
-        assert visitID != null;
-        Retrofit.Builder builder=new Retrofit.Builder()
-                .baseUrl("https://ani-care.herokuapp.com/")
-                .addConverterFactory(GsonConverterFactory.create());
-
-        Retrofit retrofit=builder.build();
-        RestClient restClient=retrofit.create(RestClient.class);
-        Call<STKResponse> call=restClient.pushStk(
-                visitationFee,
-                Utils.refactorPhoneNumber(phoneNumber),
-                RegistrationNumber,
-                visitID
-        );
-        call.enqueue(new Callback<STKResponse>() {
-            @Override
-            public void onResponse(Call<STKResponse> call, Response<STKResponse> response) {
-                if(response.body().getResponseCode().equals("0")){
-                    progressDialog.dismiss();
-                    Toast.makeText(context,"Visit Request Recorded",Toast.LENGTH_SHORT).show();
-                    Timber.tag(TAG).i("Mpesa Worked: ");
-
-                }else{
-                    Toast.makeText(context,"Something Wrong Happened Please Try Again",Toast.LENGTH_SHORT).show();
-                    Timber.tag(TAG).i("Mpesa Failed: ");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<STKResponse> call, Throwable t) {
-                Timber.tag(TAG).d("onFailure: Something wrong Happened");
-            }
-        });
-    }
+//    private void makeVisitationPayment(int visitationFee,String RegistrationNumber,String phoneNumber) {
+//        visitationFee=1;
+//        final DatabaseReference ref;
+//        String clientID= Prevalent.currentOnlineFarmer.getFarmerID();
+//        String visitID=mRef.push().getKey();
+//        assert visitID != null;
+//        Retrofit.Builder builder=new Retrofit.Builder()
+//                .baseUrl("https://ani-care.herokuapp.com/")
+//                .addConverterFactory(GsonConverterFactory.create());
+//
+//        Retrofit retrofit=builder.build();
+//        RestClient restClient=retrofit.create(RestClient.class);
+//        Call<STKResponse> call=restClient.pushStk(
+//                visitationFee,
+//                Utils.refactorPhoneNumber(phoneNumber),
+//                RegistrationNumber,
+//                visitID
+//        );
+//        call.enqueue(new Callback<STKResponse>() {
+//            @Override
+//            public void onResponse(Call<STKResponse> call, Response<STKResponse> response) {
+//                if(response.body().getResponseCode().equals("0")){
+//                    progressDialog.dismiss();
+//                    Toast.makeText(context,"Visit Request Recorded",Toast.LENGTH_SHORT).show();
+//                    Timber.tag(TAG).i("Mpesa Worked: ");
+//
+//                }else{
+//                    Toast.makeText(context,"Something Wrong Happened Please Try Again",Toast.LENGTH_SHORT).show();
+//                    Timber.tag(TAG).i("Mpesa Failed: ");
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<STKResponse> call, Throwable t) {
+//                Timber.tag(TAG).d("onFailure: Something wrong Happened");
+//            }
+//        });
+//    }
 
     @Override
     public int getItemCount() {

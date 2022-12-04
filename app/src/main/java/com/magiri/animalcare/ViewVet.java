@@ -7,56 +7,53 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.essam.simpleplacepicker.MapActivity;
-import com.essam.simpleplacepicker.utils.SimplePlacePicker;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.MaterialToolbar;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.magiri.animalcare.Adapters.QualificationAdapter;
+import com.magiri.animalcare.Adapters.RatingAdapter;
 import com.magiri.animalcare.Model.Veterinarian;
-import com.magiri.animalcare.Model.VisitRequest;
-import com.magiri.animalcare.Session.Prevalent;
 
 import java.util.ArrayList;
-
-import de.hdodenhof.circleimageview.CircleImageView;
+import java.util.HashMap;
+import java.util.List;
 
 public class ViewVet extends AppCompatActivity {
     private static final String TAG = "View Vet";
-    private ListView skillListView;
+    private RecyclerView skillListView;
     private RelativeLayout forwardRelativeLayout;
-    private CircleImageView profilePic;
-    private TextView nameTextView,locationTextView,visitationFeeTextView;
+    private ImageView profilePic;
+    private TextView nameTextView,locationTextView,viewAllTxt;
     private Button consultBtn,requestBtn;
     String RegNum,visitationCharges;
+    private RecyclerView reviewRecyclerView;
     String[] skillList;
-    ArrayList<String> SkillList;
-    ArrayAdapter<String> arrayAdapter;
-    String VetName,Country,Language,Api_Key,Address,Latitude,Longitude;
-    private static String []mSupportedAreas={""};
+    List<HashMap<String,Object>> ratingList;
+    QualificationAdapter arrayAdapter;
+    String VetName,Latitude,Longitude;
     ProgressDialog progressDialog;
     private DatabaseReference mRef;
     private MaterialToolbar materialToolbar;
-    private BottomSheetDialog bottomSheetDialog;
+    RecyclerView.LayoutManager layoutManager;
+    LinearLayoutManager horizontalLayout;
+    LinearLayout reviewLayout;
+    RatingAdapter ratingAdapter;
     private String vetLocation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,18 +65,32 @@ public class ViewVet extends AppCompatActivity {
         profilePic=findViewById(R.id.vetProfilePic);
         nameTextView=findViewById(R.id.vetNameTxt);
         locationTextView=findViewById(R.id.locationTxt);
-        visitationFeeTextView=findViewById(R.id.visitationFeeTextView);
         consultBtn=findViewById(R.id.consultBtn);
         requestBtn=findViewById(R.id.visitBtn);
         materialToolbar=findViewById(R.id.materialToolBar);
+        reviewRecyclerView=findViewById(R.id.ratingRecyclerView);
+        layoutManager=new LinearLayoutManager(getApplicationContext());
+        reviewRecyclerView.setLayoutManager(layoutManager);
+        horizontalLayout=new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
+        reviewRecyclerView.setLayoutManager(horizontalLayout);
+        viewAllTxt=findViewById(R.id.viewAllBtn);
+        skillListView.setLayoutManager(new LinearLayoutManager(this));
+        skillListView.setHasFixedSize(true);
 
-        Country="Kenya";
-        Language="English";
-        Api_Key=getResources().getString(R.string.maps_ApiKey);
+        ratingList=new ArrayList<>();
+        reviewLayout=findViewById(R.id.reviewLayout);
+
+        viewAllTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //to view all reviews
+            }
+        });
+
         progressDialog=new ProgressDialog(this);
-        progressDialog.setMessage("Please Wait, while we save your Request");
+        progressDialog.setMessage("Loading Vet Profile");
         progressDialog.setCanceledOnTouchOutside(false);
-        mRef=FirebaseDatabase.getInstance().getReference("VisitRequest");
+        mRef=FirebaseDatabase.getInstance().getReference("Ratings");
         materialToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,42 +113,8 @@ public class ViewVet extends AppCompatActivity {
         requestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bottomSheetDialog=new BottomSheetDialog(ViewVet.this);
-                bottomSheetDialog.setContentView(R.layout.request_visit_bottom_sheet);
-                TextView vetNameTextView=bottomSheetDialog.findViewById(R.id.vetNameTextView);
-                locationTextView=bottomSheetDialog.findViewById(R.id.locationTxt);
-                Button cancelBtn=bottomSheetDialog.findViewById(R.id.cancelBtn);
-                Button OkBtn=bottomSheetDialog.findViewById(R.id.okStatusBtn);
-                ImageView locationPickerImageView=bottomSheetDialog.findViewById(R.id.pickLocationImageView);
-//                TextView feeTxt=bottomSheetDialog.findViewById(R.id.vetVisitationFeeTxt);
-//                Button payBtn=bottomSheetDialog.findViewById(R.id.payBtn);
-
-                vetNameTextView.setText(VetName);
-//                feeTxt.setText(visitationCharges);
-
-                locationPickerImageView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //open location Place Picker
-                        SelectLocation();
-                    }
-                });
-                cancelBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        bottomSheetDialog.dismiss();
-                    }
-                });
-                OkBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //save the request to database
-                        validatedSelectedLocation(RegNum,visitationCharges);
-//                        bottomSheetDialog.dismiss();
-                    }
-                });
-                bottomSheetDialog.show();
-
+                startActivity(new Intent(getApplicationContext(),RequestVisitation.class));
+                finish();
             }
         });
 
@@ -153,64 +130,6 @@ public class ViewVet extends AppCompatActivity {
         });
     }
 
-    private void SelectLocation() {
-        Intent intent = new Intent(this, MapActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString(SimplePlacePicker.API_KEY,Api_Key);
-        bundle.putString(SimplePlacePicker.COUNTRY,Country);
-        bundle.putString(SimplePlacePicker.LANGUAGE,Language);
-        bundle.putStringArray(SimplePlacePicker.SUPPORTED_AREAS,mSupportedAreas);
-        intent.putExtras(bundle);
-        startActivityForResult(intent, SimplePlacePicker.SELECT_LOCATION_REQUEST_CODE);
-    }
-    private void validatedSelectedLocation(String RegistrationNumber,String Fee) {
-        if(TextUtils.isEmpty(Address) || TextUtils.isEmpty(Latitude) || TextUtils.isEmpty(Longitude)){
-            Toast.makeText(getApplicationContext(),"Please Select Your Location",Toast.LENGTH_SHORT).show();
-            return;
-        }
-        progressDialog.show();
-//        SaveRequest(RegistrationNumber,Fee);
-    }
-
-    private void SaveRequest(String registrationNumber, String fee) {
-        final DatabaseReference ref;
-        String clientID= Prevalent.currentOnlineFarmer.getFarmerID();
-//        ref=mRef.child(RegistrationNumber);
-        String visitID=mRef.push().getKey();
-//        VisitRequest visitRequest=new VisitRequest(registrationNumber,Address,Latitude,Longitude,fee,clientID,"Pending",visitID,false);
-//        assert visitID != null;
-//        mRef.child(visitID).setValue(visitRequest).addOnCompleteListener(new OnCompleteListener<Void>() {
-//            @Override
-//            public void onComplete(@NonNull Task<Void> task) {
-//                if(task.isSuccessful()){
-//                    Toast.makeText(getApplicationContext(),"Request Recorded",Toast.LENGTH_SHORT).show();
-//                }else{
-//                    Log.d(TAG, "onComplete: Something Happened");
-//                }
-//                progressDialog.dismiss();
-//                bottomSheetDialog.dismiss();
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//                Log.d(TAG, "onFailure: "+e.getMessage());
-//                Toast.makeText(getApplicationContext(),"Failed to Record your visit Request",Toast.LENGTH_SHORT).show();
-//                progressDialog.dismiss();
-//                bottomSheetDialog.dismiss();
-//            }
-//        });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==SimplePlacePicker.SELECT_LOCATION_REQUEST_CODE && resultCode==RESULT_OK && data!=null){
-            String locationAddress=data.getStringExtra(SimplePlacePicker.SELECTED_ADDRESS);
-            String latitude=String.valueOf(data.getDoubleExtra(SimplePlacePicker.LOCATION_LAT_EXTRA,-1));
-            String longitude=String.valueOf(data.getDoubleExtra(SimplePlacePicker.LOCATION_LNG_EXTRA,-1));
-        }
-    }
-
     private void fetchData(String regNum) {
         DatabaseReference ref= FirebaseDatabase.getInstance().getReference("Veterinarian");
         ref.child(regNum).addValueEventListener(new ValueEventListener() {
@@ -218,7 +137,6 @@ public class ViewVet extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Veterinarian vet=snapshot.getValue(Veterinarian.class);
                 visitationCharges=vet.getVisitationFee();
-                visitationFeeTextView.setText(visitationCharges);
                 String location=vet.getWard()+","+vet.getConstituency();
                 locationTextView.setText(location);
                 VetName=vet.getName();
@@ -232,9 +150,37 @@ public class ViewVet extends AppCompatActivity {
                     Glide.with(ViewVet.this).load(R.drawable.ic_vet).into(profilePic);
                 }
                 skillList= vet.getSkill().split(",");
-                arrayAdapter=new ArrayAdapter(ViewVet.this, android.R.layout.simple_list_item_1,skillList);
+                arrayAdapter=new QualificationAdapter(ViewVet.this, skillList);
                 skillListView.setAdapter(arrayAdapter);
                 arrayAdapter.notifyDataSetChanged();
+                mRef.child(regNum).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for(DataSnapshot dataSnapshot:snapshot.getChildren()){
+                            HashMap<String,Object> map=new HashMap<>();
+                            String comment= (String) dataSnapshot.child("Comment").getValue();
+                            if(!TextUtils.isEmpty(comment)){
+                                map.put("Rating",dataSnapshot.child("Rating").getValue());
+                                map.put("Comment",dataSnapshot.child("Comment").getValue());
+                                map.put("FarmerID",dataSnapshot.child("FarmerID").getValue());
+                                ratingList.add(map);
+                            }
+                        }
+                        if(ratingList.size()==0){
+                            reviewLayout.setVisibility(View.GONE);
+                        }else{
+                            ratingAdapter=new RatingAdapter(ViewVet.this,ratingList);
+                            reviewRecyclerView.setAdapter(ratingAdapter);
+                            ratingAdapter.notifyDataSetChanged();
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Log.d(TAG, "onCancelled: "+error.getMessage());
+                    }
+                });
             }
 
             @Override

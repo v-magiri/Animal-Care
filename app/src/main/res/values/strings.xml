@@ -60,12 +60,14 @@
     <string name="breedType" translatable="false">Choose Breed Type</string>
     <string name="animalProfile" translatable="false">Animal Profile</string>
     <string name="diseaseAnimalText" translatable="false">Animal requiring intervention</string>
-    <string name="animalChoose">Select Animal</string>
-    <string name="totalMilkProduction">Total Milk Production</string>
-    <string name="milkingTime">Choose Milking Time</string>
-    <string name="ratingText">Please Rate The Service</string>
-    <string name="ratingInstruction">Tap a star to give your rating</string>
-    <string name="reviewComment">Leave a Comment (Optional)</string>
+    <string name="animalChoose" translatable="false">Select Animal</string>
+    <string name="totalMilkProduction" translatable="false">Total Milk Production</string>
+    <string name="milkingTime" translatable="false">Choose Milking Time</string>
+    <string name="ratingText" translatable="false">Please Rate The Service</string>
+    <string name="ratingInstruction" translatable="false">Tap a star to give your rating</string>
+    <string name="reviewComment" translatable="false">Leave a Comment (Optional)</string>
+    <string name="review" translatable="false">Reviews</string>
+    <string name="viewAllTxt" translatable="false"><u>View All</u></string>
 
     //string for spinner
     <string-array name="topic">
