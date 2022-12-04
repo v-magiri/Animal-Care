@@ -63,6 +63,9 @@
     <string name="animalChoose">Select Animal</string>
     <string name="totalMilkProduction">Total Milk Production</string>
     <string name="milkingTime">Choose Milking Time</string>
+    <string name="ratingText">Please Rate The Service</string>
+    <string name="ratingInstruction">Tap a star to give your rating</string>
+    <string name="reviewComment">Leave a Comment (Optional)</string>
 
     //string for spinner
     <string-array name="topic">

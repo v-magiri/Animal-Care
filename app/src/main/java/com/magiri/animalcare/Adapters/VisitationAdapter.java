@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -31,6 +33,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.datepicker.CalendarConstraints;
+import com.google.android.material.datepicker.DateValidatorPointBackward;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
@@ -61,21 +64,25 @@ public class VisitationAdapter extends RecyclerView.Adapter<VisitationAdapter.My
     Context context;
     List<VisitRequest> visitationList;
     DatabaseReference ref;
-    ProgressDialog progressDialog;
+    private ProgressDialog progressDialog,reviewProgressDialog;
     String currentDate,currentTime;
     SimpleDateFormat sdf;
-    AlertDialog crudAlertDialog;
+    AlertDialog crudAlertDialog,reviewAlertDialog;
     private DatabaseReference mRef,databaseReference;
-    String[] actions={"Update Record","Delete Record"};
+    String[] actions={"Edit Request","Delete Request"};
+    String FarmerID;
     public VisitationAdapter(Context context, List<VisitRequest> visitationList) {
         this.context = context;
         this.visitationList = visitationList;
-        ref= FirebaseDatabase.getInstance().getReference();
+        ref= FirebaseDatabase.getInstance().getReference("Ratings");
         progressDialog=new ProgressDialog(context);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setTitle("Saving Request Status");
         progressDialog.setMessage("Please Wait, while we updated request Status");
-//        VetID= Prevalent.currentOnlineVeterinarian.getRegistrationNumber();
+        reviewProgressDialog=new ProgressDialog(context);
+        reviewProgressDialog.setMessage("Saving your Review");
+        reviewProgressDialog.setCanceledOnTouchOutside(false);
+        FarmerID=Prevalent.currentOnlineFarmer.getFarmerID();
         sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
         mRef=FirebaseDatabase.getInstance().getReference("Veterinarian");
         databaseReference=FirebaseDatabase.getInstance().getReference("VisitRequest");
@@ -93,6 +100,12 @@ public class VisitationAdapter extends RecyclerView.Adapter<VisitationAdapter.My
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         VisitRequest visit=visitationList.get(position);
+        String status=visit.getStatus();
+        if(status.equals("Delivered")){
+            holder.actionBtn.setVisibility(View.GONE);
+            holder.reviewBtn.setVisibility(View.VISIBLE);
+        }
+        getVetDetails(visit.getVetID(),holder.vetImageView,holder.vetNameTxt);
         holder.statusTxt.setText(visit.getStatus());
         holder.serviceTypeTxt.setText(visit.getServiceType());
         holder.actionBtn.setOnClickListener(new View.OnClickListener() {
@@ -116,7 +129,7 @@ public class VisitationAdapter extends RecyclerView.Adapter<VisitationAdapter.My
                                         if(task.isComplete()){
                                             visitationList.remove(position);
                                             notifyItemRemoved(position);
-                                            Toast.makeText(context,"Successfully Deleted Record",Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(context,"Successfully Deleted Request",Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 });
@@ -133,7 +146,73 @@ public class VisitationAdapter extends RecyclerView.Adapter<VisitationAdapter.My
                 crudAlertDialog.show();
             }
         });
-        getVetDetails(visit.getVetID(),holder.vetImageView,holder.vetNameTxt);
+        holder.reviewBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //review Veterinarian Service
+                AlertDialog.Builder alertDialogBuilder=new AlertDialog.Builder(context);
+                LayoutInflater layoutInflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View view=layoutInflater.inflate(R.layout.rating_layout,null);
+                alertDialogBuilder.setView(view);
+                alertDialogBuilder.setCancelable(false);
+                TextInputEditText commentEditTxt=view.findViewById(R.id.commentEditTxt);
+                Button reviewBtn=view.findViewById(R.id.submitReviewBtn);
+                ImageView closeImageView=view.findViewById(R.id.closeBtn);
+                RatingBar serviceRating=view.findViewById(R.id.rating);
+
+                closeImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        reviewAlertDialog.dismiss();
+                    }
+                });
+                reviewBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //submit Review
+                        Float rating = serviceRating.getRating();
+                        String Comment=commentEditTxt.getText().toString();
+                        HashMap<String,Object> ratingMap=new HashMap<>();
+                        if(rating==0.0){
+                            Toast.makeText(context,"Please Rate Service Delivered",Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        if(!TextUtils.isEmpty(Comment)){
+                            ratingMap.put("Comment",Comment);
+                        }
+                        ratingMap.put("Rating",rating);
+                        ratingMap.put("FarmerID",FarmerID);
+                        reviewProgressDialog.show();
+                        saveRating(visit.getVetID(),ratingMap);
+                    }
+                });
+
+                reviewAlertDialog=alertDialogBuilder.create();
+                reviewAlertDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                reviewAlertDialog.show();
+            }
+        });
+
+    }
+
+    private void saveRating(String VETID, HashMap<String, Object> ratingMap) {
+//        String pushID=ref.child(VETID).push().getKey();
+        ref.child(VETID).push().setValue(ratingMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isComplete()){
+                    Toast.makeText(context,"Review Successful",Toast.LENGTH_SHORT).show();
+                    reviewAlertDialog.dismiss();
+                    reviewProgressDialog.dismiss();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(context,"Something wrong Happened",Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onFailure: "+e.getMessage());
+            }
+        });
     }
 
     private void updateRecord(String visitID) {
@@ -171,6 +250,7 @@ public class VisitationAdapter extends RecyclerView.Adapter<VisitationAdapter.My
         private ImageButton actionBtn;
         private CircleImageView vetImageView;
         private TextView vetNameTxt,dateTxt,serviceTypeTxt,statusTxt;
+        private Button reviewBtn;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             actionBtn=itemView.findViewById(R.id.actionsBtn);
@@ -179,7 +259,7 @@ public class VisitationAdapter extends RecyclerView.Adapter<VisitationAdapter.My
             dateTxt=itemView.findViewById(R.id.requestDateTxt);
             serviceTypeTxt=itemView.findViewById(R.id.serviceTypeTxt);
             statusTxt=itemView.findViewById(R.id.requestStatusTextView);
-
+            reviewBtn=itemView.findViewById(R.id.reviewBtn);
         }
     }
 
