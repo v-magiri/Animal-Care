@@ -28,6 +28,7 @@ import com.magiri.animalcare.Adapters.ChatAdapter;
 import com.magiri.animalcare.Adapters.VetClientChatAdapter;
 import com.magiri.animalcare.Model.Chat;
 import com.magiri.animalcare.Model.ChatMemory;
+import com.magiri.animalcare.Model.Veterinarian;
 import com.magiri.animalcare.Session.Prevalent;
 
 import java.text.DateFormat;
@@ -44,7 +45,7 @@ public class FarmerVet_Chat extends AppCompatActivity {
     private List<Chat> chatList;
 //    private ChatAdapter chatAdapter;
     private VetClientChatAdapter clientChatAdapter;
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseReference,mRef;
     String currentTimeStamp;
     String Reg_Num,vetName,FarmerID;
     @Override
@@ -53,7 +54,6 @@ public class FarmerVet_Chat extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
 
         Reg_Num=getIntent().getStringExtra("Vet_REGNUM");
-        vetName=getIntent().getStringExtra("Vet_Name");
         chatMaterialToolbar=findViewById(R.id.chatMaterialToolbar);
         messageEditTxt=findViewById(R.id.et_message);
         chatRecyclerView=findViewById(R.id.chatRecyclerView);
@@ -62,11 +62,22 @@ public class FarmerVet_Chat extends AppCompatActivity {
         sendFAB=findViewById(R.id.btn_send);
         chatList=new ArrayList<>();
         databaseReference= FirebaseDatabase.getInstance().getReference("Chats");
+        mRef=FirebaseDatabase.getInstance().getReference("Veterinarian");
         clientChatAdapter=new VetClientChatAdapter(this,chatList);
         chatRecyclerView.setAdapter(clientChatAdapter);
         FarmerID=Prevalent.currentOnlineFarmer.getFarmerID();
+        mRef.child(Reg_Num).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Veterinarian vet=snapshot.getValue(Veterinarian.class);
+                chatMaterialToolbar.setTitle(vet.getName());
+            }
 
-        chatMaterialToolbar.setTitle(vetName);
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d(TAG, "onCancelled: "+error.getMessage());
+            }
+        });
         chatMaterialToolbar.setNavigationOnClickListener(v -> finish());
 
         getMessages();
@@ -93,8 +104,6 @@ public class FarmerVet_Chat extends AppCompatActivity {
         String chatID= String.valueOf(System.currentTimeMillis());
         ChatMemory.saveLastChat(chatID,FarmerID,FarmerVet_Chat.this);
         Chat chat=new Chat(message,currentTimeStamp,FarmerID,Reg_Num,true,false);
-        databaseReference.child(FarmerID).child("client").setValue(FarmerID);
-        databaseReference.child(FarmerID).child("Vet").setValue(Reg_Num);
         databaseReference.child(FarmerID).child(Reg_Num).child("Messages").child(chatID).setValue(chat).addOnCompleteListener(task -> {
             if(task.isSuccessful()){
                 clientChatAdapter.notifyDataSetChanged();
