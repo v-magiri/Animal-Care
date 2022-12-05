@@ -12,7 +12,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:id="@+id/instructionTitle"
-            android:background="@color/animalCareBackground"
+                android:background="@color/animalCareBackground"
             android:layout_height="wrap_content">
             <ImageView
                 android:layout_width="40dp"

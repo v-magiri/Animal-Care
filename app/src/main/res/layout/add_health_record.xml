@@ -10,19 +10,21 @@
         android:layout_marginHorizontal="20dp"
         app:cardCornerRadius="10dp"
         android:layout_marginVertical="32dp">
-        <ScrollView
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:id="@+id/titleLayout"
+                android:background="@color/animalCareBackground"
+                android:layout_height="wrap_content">
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/ic_baseline_close_24"
+                    android:src="@drawable/ic_close_white"
                     android:layout_gravity="end"
                     android:layout_marginEnd="15dp"
+                    android:layout_alignParentEnd="true"
                     android:layout_marginTop="8dp"
                     android:id="@+id/closeBtn"/>
                 <TextView
@@ -31,241 +33,253 @@
                     android:textSize="24sp"
                     android:textStyle="bold"
                     android:layout_marginBottom="20dp"
-                    android:textColor="@color/black"
+                    android:layout_below="@+id/closeBtn"
+                    android:textColor="@color/white"
                     android:text="@string/addTreatment"
                     android:textAlignment="center"/>
+            </RelativeLayout>
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_below="@+id/titleLayout"
+                android:layout_height="wrap_content">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Animal Name"
-                        android:textColor="@color/black"
-                        android:padding="3dp"
-                        android:textStyle="bold"
-                        android:textSize="20dp"/>
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp">
+                        android:orientation="vertical">
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="20dp"
-                            android:text="@string/animalName"
+                            android:text="Animal Name"
                             android:textColor="@color/black"
-                            android:id="@+id/animalNameTxt"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Date"
-                        android:textColor="@color/black"
-                        android:padding="3dp"
-                        android:textStyle="bold"
-                        android:textSize="20dp"/>
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:hintTextColor="#454545"
-                        android:padding="8dp"
-                        app:boxStrokeColor="@color/text_input_stroke_color"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_marginBottom="10dp">
-                        <com.google.android.material.textfield.TextInputEditText
+                            android:padding="3dp"
+                            android:textStyle="bold"
+                            android:textSize="20dp"/>
+                        <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
-                            android:cursorVisible="false"
-                            android:id="@+id/dateText"
-                            android:drawableLeft="@drawable/ic_date"
-                            android:drawablePadding="20dp"
-                            android:hint="@string/dayOfMonth"
-                            android:maxLines="1"
-                            android:focusable="false"
-                            android:focusableInTouchMode="false"
-                            android:clickable="false"
-                            android:textSize="20sp"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:orientation="vertical">
-                    <TextView
+                            android:layout_marginBottom="10dp">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="10dp"
+                                android:textSize="18sp"
+                                android:text="@string/animalName"
+                                android:textColor="@color/black"
+                                android:id="@+id/animalNameTxt"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Actions"
-                        android:textColor="@color/black"
-                        android:padding="3dp"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="10dp"
-                        android:textSize="20dp"/>
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:hintTextColor="#454545"
-                        android:padding="8dp"
-                        app:boxStrokeColor="@color/text_input_stroke_color"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:hint="Enter Interventions Done"
-                        android:layout_marginBottom="10dp">
-                        <com.google.android.material.textfield.TextInputEditText
+                        android:orientation="vertical">
+                        <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="20dp"
-                            android:maxLines="1"
+                            android:text="Date"
                             android:textColor="@color/black"
-                            android:inputType="number"
-                            android:id="@+id/actionsTxt"/>
-                    </com.google.android.material.textfield.TextInputLayout>
+                            android:padding="3dp"
+                            android:textStyle="bold"
+                            android:textSize="20dp"/>
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:hintTextColor="#454545"
+                            android:padding="8dp"
+                            app:boxStrokeColor="@color/text_input_stroke_color"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_marginBottom="10dp">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/black"
+                                android:cursorVisible="false"
+                                android:id="@+id/dateText"
+                                android:drawableLeft="@drawable/ic_date"
+                                android:drawablePadding="20dp"
+                                android:hint="@string/dayOfMonth"
+                                android:maxLines="1"
+                                android:focusable="false"
+                                android:focusableInTouchMode="false"
+                                android:clickable="false"
+                                android:textSize="20sp"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Actions"
+                            android:textColor="@color/black"
+                            android:padding="3dp"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="10dp"
+                            android:textSize="20dp"/>
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:hintTextColor="#454545"
+                            android:padding="8dp"
+                            app:boxStrokeColor="@color/text_input_stroke_color"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:hint="Enter Interventions Done"
+                            android:layout_marginBottom="10dp">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="20dp"
+                                android:maxLines="1"
+                                android:textColor="@color/black"
+                                android:inputType="number"
+                                android:id="@+id/actionsTxt"/>
+                        </com.google.android.material.textfield.TextInputLayout>
 
-<!--                    <RadioGroup-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:orientation="horizontal"-->
-<!--                        android:layout_height="wrap_content">-->
-<!--                        <RadioButton-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:padding="10dp"-->
-<!--                            android:drawableTop="@drawable/ic_morning"-->
-<!--                            android:text="Morning"-->
-<!--                            android:layout_marginHorizontal="5dp"-->
-<!--                            android:drawablePadding="10dp"-->
-<!--                            android:textAlignment="center"-->
-<!--                            android:background="@drawable/radio_selector"-->
-<!--                            android:textColor="@drawable/text_color"-->
-<!--                            android:layout_marginVertical="10dp"-->
-<!--                            android:button="@android:color/transparent"-->
-<!--                            android:id="@+id/morningBtn"/>-->
-<!--                        <RadioButton-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:padding="10dp"-->
-<!--                            android:drawableTop="@drawable/ic_noon"-->
-<!--                            android:text="Afternoon"-->
-<!--                            android:background="@drawable/radio_selector"-->
-<!--                            android:textColor="@drawable/text_color"-->
-<!--                            android:layout_marginVertical="10dp"-->
-<!--                            android:layout_marginHorizontal="5dp"-->
-<!--                            android:drawablePadding="10dp"-->
-<!--                            android:button="@android:color/transparent"-->
-<!--                            android:id="@+id/noonBtn"/>-->
-<!--                        <RadioButton-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:padding="10dp"-->
-<!--                            android:drawableTop="@drawable/ic_evening"-->
-<!--                            android:text="Evening"-->
-<!--                            android:drawablePadding="10dp"-->
-<!--                            android:background="@drawable/radio_selector"-->
-<!--                            android:textColor="@drawable/text_color"-->
-<!--                            android:layout_marginVertical="10dp"-->
-<!--                            android:layout_marginHorizontal="5dp"-->
-<!--                            android:textAlignment="center"-->
-<!--                            android:button="@android:color/transparent"-->
-<!--                            android:id="@+id/eveningBtn"/>-->
-<!--                        <RadioButton-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:padding="10dp"-->
-<!--                            android:drawableTop="@drawable/ic_allday"-->
-<!--                            android:text="All Day"-->
-<!--                            android:background="@drawable/radio_selector"-->
-<!--                            android:textColor="@drawable/text_color"-->
-<!--                            android:layout_marginVertical="10dp"-->
-<!--                            android:textAlignment="center"-->
-<!--                            android:drawablePadding="10dp"-->
-<!--                            android:layout_marginHorizontal="5dp"-->
-<!--                            android:button="@android:color/transparent"-->
-<!--                            android:id="@+id/allDayBtn"/>-->
-<!--                    </RadioGroup>-->
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <TextView
+                        <!--                    <RadioGroup-->
+                        <!--                        android:layout_width="match_parent"-->
+                        <!--                        android:orientation="horizontal"-->
+                        <!--                        android:layout_height="wrap_content">-->
+                        <!--                        <RadioButton-->
+                        <!--                            android:layout_width="wrap_content"-->
+                        <!--                            android:layout_height="wrap_content"-->
+                        <!--                            android:padding="10dp"-->
+                        <!--                            android:drawableTop="@drawable/ic_morning"-->
+                        <!--                            android:text="Morning"-->
+                        <!--                            android:layout_marginHorizontal="5dp"-->
+                        <!--                            android:drawablePadding="10dp"-->
+                        <!--                            android:textAlignment="center"-->
+                        <!--                            android:background="@drawable/radio_selector"-->
+                        <!--                            android:textColor="@drawable/text_color"-->
+                        <!--                            android:layout_marginVertical="10dp"-->
+                        <!--                            android:button="@android:color/transparent"-->
+                        <!--                            android:id="@+id/morningBtn"/>-->
+                        <!--                        <RadioButton-->
+                        <!--                            android:layout_width="wrap_content"-->
+                        <!--                            android:layout_height="wrap_content"-->
+                        <!--                            android:padding="10dp"-->
+                        <!--                            android:drawableTop="@drawable/ic_noon"-->
+                        <!--                            android:text="Afternoon"-->
+                        <!--                            android:background="@drawable/radio_selector"-->
+                        <!--                            android:textColor="@drawable/text_color"-->
+                        <!--                            android:layout_marginVertical="10dp"-->
+                        <!--                            android:layout_marginHorizontal="5dp"-->
+                        <!--                            android:drawablePadding="10dp"-->
+                        <!--                            android:button="@android:color/transparent"-->
+                        <!--                            android:id="@+id/noonBtn"/>-->
+                        <!--                        <RadioButton-->
+                        <!--                            android:layout_width="wrap_content"-->
+                        <!--                            android:layout_height="wrap_content"-->
+                        <!--                            android:padding="10dp"-->
+                        <!--                            android:drawableTop="@drawable/ic_evening"-->
+                        <!--                            android:text="Evening"-->
+                        <!--                            android:drawablePadding="10dp"-->
+                        <!--                            android:background="@drawable/radio_selector"-->
+                        <!--                            android:textColor="@drawable/text_color"-->
+                        <!--                            android:layout_marginVertical="10dp"-->
+                        <!--                            android:layout_marginHorizontal="5dp"-->
+                        <!--                            android:textAlignment="center"-->
+                        <!--                            android:button="@android:color/transparent"-->
+                        <!--                            android:id="@+id/eveningBtn"/>-->
+                        <!--                        <RadioButton-->
+                        <!--                            android:layout_width="wrap_content"-->
+                        <!--                            android:layout_height="wrap_content"-->
+                        <!--                            android:padding="10dp"-->
+                        <!--                            android:drawableTop="@drawable/ic_allday"-->
+                        <!--                            android:text="All Day"-->
+                        <!--                            android:background="@drawable/radio_selector"-->
+                        <!--                            android:textColor="@drawable/text_color"-->
+                        <!--                            android:layout_marginVertical="10dp"-->
+                        <!--                            android:textAlignment="center"-->
+                        <!--                            android:drawablePadding="10dp"-->
+                        <!--                            android:layout_marginHorizontal="5dp"-->
+                        <!--                            android:button="@android:color/transparent"-->
+                        <!--                            android:id="@+id/allDayBtn"/>-->
+                        <!--                    </RadioGroup>-->
+                    </LinearLayout>
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Cost"
-                        android:textColor="@color/black"
-                        android:padding="3dp"
-                        android:textStyle="bold"
-                        android:textSize="20dp"/>
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:hintTextColor="#454545"
-                        android:padding="8dp"
-                        app:boxStrokeColor="@color/text_input_stroke_color"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:hint="Enter Cost Incurred"
-                        android:layout_marginBottom="10dp">
-                        <com.google.android.material.textfield.TextInputEditText
+                        android:orientation="vertical">
+                        <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="20dp"
-                            android:maxLines="1"
+                            android:text="Cost"
                             android:textColor="@color/black"
-                            android:inputType="number"
-                            android:id="@+id/costTxt"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Remarks"
-                        android:textColor="@color/black"
-                        android:padding="3dp"
-                        android:textStyle="bold"
-                        android:textSize="20dp"/>
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Enter Any Remarks"
-                        app:hintTextColor="#454545"
-                        android:padding="8dp"
-                        app:boxStrokeColor="@color/text_input_stroke_color"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_marginBottom="10dp">
-                        <EditText
+                            android:padding="3dp"
+                            android:textStyle="bold"
+                            android:textSize="20dp"/>
+                        <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="textMultiLine"
-                            android:lines="4"
+                            app:hintTextColor="#454545"
+                            android:padding="8dp"
+                            app:boxStrokeColor="@color/text_input_stroke_color"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:hint="Enter Cost Incurred"
+                            android:layout_marginBottom="10dp">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="20dp"
+                                android:maxLines="1"
+                                android:textColor="@color/black"
+                                android:inputType="number"
+                                android:id="@+id/costTxt"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Remarks"
                             android:textColor="@color/black"
-                            android:textSize="18sp"
-                            android:gravity="top"
-                            android:id="@+id/remarksTxt"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-                </LinearLayout>
+                            android:padding="3dp"
+                            android:textStyle="bold"
+                            android:textSize="20dp"/>
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Enter Any Remarks"
+                            app:hintTextColor="#454545"
+                            android:padding="8dp"
+                            app:boxStrokeColor="@color/text_input_stroke_color"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_marginBottom="10dp">
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textMultiLine"
+                                android:lines="4"
+                                android:textColor="@color/black"
+                                android:textSize="18sp"
+                                android:gravity="top"
+                                android:id="@+id/remarksTxt"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
 
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:backgroundTint="@null"
-                    android:background="@drawable/button_background"
-                    android:textColor="@color/white"
-                    android:layout_marginVertical="15dp"
-                    android:layout_marginHorizontal="20dp"
-                    android:textSize="20sp"
-                    android:text="@string/saveMilkProduction"
-                    android:id="@+id/saveHealthRecord"/>
-            </LinearLayout>
-        </ScrollView>
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:backgroundTint="@null"
+                        android:background="@drawable/button_background"
+                        android:textColor="@color/white"
+                        android:layout_marginVertical="15dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:textSize="20sp"
+                        android:text="@string/saveMilkProduction"
+                        android:id="@+id/saveHealthRecord"/>
+                </LinearLayout>
+            </ScrollView>
+        </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
 </RelativeLayout>
