@@ -49,6 +49,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.magiri.animalcare.Model.Animal;
+import com.magiri.animalcare.Model.Veterinarian;
 import com.magiri.animalcare.Model.VisitRequest;
 import com.magiri.animalcare.Session.Prevalent;
 import com.magiri.animalcare.UI.DropDown;
@@ -120,6 +121,8 @@ public class RequestVisitation extends AppCompatActivity {
         locationDropDown.setAdapter(locationOptionsAdapter);
         servicesDropDown.setAdapter(servicesOptionsAdapter);
 
+        mRef= FirebaseDatabase.getInstance().getReference("VisitRequest");
+        ref=FirebaseDatabase.getInstance().getReference("Veterinarian");
         databaseReference=FirebaseDatabase.getInstance().getReference("Animals").child(FarmerID);
         listAnimal=new ArrayList<>();
         animalProgressDialog=new ProgressDialog(RequestVisitation.this);
@@ -156,8 +159,21 @@ public class RequestVisitation extends AppCompatActivity {
         });
 
         Bundle bundle=getIntent().getExtras();
-        VetNameTxt.setText(bundle.getString("VetName","FooBar"));
+//        VetNameTxt.setText(bundle.getString("VetName","FooBar"));
+
         VETID=bundle.getString("VetID",null);
+        ref.child(VETID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Veterinarian veterinarian=snapshot.getValue(Veterinarian.class);
+                VetNameTxt.setText(veterinarian.getName());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d(TAG, "onCancelled: "+error.getMessage());
+            }
+        });
         if(bundle.getString("VetProfilePicUrl")!=null){
             Glide.with(getApplicationContext()).load(bundle.get("VetProfilePicUrl")).into(profilePic);
         }else{
@@ -167,8 +183,6 @@ public class RequestVisitation extends AppCompatActivity {
         Country="Kenya";
         Language="English";
         Api_Key=getResources().getString(R.string.maps_ApiKey);
-        mRef= FirebaseDatabase.getInstance().getReference("VisitRequest");
-        ref=FirebaseDatabase.getInstance().getReference("Veterinarian");
 
         progressDialog=new ProgressDialog(this);
         mProgressDialog=new ProgressDialog(this);

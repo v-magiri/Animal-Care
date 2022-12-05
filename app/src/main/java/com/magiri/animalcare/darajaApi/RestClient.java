@@ -1,6 +1,8 @@
 package com.magiri.animalcare.darajaApi;
 
 import com.magiri.animalcare.Model.DiseaseDiagnosis;
+import com.magiri.animalcare.Model.MyResponse;
+import com.magiri.animalcare.Model.Notification;
 import com.magiri.animalcare.Model.VisitPayment;
 
 import java.util.ArrayList;
@@ -37,5 +39,15 @@ public interface RestClient {
     @FormUrlEncoded
     @POST("diagnose")
     Call<DiseaseDiagnosis> diagnoseDisease(@Field("Symptoms") String symptoms);
+
+    @Headers(
+            {
+                    "Content-Type:application/json",
+                    "Authorization:key=AAAAfxZa5XQ:APA91bEawPPe_7D5hLqIzjyaU22lJh-61YnHZu_a8GYYifoJHUbUyMHMe058OrrVIooaEDLJvbfOfvb8z2Xr9nsQjm5705nqBD519L5_491jKJKZlmk_rvosPN_wvxUSaweBPgufNsBz"
+            }
+    )
+
+    @POST("fcm/send")
+    Call<MyResponse> sendNotification(@Body Notification body);
 
 }

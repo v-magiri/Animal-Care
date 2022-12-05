@@ -13,6 +13,7 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,7 +39,9 @@ import com.firebase.geofire.GeoQuery;
 import com.firebase.geofire.GeoQueryEventListener;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -46,6 +49,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.magiri.animalcare.Adapters.VetsAroundAdapter;
 import com.magiri.animalcare.Model.Veterinarian;
 import com.magiri.animalcare.Session.Prevalent;
@@ -73,6 +77,7 @@ public class Home extends AppCompatActivity {
     private ImageView closeDrawerImageView,headerProfilePic;
     private TextView headerFarmerNameTxt;
     private ProgressDialog progressDialog;
+    String refreshToken;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +88,7 @@ public class Home extends AppCompatActivity {
         drawerLayout=findViewById(R.id.drawerLayout);
         materialToolbar=findViewById(R.id.vetMaterialToolBar);
         setSupportActionBar(materialToolbar);
+        SetToken();
         veterinarianList = new ArrayList<>();
         fusedLocationProviderClient=LocationServices.getFusedLocationProviderClient(this);
 
@@ -137,6 +143,24 @@ public class Home extends AppCompatActivity {
             return false;
         });
         fetchLocation();
+    }
+
+    private void SetToken() {
+        String FarmerID=Prevalent.currentOnlineFarmer.getFarmerID();
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (task.isSuccessful()) {
+                            refreshToken = task.getResult();
+                            if (FarmerID != null) {
+                                FirebaseDatabase.getInstance().getReference("Tokens").child(FarmerID).child("token").setValue(refreshToken);
+                            } else {
+                                Log.e(TAG, "onComplete: User id is null");
+                            }
+                        }
+                    }
+                });
     }
 
     @SuppressLint("MissingPermission")

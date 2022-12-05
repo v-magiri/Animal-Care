@@ -113,7 +113,9 @@ public class ViewVet extends AppCompatActivity {
         requestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),RequestVisitation.class));
+                Intent intent=new Intent(getApplicationContext(), RequestVisitation.class);
+                intent.putExtra("VetID",RegNum);
+                startActivity(intent);
                 finish();
             }
         });
