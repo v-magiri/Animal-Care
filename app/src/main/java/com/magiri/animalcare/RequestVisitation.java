@@ -310,7 +310,7 @@ public class RequestVisitation extends AppCompatActivity {
                 }else {
                     progressDialog.show();
                     Retrofit.Builder builder=new Retrofit.Builder()
-                            .baseUrl("https://697b-41-89-227-170.eu.ngrok.io")
+                            .baseUrl("https://4b43-41-89-227-170.eu.ngrok.io/")
                             .addConverterFactory(GsonConverterFactory.create());
 
                     Retrofit retrofit=builder.build();

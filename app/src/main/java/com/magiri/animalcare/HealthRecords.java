@@ -50,6 +50,7 @@ public class HealthRecords extends AppCompatActivity {
         treatmentList=new ArrayList<>();
         mRef= FirebaseDatabase.getInstance().getReference("Health_Record").child(FarmerID);
 
+        progressDialog=new ProgressDialog(this);
         progressDialog.setMessage("Loading Health Records");
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
@@ -73,8 +74,12 @@ public class HealthRecords extends AppCompatActivity {
                     treatmentAdapter=new AnimalHealthRecordAdapter(HealthRecords.this,treatmentList);
                     healthRecyclerView.setAdapter(treatmentAdapter);
                 }
+
                 progressDialog.dismiss();
-                treatmentAdapter.notifyDataSetChanged();
+                if(treatmentList.size()>0){
+                    treatmentAdapter.notifyDataSetChanged();
+                }
+
 
             }
 

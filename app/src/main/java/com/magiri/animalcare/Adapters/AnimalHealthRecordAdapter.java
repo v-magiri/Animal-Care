@@ -23,6 +23,7 @@ import com.magiri.animalcare.Model.Animal;
 import com.magiri.animalcare.Model.Breeding;
 import com.magiri.animalcare.Model.DiseaseTreatment;
 import com.magiri.animalcare.R;
+import com.magiri.animalcare.Session.Prevalent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,11 +38,13 @@ public class AnimalHealthRecordAdapter extends
     List<DiseaseTreatment> diseaseTreatmentList;
     private DatabaseReference mRef;
     List<DiseaseTreatment> treatmentList;
+    private String FarmerID;
 
     public AnimalHealthRecordAdapter(Context context, List<DiseaseTreatment> diseaseTreatmentList) {
         this.context = context;
         this.diseaseTreatmentList = diseaseTreatmentList;
-        mRef= FirebaseDatabase.getInstance().getReference("Animals");
+        FarmerID= Prevalent.currentOnlineFarmer.getFarmerID();
+        mRef= FirebaseDatabase.getInstance().getReference("Animals").child(FarmerID);
         treatmentList=new ArrayList<>(diseaseTreatmentList);
     }
 
@@ -66,6 +69,7 @@ public class AnimalHealthRecordAdapter extends
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Animal animal=snapshot.getValue(Animal.class);
+                assert animal != null;
                 String animalProfileImgUrl=animal.getAnimalImageUrl();
 
                 if(TextUtils.isEmpty(animalProfileImgUrl)){

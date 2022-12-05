@@ -67,7 +67,9 @@ public class ProductionRecord extends AppCompatActivity {
                     productionAdapter=new ProductionAdapter(ProductionRecord.this,milkRecordList);
                     milkRecyclerView.setAdapter(productionAdapter);
                 }
-                productionAdapter.notifyDataSetChanged();
+                if(milkRecordList.size()>0){
+                    productionAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override

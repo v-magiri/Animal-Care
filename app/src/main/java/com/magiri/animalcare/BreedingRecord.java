@@ -75,7 +75,9 @@ public class BreedingRecord extends AppCompatActivity {
 
                 }
                 progressDialog.dismiss();
-                breedingAdapter.notifyDataSetChanged();
+                if(breedingList.size()>0){
+                    breedingAdapter.notifyDataSetChanged();
+                }
 
             }
 
