@@ -49,6 +49,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.magiri.animalcare.Model.Animal;
+import com.magiri.animalcare.Model.Data;
+import com.magiri.animalcare.Model.MyResponse;
+import com.magiri.animalcare.Model.Notification;
 import com.magiri.animalcare.Model.Veterinarian;
 import com.magiri.animalcare.Model.VisitRequest;
 import com.magiri.animalcare.Session.Prevalent;
@@ -310,7 +313,7 @@ public class RequestVisitation extends AppCompatActivity {
                 }else {
                     progressDialog.show();
                     Retrofit.Builder builder=new Retrofit.Builder()
-                            .baseUrl("https://4b43-41-89-227-170.eu.ngrok.io/")
+                            .baseUrl("https://251f-2c0f-fe38-2408-b08c-d053-3a66-d237-c390.in.ngrok.io/")
                             .addConverterFactory(GsonConverterFactory.create());
 
                     Retrofit retrofit=builder.build();
@@ -333,6 +336,18 @@ public class RequestVisitation extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if(task.isSuccessful()){
+                                            FirebaseDatabase.getInstance().getReference("Tokens").child(vetid).child("token").addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                    String VetToken=snapshot.getValue(String.class);
+                                                    SendNotification(VetToken,"New Request","You Have a new Visit Request","Request");
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                                }
+                                            });
                                             paymentDailog.dismiss();
                                             if(serviceType.equals("Disease Treatment")){
                                                 Intent intent=new Intent(RequestVisitation.this,Diagnose.class);
@@ -379,6 +394,32 @@ public class RequestVisitation extends AppCompatActivity {
         });
     }
 
+    private void SendNotification(String vetToken, String title, String message, String request) {
+        Data data=new Data(title,message,request);
+        Notification notification=new Notification(data,vetToken);
+        Retrofit.Builder builder=new Retrofit.Builder()
+                .baseUrl("https://fcm.googleapis.com/")
+                .addConverterFactory(GsonConverterFactory.create());
+        Retrofit retrofit=builder.build();
+        RestClient client=retrofit.create(RestClient.class);
+        Call<MyResponse> call = client.sendNotification(notification);
+        call.enqueue(new Callback<MyResponse>() {
+            @Override
+            public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+                if(response.code()==200){
+                    if(response.body().success!=1){
+                        Toast.makeText(getApplicationContext(),"Failed",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MyResponse> call, Throwable t) {
+                Log.d(TAG, "onFailure: "+t.getMessage());
+            }
+        });
+    }
+
 
     private void SelectLocation() {
         Intent intent = new Intent(getApplicationContext(), MapActivity.class);
@@ -413,67 +454,6 @@ public class RequestVisitation extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-            }
-        });
-    }
-
-    private void makeVisitationPayment(int visitationFee,String RegistrationNumber,String phoneNumber) {
-        visitationFee=1;
-        final DatabaseReference ref;
-        String clientID= Prevalent.currentOnlineFarmer.getFarmerID();
-//        ref=mRef.child(RegistrationNumber);
-        String visitID=mRef.push().getKey();
-//        VisitRequest visitRequest=new VisitRequest(RegistrationNumber,Address,Latitude,Longitude,visitationFee,clientID,"Pending",visitID,false);
-        assert visitID != null;
-//        mRef.child(visitID).setValue(visitRequest).addOnCompleteListener(new OnCompleteListener<Void>() {
-//            @Override
-//            public void onComplete(@NonNull Task<Void> task) {
-//                if(task.isSuccessful()){
-//                    Toast.makeText(getApplicationContext(),"Request Recorded",Toast.LENGTH_SHORT).show();
-//                }else{
-//                    Log.d(TAG, "onComplete: Something Happened");
-//                }
-//                progressDialog.dismiss();
-////                bottomSheetDialog.dismiss();
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//                Log.d(TAG, "onFailure: "+e.getMessage());
-//                Toast.makeText(getApplicationContext(),"Failed to Record your visit Request",Toast.LENGTH_SHORT).show();
-//                progressDialog.dismiss();
-////                bottomSheetDialog.dismiss();
-//            }
-//        });
-        Retrofit.Builder builder=new Retrofit.Builder()
-                .baseUrl("https://ani-care.herokuapp.com/")
-                .addConverterFactory(GsonConverterFactory.create());
-
-        Retrofit retrofit=builder.build();
-        RestClient restClient=retrofit.create(RestClient.class);
-        Call<STKResponse> call=restClient.pushStk(
-                visitationFee,
-                Utils.refactorPhoneNumber(phoneNumber),
-                RegistrationNumber,
-                visitID
-        );
-        call.enqueue(new Callback<STKResponse>() {
-            @Override
-            public void onResponse(Call<STKResponse> call, Response<STKResponse> response) {
-                if(response.body().getResponseCode().equals("0")){
-                    progressDialog.dismiss();
-                    Toast.makeText(getApplicationContext(),"Visit Request Recorded",Toast.LENGTH_SHORT).show();
-                    Timber.tag(TAG).i("Mpesa Worked: ");
-
-                }else{
-                    Toast.makeText(getApplicationContext(),"Something Wrong Happened Please Try Again",Toast.LENGTH_SHORT).show();
-                    Timber.tag(TAG).i("Mpesa Failed: ");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<STKResponse> call, Throwable t) {
-                Timber.tag(TAG).d("onFailure: Something wrong Happened");
             }
         });
     }

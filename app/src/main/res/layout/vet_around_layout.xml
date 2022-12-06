@@ -11,7 +11,7 @@
     android:layout_width="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:padding="8dp"
+        android:padding="4dp"
         android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,7 +25,6 @@
                 android:layout_height="60dp"
                 android:src="@drawable/ic_vet"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="1"
                 android:id="@+id/vetProfilePic"/>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -69,7 +68,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:id="@+id/ratingLayout"
-                        android:layout_weight="1.1"
+                        android:layout_weight="1.3"
                         android:orientation="horizontal">
                         <ImageView
                             android:layout_width="50dp"
@@ -94,7 +93,7 @@
                         android:orientation="horizontal"
                         android:padding="4dp"
                         android:layout_gravity="center_vertical"
-                        android:layout_weight="0.8">
+                        android:layout_weight="0.7">
                         <ImageView
                             android:layout_width="25dp"
                             android:layout_height="25dp"
